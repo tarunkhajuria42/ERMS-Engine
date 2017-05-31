@@ -1,3 +1,3 @@
 <?php
-define('host','localhost');
+define('host','http://localhost/ERMS-Engine');
 ?>

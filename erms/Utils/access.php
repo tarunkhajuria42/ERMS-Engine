@@ -31,7 +31,7 @@ function change_password($username,$password,$newpassword){
 }
 function checkEmail($email)
 {
-
+	
 }
 
 ?>

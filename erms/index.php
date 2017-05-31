@@ -12,11 +12,15 @@ require('Utils/database.php');
 require('user.php');
 require('marks.php');
 require('access.php');
-$name=["abc"];
-echo(json_encode(util\database\find('Select userid from login where token=?',$name)));
-/*
-if(isset($_COOKIE['user']))
+
+$res=util\user\checkSession();
+
+if($res <0)
 {
+	echo(utils\error(abs($res)));
+	
+}
+else{
 	if(isset($_post['type']))
 	{
 		switch($_POST['type'])
@@ -31,27 +35,6 @@ if(isset($_COOKIE['user']))
 				echo(json_encode(utils\error(0)));	
 		}	
 	}
-	
 }
-else{
-	if(isset($_POST['type']))
-	{
-		switch($_POST['type'])
-		{
-			case 'user': echo("badiya");
-			default : 
-		}
-	}
-	else
-	{
-		echo(json_encode(utils\error(2)));
-	}
-	
-	
-}
-*/
-
-
-
 
 

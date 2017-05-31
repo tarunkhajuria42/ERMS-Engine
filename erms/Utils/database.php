@@ -8,7 +8,7 @@ Version 0.1
 */
 
 //Main Database interaction
-namespace data\util\database;
+namespace data\utils\database;
 require ("configuration.php");
 
 
@@ -51,8 +51,6 @@ function find($query,$parameters)
 		$variables=count($parameters);
 		for ($i=0;$i<$variables;$i++)
 		{
-
-			echo($parameters[$i]);
 			$statement->bindParam($i+1,$parameters[$i]);
 		}
 		$statement->execute();

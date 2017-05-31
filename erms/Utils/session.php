@@ -9,26 +9,37 @@ Author: Tarun Khajuria (tarunkhajuria42@gmail.com)
 Session maintainace functions
 */
 require(database.php);
-namespace data\util\user;
+namespace data\utils\user;
 
-function new_session()
+function newSession()
 {
 	
 }
-function destroy_session()
+function destroySession()
 {
 
 }
 /* returns the userid if session is set else returns -1*/
-function check_session()
+function checkSession()
 {
-	if(isset($_COOKIE['token']))
+	if(isset($_COOKIE['token']))	
 	{
-		$selector=..\database\find('Select userid from login where token =?',$_COOKIE['token']);
-			
+		$arguments=[$_COOKIE['token']];
+		$results=..\database\find('SELECT userid,valid FROM login WHERE token =?',$arguments);
+		if(count($result)>0)
+		{
+			if (time<$result[0]['valid'])
+				return $result;
+			else
+				destroySession()
+				return -3
+		}
+		else
+		{
+			return -2;
+		}
+
 	}
 	else 
-	return -1;
-	
-	
+		return -1;
 }
