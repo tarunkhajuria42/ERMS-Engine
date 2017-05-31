@@ -8,11 +8,15 @@ Author: Tarun Khajuria(tarunkhajuria@gmail.com)
 Model Entry point
 */
 namespace data;
-require('Utils/database.php');	
 require('user.php');
 require('marks.php');
 require('access.php');
+require('Utils/session.php');
+$parameters=['abc'];
 
+utils\user\newSession("usrsds");
+
+/*
 $res=util\user\checkSession();
 
 if($res <0)
@@ -38,3 +42,4 @@ else{
 }
 
 
+*/

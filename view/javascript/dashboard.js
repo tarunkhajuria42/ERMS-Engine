@@ -1,5 +1,7 @@
 function generateDashboard()
 {
+	//check if user is logged 
+	//check user permission
 	$.post("http://localhost/ERMS/exammanagement/ExamManagement/index.php",
 	{
 
@@ -12,5 +14,20 @@ function generateDashboard()
 
 		}
 	})
+	$
 	
+}
+
+function add()
+{
+
+}
+function edit($id)
+{
+
+}
+
+function Submit()
+{
+
 }

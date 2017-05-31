@@ -1,15 +1,13 @@
 <?php
 /*
-Marks Views
-
-ERMS
+Dashboard views
+Marks
 */
 
 function list_papers()
 {
 ?>
 	<div class="container-fluid">
-
             <!-- Breadcrumbs -->
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
@@ -40,7 +38,7 @@ function list_papers()
                             </thead>
                             <tbody>
                             	<tr>
-                            		<td>Y<img src='images/logoWhite.png' style='height:10px'></td>
+                            		<td>Y></td>
                             		<td>adsd</td>
                             		<td>adsd</td>
                             		<td>adsd</td>
@@ -58,7 +56,7 @@ function list_papers()
                             		<td>adsd</td>
                             	</tr>
                             	<tr>
-                            		<td>Y<img src='images/logoWhite.png' style='height:10px'></td>
+                            		<td>Y</td>
                             		<td>adsd</td>
                             		<td>adsd</td>
                             		<td>adsd</td>

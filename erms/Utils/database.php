@@ -12,23 +12,43 @@ namespace data\utils\database;
 require ("configuration.php");
 
 
-function init_connection()
+function initConnection()
 {
 	try{
-	echo $GLOBALS['servername'];
 	$conn=new \PDO("mysql:host=$GLOBALS[servername];dbname=$GLOBALS[dbname]",$GLOBALS['username'],$GLOBALS['password']);
 	$conn->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION);
 	return $conn;
+	}catch(Exception $e)
+	{
+		echo "Exception Caught", $e->getMessage(),"\n";
+	}
+}
+
+function initConnectionCurrent()
+{	
+	try{
+		$conn=new \PDO("mysql:host=$GLOBALS[servername];dbname=$GLOBALS[dDbname]",$GLOBALS['dUsername'],$GLOBALS['dpassword']);
+		$conn->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION);
+		return $conn;
+		echo($GLOBALS['dpassword']);
 	}
 	catch(Exception $e)
 	{
 		echo "Exception Caught", $e->getMessage(),"\n";
 	}
-
 }
-function insert($query,$parameters)
+/* Table 1=Erms
+	Table 2='ErmsCurrent'*/
+
+function insert($query,$parameters,$table)
 {
-	$conn=init_connection();
+	if($table==1)
+	{
+		$conn=initConnection();	
+	}else{
+		$conn=initConnectionCurrent();
+	}
+	
 	try{
 		$statement=$conn->prepare($query);
 		$variables=count($parameters);
@@ -40,12 +60,22 @@ function insert($query,$parameters)
 		$statement->execute();
 	}catch(Exception $e)
 	{
+		return -1;
 		echo "Ecteption found",$e->getMessage(),"\n";	
 	}
 }
-function find($query,$parameters)
+
+function find($query,$parameters,$table)
 {
-	$conn=init_connection();
+	if($table=1)
+	{
+		$conn=initConnection();	
+	}
+	else
+	{
+		$conn=initConnectionCurrent();		
+	}
+	
 	try{
 		$statement=$conn->prepare($query);
 		$variables=count($parameters);
@@ -63,9 +93,28 @@ function find($query,$parameters)
 
 	}catch(Exception $e)
 	{
+		return -1;
 		echo "Exception found",$e->getMessage(),"\n";	
 	}
 	
+}
+function delete($query,$parameters)
+{
+	$conn=initConnectionCurrent();
+	try{
+		$statement=$conn->prepare($query);
+		$variables=count($parameters);
+		for ($i=0;$i<$variables;$i++)
+		{
+			$statement->bindParam($i+1,$parameters[$i]);
+		}
+			
+		$statement->execute();
+	}catch(Exception $e)
+	{
+		return -1;
+		echo "Ecteption found",$e->getMessage(),"\n";	
+	}
 }
 
 ?>

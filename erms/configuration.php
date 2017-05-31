@@ -8,9 +8,12 @@ Author: Tarun Khajuria (tarunkhajuria42@gmail.com)
 Configuration file
 Database
 */
-namespace main\configuration;
 $servername='localhost';
 $username='admin';
-$password='I9pRFDbX5BA8Xh1b';
-$dbname='ErmsDB';
+$password='PgCSrbi9K7vSQrSi';
+$dbname='Erms';
+
+$dUsername='admin';
+$dpassword='PgCSrbi9K7vSQrSi';
+$dDbname='ErmsC';
 ?>
