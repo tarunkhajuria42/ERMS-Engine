@@ -1,0 +1,3 @@
+<?php
+define('hostname','localhost');
+?>
