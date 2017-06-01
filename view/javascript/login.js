@@ -6,7 +6,7 @@ function checktoken()
 			var res=json.parse(data);
 			if (res['type']=='success')
 			{
-				window.loaction="http://localhost/ERMS-Engine/view/dashboard.php";
+				window.location="http://localhost/ERMS-Engine/view/dashboard.php";
 			}
 		});
 	

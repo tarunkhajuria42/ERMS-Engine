@@ -168,7 +168,9 @@ body.fixed-nav {
       -ms-flex-direction: column; }
       #mainNav .navbar-collapse .navbar-nav.sidebar-nav > .nav-item {
         width: 250px;
-        padding: 0; }
+        padding: 0; 
+        border:solid;
+        border-width: 1px;}
         #mainNav .navbar-collapse .navbar-nav.sidebar-nav > .nav-item > .nav-link {
           padding: 1em; }
         #mainNav .navbar-collapse .navbar-nav.sidebar-nav > .nav-item .sidebar-second-level,

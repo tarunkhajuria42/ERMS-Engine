@@ -3,10 +3,11 @@
 Dashboard views
 Marks
 */
+namespace view;
 
 function list_papers()
 {
-?>
+return <<<HTML
 	<div class="container-fluid">
             <!-- Breadcrumbs -->
             <ol class="breadcrumb">
@@ -90,7 +91,14 @@ function list_papers()
 
         </div>
         <!-- /.container-fluid -->
-
-<?php
+HTML;
+}
+function logout()
+{
+return <<<HTML
+    <div id='logout'>
+        <p> Logout</p>
+    </div>
+HTML;
 }
 ?>

@@ -37,7 +37,7 @@ require('misc.php');
             <link href="css/dashboard.css" rel="stylesheet">
 		</head>
 
-<body id="page-top" onload='gDashboard()'>
+<body id="page-top" onload='checkstatus()'>
 
     <!-- Navigation -->
     <nav id="mainNav" class="navbar static-top navbar-toggleable-md navbar-inverse">
@@ -48,16 +48,19 @@ require('misc.php');
         echo(misc\header());
         ?>
         <div class="collapse navbar-collapse" id="navbarmain">  
-            <ul class="sidebar-nav navbar-nav">
+            <ul class="sidebar-nav navbar-nav" id='navlist'>
          			<li class="nav-item active">
-                    	<a class="nav-link" href="#">abc</a>
+                    	<a class="nav-link" href="#">Marks</a>
                 	</li>	
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Logout</a>
+                    </li>   
             </ul>
         </div>
     </nav>	
 
     <div class="content-wrapper py-3">
-        <div class="container-fluid">
+        <div class="container-fluid" id='container'>
 
             <!-- Breadcrumbs -->
             <ol class="breadcrumb">
@@ -78,171 +81,48 @@ require('misc.php');
                         <table class="table table-bordered" width="100%" id="dataTable" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>Roll No</th>
-                                    <th>Name</th>
+                                    <th>Subject Code</th>
+                                    <th>Course</th>
+                                    <th>Batch</th>
                                     <th>Internal Practical</th>
                                     <th>Internal Theory</th>
                                     <th>External Practical</th>
-                                    <th>Roll</th>
-                                    <th>Mali</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr id='row01'>
-                                    <td >Y></td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td><input type='button' name='abc' ></td>
-                                </tr>
                                 <tr>
+                                    <td >AA130</td>
+                                    <td>Architectural Assistantship</td>
+                                    <td>2018</td>
                                     <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
                                     <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
                                     <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
                                 </tr>
                                 <tr>
+                                    <td >AA138</td>
+                                    <td>Architectural Assistantship</td>
+                                    <td>2018</td>
                                     <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
                                     <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
                                     <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
                                 </tr>
                                 <tr>
+                                    <td >AA138</td>
+                                    <td>Architectural Assistantship</td>
+                                    <td>2018</td>
                                     <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
                                     <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
                                     <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
                                 </tr>
-                                <tr>
-                                    <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
-                                    <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
-                                    <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
-                                    <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
-                                    <td>Y</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
-                                    <td><input type='text' text='as'></td>
-                                    <td><input type='text' text='as'></td>
-                                    <td><input type='text' text='as'></td>
-                                    <td><input type='text' text='as'></td>
-                                    <td><input type='text' text='as'></td>
-                                    <td><input type='text' text='as'></td>
-                                    <td><input type='text' text='as'></td>
-                                </tr>    
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Roll No</th>
-                                    <th>Name</th>
+                                    <th>Subject Code</th>
+                                    <th>Course</th>
+                                    <th>Batch</th>
                                     <th>Internal Practical</th>
                                     <th>Internal Theory</th>
                                     <th>External Practical</th>
-                                    <th>Start date</th>
-                                    <th>Roll</th>
-                                    <th>Mali</th>
                                 </tr>
                             </tfoot>
                             <tbody>
@@ -250,27 +130,12 @@ require('misc.php');
                             </tbody>
                         </table>
                     </div>
-                        <button id='add' name='add' data-toggle="modal" data-target="#myModal">Add</button>
-                </div>
-                <div class="card-footer small text-muted">
-                    CopyRight Board of Technical Education
-                </div>
+                       
+                </div> 
             </div>
-            <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog" id="modalcon">
-                
-                  <!-- Modal content-->
-                  <div class="modal-content">
-                    <div >
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 >Modal Header</h4>
-                    </div>
-                    <div class="modal-body">
-                           
-            <!-- Example Tables Card -->
-            <div class="card mb-3">
+            <div class="card mb-3" id='editmarks'>
                 <div class="card-header">
-                    <i class="fa fa-table"></i> Checked Marks
+                    <i class="fa fa-table"></i> Enter Marks : Internal Practical
                 </div>
                 <div class="card-block">
                     <div class="table-responsive">
@@ -279,169 +144,36 @@ require('misc.php');
                                 <tr>
                                     <th>Roll No</th>
                                     <th>Name</th>
-                                    <th>Internal Practical</th>
-                                    <th>Internal Theory</th>
-                                    <th>External Practical</th>
-                                    <th>Roll</th>
-                                    <th>Mali</th>
+                                    <th>Entry 1</th>
+                                    <th>Entry 2</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr id='row01'>
-                                    <td >Y></td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td><input type='button' name='abc' ></td>
+                                <tr>
+                                    <td >11234</td>
+                                    <td>Tarun Khajuria</td>
+                                    <td id='e1_11234' class='entry1'><input id='i1_11234' type='text'></td>
+                                    <td id='e2_11234' class='entry2'></td>
                                 </tr>
                                 <tr>
-                                    <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
+                                    <td >11237</td>
+                                    <td>Vishal Sengar</td>
+                                    <td id='e1_11237' class='entry1'><input id='i1_11237' type='text'></td>
+                                    <td id='e2_11237' class='entry2'></td>
                                 </tr>
                                 <tr>
-                                    <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
+                                    <td >11534</td>
+                                    <td>Manas Mehta</td>
+                                    <td id='e1_11534' class='entry1'><input id='i1_11534' type='text'></td>
+                                    <td id='e2_11534' class='entry2'></td>
                                 </tr>
-                                <tr>
-                                    <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
-                                    <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
-                                    <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
-                                    <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
-                                    <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
-                                    <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
-                                    <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
-                                    <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
-                                    <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
-                                    <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
-                                    <td>N</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
-                                    <td>Y</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                    <td>adsd</td>
-                                </tr>
-                                <tr>
-                                    <td><input type='text' text='as'></td>
-                                    <td><input type='text' text='as'></td>
-                                    <td><input type='text' text='as'></td>
-                                    <td><input type='text' text='as'></td>
-                                    <td><input type='text' text='as'></td>
-                                    <td><input type='text' text='as'></td>
-                                    <td><input type='text' text='as'></td>
-                                </tr>    
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <th>Roll No</th>
                                     <th>Name</th>
-                                    <th>Internal Practical</th>
-                                    <th>Internal Theory</th>
-                                    <th>External Practical</th>
-                                    <th>Start date</th>
-                                    <th>Roll</th>
-                                    <th>Mali</th>
+                                    <th>Entry 1</th>
+                                    <th>Entry 2</th>
                                 </tr>
                             </tfoot>
                             <tbody>
@@ -449,22 +181,13 @@ require('misc.php');
                             </tbody>
                         </table>
                     </div>
-                        <button id='add' name='add' data-toggle="modal" data-target="#myModal">Add</button>
+                        <button id='submitButton' name='Submit' class='pull-right mr-2' onclick='submit1()'>Submit</button>
                 </div>
                 <div class="card-footer small text-muted">
                     CopyRight Board of Technical Education
                 </div>
             </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                  </div>
-                  
-                </div>
-              </div>
-        </div>
-
+            
     </div>
     <!-- /.content-wrapper -->
 
@@ -485,7 +208,7 @@ require('misc.php');
 
     <!-- Custom scripts for this template -->
     <script src="js/sb-admin.min.js"></script>
-
+    <script src="javascript/tables.js"></script>
 </body>
 
 </html>

@@ -32,14 +32,14 @@ function header(){
 				position:absolute;
 				color:white;
 				font-size:18px;
-				top:35px;
+				top:45px;
 				right:150px;
 			}
 			#header_subtitle{
 				position:absolute;
 				color:white;
 				font-size:16px;
-				top:55px;
+				top:65px;
 				right:160px;
 
 			}

@@ -1,33 +1,43 @@
 function generateDashboard()
 {
 	//check if user is logged 
-	//check user permission
-	$.post("http://localhost/ERMS/exammanagement/ExamManagement/index.php",
+	//get user module lists
+	$.post("http://localhost/ERMS-Engine/erms/test.php",
 	{
-
-
-	},function callback(data,)
-	{
-		var resobj=JSON.parse(result);
-		if(resobj['data']=='')
+		type='access',
+		request='module'
+	},userset);
+}
+function userset(data,status)
+{
+	var resobj=JSON.parse(data);
+		if(resobj['type']=='success')
 		{
-
+			$.POST('http://localhost/ERMS-Engine/view/dashboardTest.php',{code=resobj['code']},viewCallback);
 		}
-	})
-	$
-	
+		else if(resobj['type']=='error'])
+		{
+			window.location='http://localhost/ERMS-Engine/view/error.php';
+		}
+	}
 }
 
-function add()
+function viewCallback(data,status)
 {
 
-}
-function edit($id)
-{
-
-}
-
-function Submit()
-{
-
+var moduleList=resdata['list'];
+			
+	for (var i=0; i<modulelist.length; i++)
+	{
+		if(i==0)
+		{
+			$("<li class='nav-item><p class='nav-link' onClick='changeTab(this)'"+"active"+">abc</p></li>").appendTo("#navlist");
+			$(modulecode[i]).appendTo("#")
+		}
+		else
+		{
+			$("<li class='nav-item><p class='nav-link' onClick='changeTab(this)'>abc</p></li>").appendTo("#navlist");
+		}
+		
+	}
 }

@@ -6,5 +6,6 @@ namespace data;
 function access()
 {
 	
+	
 }
 ?>
