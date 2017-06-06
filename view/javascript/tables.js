@@ -5,12 +5,13 @@ function checkstatus()
 	console.log(marks);
 }
 var submitFlag=0;
+
 function submit1()
 {
-
+	console.log(submitFlag);
+	var rollno=[11234,11237,11534];
 	if(submitFlag==0)
 	{
-		var rollno=[11234,11237,11534];
 		var scores1=[];
 		var temp;
 		$(".entry1").css('opacity','0');
@@ -22,6 +23,7 @@ function submit1()
 		}
 		submitFlag=submitFlag+1;
 	}
+	console.log(submitFlag);
 	else if(submitFlag==1)
 	{
 		var scores1=[];
@@ -32,7 +34,7 @@ function submit1()
 			$("<input id='i2_"+rollno[i].toString()+"' type='text'>").appendTo('#e2_'+rollno[i].toString())
 		}
 		submitFlag=submitFlag+1;
-
 	}
 	
 }
+

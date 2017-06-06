@@ -16,13 +16,26 @@ require("database.php");
 function newSession($uid)
 {
 	define('valid_time',10);
-	$token= \bin2hex(\random_bytes(16));
-	$valid=\date('Y-m-d H:i:s',time()+(valid_time*60));
-	echo($valid);
-	$arguments=[$uid,$token,$valid];
+	
 	$i=0;
-		if(\data\utils\database\insert('INSERT into login(userid,token,valid) VALUES(?,?,?)',$arguments,2)==-1)
-		{}
+	do
+	{
+		$token= \bin2hex(\random_bytes(16));
+		$valid=\date('Y-m-d H:i:s',time()+(valid_time*60));
+		$arguments=[$uid,$token,$valid];
+		$res=\data\utils\database\insert('INSERT into login(userid,token,valid) VALUES(?,?,?)',$arguments,2);
+		if($res==1)
+		{
+			setcookie('user',$token,$valid,secure=TRUE)
+			return 1;
+		}
+		elseif($res!=='23000')
+		{
+			return -1;
+		}
+		$i++;
+	}while($i<10);
+	return -1;
 }
 
 

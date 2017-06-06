@@ -18,7 +18,7 @@ function initConnection()
 	$conn=new \PDO("mysql:host=$GLOBALS[servername];dbname=$GLOBALS[dbname]",$GLOBALS['username'],$GLOBALS['password']);
 	$conn->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION);
 	return $conn;
-	}catch(Exception $e)
+	}catch(\Exception $e)
 	{
 		echo "Exception Caught", $e->getMessage(),"\n";
 	}
@@ -32,7 +32,7 @@ function initConnectionCurrent()
 		return $conn;
 		echo($GLOBALS['dpassword']);
 	}
-	catch(Exception $e)
+	catch(\Exception $e)
 	{
 		echo "Exception Caught", $e->getMessage(),"\n";
 	}
@@ -58,10 +58,10 @@ function insert($query,$parameters,$table)
 		}
 			
 		$statement->execute();
-	}catch(Exception $e)
+		return 1;
+	}catch(\Exception $e)
 	{
-		return -1;
-		echo "Ecteption found",$e->getMessage(),"\n";	
+		return ($e->getCode());	
 	}
 }
 
@@ -91,7 +91,7 @@ function find($query,$parameters,$table)
 		}
 		return $res;
 
-	}catch(Exception $e)
+	}catch(\Exception $e)
 	{
 		return -1;
 		echo "Exception found",$e->getMessage(),"\n";	
@@ -110,7 +110,7 @@ function delete($query,$parameters)
 		}
 			
 		$statement->execute();
-	}catch(Exception $e)
+	}catch(\Exception $e)
 	{
 		return -1;
 		echo "Ecteption found",$e->getMessage(),"\n";	

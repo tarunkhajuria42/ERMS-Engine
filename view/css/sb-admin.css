@@ -163,7 +163,10 @@ body.fixed-nav {
       height: 100vh;
       margin-top: 56px;
       padding-bottom: 56px;
-      background: #AF7A4A;
+      border:solid;
+      border-width: 1px;
+      border-color: orange;
+      background:white;
       -webkit-flex-direction: column;
       -ms-flex-direction: column; }
       #mainNav .navbar-collapse .navbar-nav.sidebar-nav > .nav-item {

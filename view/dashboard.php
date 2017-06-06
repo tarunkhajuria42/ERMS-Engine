@@ -40,6 +40,9 @@ require('misc.php');
 <body id="page-top" onload='checkstatus()'>
 
     <!-- Navigation -->
+    <div id='welcome'>
+        <p class='welcome'>Welcome Tarun</p>
+    </div>
     <nav id="mainNav" class="navbar static-top navbar-toggleable-md navbar-inverse">
         <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -77,6 +80,16 @@ require('misc.php');
                     <i class="fa fa-table"></i> Checked Marks
                 </div>
                 <div class="card-block">
+                    Course:<select id='course' class='mb-3'>
+                        <option value='all'>All</option>
+                        <option value='CS'>Computer Science</option>
+                        <option value='ECE'>Electronics</option>
+                    </select>
+                    Batch:<select id='batch' class='mb-3'>
+                        <option value='all'>All</option>
+                        <option value='2015'>2015</option>
+                        <option value='2016'>2016</option>
+                    </select>
                     <div class="table-responsive">
                         <table class="table table-bordered" width="100%" id="dataTable" cellspacing="0">
                             <thead>

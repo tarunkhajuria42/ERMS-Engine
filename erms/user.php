@@ -20,7 +20,7 @@ function user()
 			case 'check':  
 						if(util\user\checkToken($_COOKIE['user'])==1)
 						{
-							$result['type']='success';
+							$result['type']='success';	
 							echo ($result);	
 						}
 			case 'login':

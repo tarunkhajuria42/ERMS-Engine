@@ -13,6 +13,9 @@ require('marks.php');
 require('access.php');
 require('Utils/session.php');
 
+utils\user\newSession('tarris');
+
+/*
 $res=util\user\checkSession();
 
 if($res <0)
@@ -36,3 +39,4 @@ else{
 		}	
 	}
 }
+*/
