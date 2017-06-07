@@ -37,7 +37,7 @@ require('misc.php');
             <link href="css/dashboard.css" rel="stylesheet">
 		</head>
 
-<body id="page-top" onload="fill_exams()">
+<body id="page-top" onload="fill_subjects()">
 
     <!-- Navigation -->
     <div id='welcome'>

@@ -6,7 +6,6 @@ function fetch_subjectdata()
 		{
 			type:"marks",
 			request:"classes",
-			data:"{batch:'"+batch+"',course:'"+course+"'}"
 		}, function (data,status)
 		{
 			var res=json.parse(data);
@@ -19,18 +18,17 @@ function fetch_subjectdata()
 }
 function sub_click(id)
 {
-	var paper= str.substring(0, str.indexOf("_"));
-	var no=str.substring(str.indexOf("_")+1,str.length);
-	console.log(paper);
-	console.log(no);
+	var paper= id.substring(0, id.indexOf("_"));
+	var no=id.substring(id.indexOf("_")+1,id.length);
+	fetch_marks(subjectdata[no][0],subjectdata[no][1],subjectdata[no][2],paper);
 }
-function fetch_marks(batch,course,exam_type)
+function fetch_marks(subject,course,batch,exam_type)
 {
 	$.post("http://localhost/ERMS-Engine/erms/index.php",
 		{
 			type:"marks",
 			request:"classes"
-			data:"{batch:'"+batch+"',course:'"+course+"'}"
+			
 		}, function (data,status)
 		{
 			var res=json.parse(data);
