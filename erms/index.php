@@ -12,9 +12,8 @@ require('user.php');
 require('marks.php');
 require('access.php');
 require('Utils/session.php');
-
-utils\user\newSession('tarris');
-
+require('Utils/access.php');
+echo(utils\user\register('karan@imfundo.io','hahaha','Tarun',0));
 /*
 $res=util\user\checkSession();
 
@@ -38,5 +37,4 @@ else{
 				echo(json_encode(utils\error(0)));	
 		}	
 	}
-}
-*/
+}*/

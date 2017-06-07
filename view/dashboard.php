@@ -37,7 +37,7 @@ require('misc.php');
             <link href="css/dashboard.css" rel="stylesheet">
 		</head>
 
-<body id="page-top" onload='checkstatus()'>
+<body id="page-top" onload="fill_exams()">
 
     <!-- Navigation -->
     <div id='welcome'>
@@ -51,29 +51,25 @@ require('misc.php');
         echo(misc\header());
         ?>
         <div class="collapse navbar-collapse" id="navbarmain">  
-            <ul class="sidebar-nav navbar-nav" id='navlist'>
+            <ul class="sidebar-nav navbar-nav nav-tabs" id='navlist'>
          			<li class="nav-item active">
-                    	<a class="nav-link" href="#">Marks</a>
+                    	<a class="nav-link" href="#tab-01" aria-controls="tab-01" role="tab" data-toggle="tab">Marks</a>
                 	</li>	
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Logout</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab-02" aria-controls="tab-02" role="tab" data-toggle="tab">Logout</a>
                     </li>   
             </ul>
         </div>
     </nav>	
-
-    <div class="content-wrapper py-3">
+    <div class='tab-content'>
+    <div class="tab-pane content-wrapper py-3 active" id='tab-01'>
         <div class="container-fluid" id='container'>
 
             <!-- Breadcrumbs -->
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
                 <li class="breadcrumb-item active">My Dashboard</li>
-            </ol>
-
-           
-                    
-                       
+            </ol>      
             <!-- Example Tables Card -->
             <div class="card mb-3">
                 <div class="card-header">
@@ -90,8 +86,9 @@ require('misc.php');
                         <option value='2015'>2015</option>
                         <option value='2016'>2016</option>
                     </select>
+                    <button onclick='subjects_select()' value='Show' class='mb-3'>Show</button>
                     <div class="table-responsive">
-                        <table class="table table-bordered" width="100%" id="dataTable" cellspacing="0">
+                        <table class="table table-bordered" width="100%" id="dataTable1" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>Subject Code</th>
@@ -102,31 +99,7 @@ require('misc.php');
                                     <th>External Practical</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td >AA130</td>
-                                    <td>Architectural Assistantship</td>
-                                    <td>2018</td>
-                                    <td>N</td>
-                                    <td>N</td>
-                                    <td>N</td>
-                                </tr>
-                                <tr>
-                                    <td >AA138</td>
-                                    <td>Architectural Assistantship</td>
-                                    <td>2018</td>
-                                    <td>N</td>
-                                    <td>N</td>
-                                    <td>N</td>
-                                </tr>
-                                <tr>
-                                    <td >AA138</td>
-                                    <td>Architectural Assistantship</td>
-                                    <td>2018</td>
-                                    <td>N</td>
-                                    <td>N</td>
-                                    <td>N</td>
-                                </tr>
+                            <tbody id='subjects_admin'>
                             </tbody>
                             <tfoot>
                                 <tr>
@@ -161,23 +134,11 @@ require('misc.php');
                                     <th>Entry 2</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td >11234</td>
-                                    <td>Tarun Khajuria</td>
-                                    <td id='e1_11234' class='entry1'><input id='i1_11234' type='text'></td>
-                                    <td id='e2_11234' class='entry2'></td>
-                                </tr>
-                                <tr>
-                                    <td >11237</td>
-                                    <td>Vishal Sengar</td>
-                                    <td id='e1_11237' class='entry1'><input id='i1_11237' type='text'></td>
-                                    <td id='e2_11237' class='entry2'></td>
-                                </tr>
+                            <tbody id='marks_table'>
                                 <tr>
                                     <td >11534</td>
                                     <td>Manas Mehta</td>
-                                    <td id='e1_11534' class='entry1'><input id='i1_11534' type='text'></td>
+                                    <td id='e1_11534' class='entry1'><input id='i1_11534' type='text' value='123'></td>
                                     <td id='e2_11534' class='entry2'></td>
                                 </tr>
                             </tbody>
@@ -194,17 +155,128 @@ require('misc.php');
                             </tbody>
                         </table>
                     </div>
-                        <button id='submitButton' name='Submit' class='pull-right mr-2' onclick='submit1()'>Submit</button>
+                        <button id='submitButton' name='Submit' class='pull-right mr-2' onclick='submit()'>Submit</button>
                 </div>
                 <div class="card-footer small text-muted">
                     CopyRight Board of Technical Education
                 </div>
             </div>
             
-    </div>
+        </div>
     <!-- /.content-wrapper -->
+    </div>
+    <div class="tab-pane content-wrapper py-3" id='tab-02'>
+        <div class="container-fluid" id='container'>
 
-    <a class="scroll-to-top rounded" href="#    page-top">
+            <!-- Breadcrumbs -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>dat
+                <li class="breadcrumb-item active">My Dashboard</li>
+            </ol>      
+            <!-- Example Tables Card -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-table"></i> Checked Marks
+                </div>
+                <div class="card-block">
+                    Course:<select id='course' class='mb-3'>
+                        <option value='all'>All</option>
+                        <option value='CS'>Computer Science</option>
+                        <option value='ECE'>Electronics</option>
+                    </select>
+                    Batch:<select id='batch' class='mb-3'>
+                        <option value='all'>All</option>
+                        <option value='2015'>2015</option>
+                        <option value='2016'>2016</option>
+                    </select>
+                    <button onclick='subjects_select()' value='Show' class='mb-3'>Show</button>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" id="table2" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Subject Code</th>
+                                    <th>Course</th>
+                                    <th>Batch</th>
+                                    <th>Internal Practical</th>
+                                    <th>Internal Theory</th>
+                                    <th>External Practical</th>
+                                </tr>
+                            </thead>
+                            <tbody id='subjects_admin'>
+                                <tr>
+                                    <td >AA130</td>
+                                    <td>Architectural Assistantship</td>
+                                    <td>2018</td>
+                                    <td>N</td>
+                                    <td>N</td>
+                                    <td>N</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Subject Code</th>
+                                    <th>Course</th>
+                                    <th>Batch</th>
+                                    <th>Internal Practical</th>
+                                    <th>Internal Theory</th>
+                                    <th>External Practical</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                       
+                </div> 
+            </div>
+            <div class="card mb-3" id='editmarks'>
+                <div class="card-header">
+                    <i class="fa fa-table"></i> Enter Marks : Internal Practical
+                </div>
+                <div class="card-block">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" id="subject_table" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Roll No</th>
+                                    <th>Name</th>
+                                    <th>Entry 1</th>
+                                    <th>Entry 2</th>
+                                </tr>
+                            </thead>
+                            <tbody id='marks_table'>
+                                <tr>
+                                    <td >11534</td>
+                                    <td>Manas Mehta</td>
+                                    <td id='e1_11534' class='entry1'><input id='i1_11534' type='text' value='123'></td>
+                                    <td id='e2_11534' class='entry2'></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Roll No</th>
+                                    <th>Name</th>
+                                    <th>Entry 1</th>
+                                    <th>Entry 2</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                        <button id='submitButton' name='Submit' class='pull-right mr-2' onclick='submit()'>Submit</button>
+                </div>
+                <div class="card-footer small text-muted">
+                    CopyRight Board of Technical Education
+                </div>
+            </div>
+
+           
+    </div>
+    </div>
+    <a class="scroll-to-top rounded" href="#page-top">
         <i class="fa fa-chevron-up"></i>
     </a>
 

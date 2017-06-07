@@ -7,17 +7,59 @@ Author: Tarun Khajuria (tarunkhajuria42@gmail.com)
 
 Utils for Password Management
 */
-namespace data\util\user;
-require(database.php);
+namespace data\utils\user;
 
-function store_password($username,$password)
+function hash_password($password)
 {
-	
+	$options = [
+    'cost' => 11,
+    'salt' => \mcrypt_create_iv(22, \MCRYPT_DEV_URANDOM),
+	];
+	try
+	{
+		return(\password_hash($password,\PASSWORD_BCRYPT,$options));
+	}
+	catch(\Exception $e)
+	{
+		return -1;
+	}
 }
-function check_password($username,$password)
-{
 
+function register($username,$password,$name,$access)
+{
+	$pass=hash_password($password);
+	$arguments=[$username,$pass,$name,$access];
+	if(\data\utils\database\insert('INSERT into user(email,password,name,access) values(?,?,?,?)',$arguments,1)==1)
+		{
+			return 1;
+		}
+		else
+		{
+			return -1;
+		}
 }
+
+function check_password($email,$password)
+{
+	$arguments=[$email];
+	$result=\data\utils\database\find('SELECT password FROM user WHERE email=?',$arguments,1);
+	if(count($result)>0)
+	{
+		if(password_verify($password,$result[0]['password']))
+		{
+			return 1;
+		}
+		else
+		{
+			return -1;
+		}
+
+	}
+	else{
+		return -1;
+	}
+}
+
 function change_password($username,$password,$newpassword){
 
 }

@@ -65,7 +65,9 @@ body.fixed-nav {
 
 .z-1 {
   z-index: 1; }
-
+.nav-item .active{
+background-color: red;
+}
 .card-block-icon {
   font-size: 5rem;
   position: absolute;
@@ -158,15 +160,15 @@ body.fixed-nav {
       position: fixed;
       top: 90px;
       left: 0;
+      height:500px;
       overflow: auto;
       flex-direction: column;
-      height: 100vh;
       margin-top: 56px;
       padding-bottom: 56px;
       border:solid;
       border-width: 1px;
-      border-color: orange;
-      background:white;
+      border-color: white;
+      background:#AF7A4A;
       -webkit-flex-direction: column;
       -ms-flex-direction: column; }
       #mainNav .navbar-collapse .navbar-nav.sidebar-nav > .nav-item {
@@ -192,7 +194,7 @@ body.fixed-nav {
         #mainNav .navbar-collapse .navbar-nav.sidebar-nav > .nav-item .sidebar-third-level > li > a {
           padding-left: 3em; }
       #mainNav .navbar-collapse .navbar-nav.sidebar-nav li.active a {
-        color: white;
+        color: black;
         background-color: #FF931E; }
         #mainNav .navbar-collapse .navbar-nav.sidebar-nav li.active a:hover, #mainNav .navbar-collapse .navbar-nav.sidebar-nav li.active a:focus {
           color: white; }

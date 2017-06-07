@@ -1,15 +1,86 @@
-
-function checkstatus()
+var subjectdata=[["CC231","CS","2015","Y","N","Y"],["CC231","CS","2015","Y","N","Y"]];
+var marks=[["231","Tarun","11"],[234,"tarri",21]];
+function fetch_subjectdata()
 {
-	var marks=[["CC231","CS","2015",'Y','N','Y'],["CC231","CS","2015",'Y','N','Y']];
-	console.log(marks);
+	$.post("http://localhost/ERMS-Engine/erms/index.php",
+		{
+			type:"marks",
+			request:"classes",
+			data:"{batch:'"+batch+"',course:'"+course+"'}"
+		}, function (data,status)
+		{
+			var res=json.parse(data);
+			if (res['type']=='success')
+			{
+				subjectdata=res['data'];
+				fill_subjects();
+			}
+		});
 }
-var submitFlag=0;
-
-function submit1()
+function sub_click(id)
 {
-	console.log(submitFlag);
-	var rollno=[11234,11237,11534];
+	var paper= str.substring(0, str.indexOf("_"));
+	var no=str.substring(str.indexOf("_")+1,str.length);
+	console.log(paper);
+	console.log(no);
+}
+function fetch_marks(batch,course,exam_type)
+{
+	$.post("http://localhost/ERMS-Engine/erms/index.php",
+		{
+			type:"marks",
+			request:"classes"
+			data:"{batch:'"+batch+"',course:'"+course+"'}"
+		}, function (data,status)
+		{
+			var res=json.parse(data);
+			if (res['type']=='success')
+			{
+				subjectdata=res['data'];
+				fill_subjects();
+			}
+		});
+
+}
+
+function fill_subjects()
+{
+	sub_click("abc_21");
+	$("#table2").DataTable();
+	fill_marks();
+	var entry;
+	for (var i=0; i<subjectdata.length; i++)
+	{
+		entry=`<tr id=subject_`+i+`>
+           <td id='subid_`+i+`'>`+subjectdata[i][0]+`</td>
+            <td id='course_`+i+`'>`+subjectdata[i][1]+`</td>
+                <td id='batch_`+i+`'>`+subjectdata[i][2]+`</td>
+                <td id=it_`+i+`'>`+subjectdata[i][3]+`</td>
+                <td id=ip_`+i+`'>`+subjectdata[i][4]+`</td>
+                <td id=ep_`+i+`'>`+subjectdata[i][5]+`</td>
+             </tr>`;
+        $(entry).appendTo("#subjects_admin");	
+	}
+}
+
+function fill_marks()
+{	
+	var entry;
+	for (var i=0; i<marks.length; i++)
+	{
+		entry=`<tr id=marks_`+i+`>
+           <td id='roll_`+i+`'>`+marks[i][0]+`</td>
+            <td id='name_`+i+`'>`+marks[i][1]+`</td>
+                <td id='e1_`+i+`' class='entry1'><input id='i1_`+i+`' value='`+marks[i][2]+`'type='text'></td>
+                <td id='e2_`+i+`' class='entry2'></td>
+             </tr>`;
+        $(entry).appendTo("#marks_table");
+	}
+}
+
+var submitFlag=0;
+function submit()
+{
 	if(submitFlag==0)
 	{
 		var scores1=[];
@@ -19,19 +90,18 @@ function submit1()
 		{
 			temp=$('#i1_'+rollno[i].toString()).val();
 			scores1.push(temp);
-			$("<input id='i2_"+rollno[i].toString()+"' type='text'>").appendTo('#e2_'+rollno[i].toString())
+			$("<input id='i2_"+rollno[i].toString()+"' type='text'>").appendTo('#e2_'+rollno[i].toString());
 		}
 		submitFlag=submitFlag+1;
 	}
-	console.log(submitFlag);
 	else if(submitFlag==1)
 	{
-		var scores1=[];
+		var scores2=[];
 		$(".entry1").css('opacity','100');
 		for (var i=0; i<rollno.length;i++)
 		{
 			scores1.push($('#i1_'+rollno[i].toString()).val());
-			$("<input id='i2_"+rollno[i].toString()+"' type='text'>").appendTo('#e2_'+rollno[i].toString())
+			$("<input id='i2_"+rollno[i].toString()+"' type='text'>").appendTo('#e2_'+rollno[i].toString());
 		}
 		submitFlag=submitFlag+1;
 	}

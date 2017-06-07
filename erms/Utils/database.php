@@ -67,7 +67,7 @@ function insert($query,$parameters,$table)
 
 function find($query,$parameters,$table)
 {
-	if($table=1)
+	if($table==1)
 	{
 		$conn=initConnection();	
 	}
@@ -75,7 +75,6 @@ function find($query,$parameters,$table)
 	{
 		$conn=initConnectionCurrent();		
 	}
-	
 	try{
 		$statement=$conn->prepare($query);
 		$variables=count($parameters);

@@ -17,12 +17,6 @@ function user()
 	{
 		switch($_POST['request'])
 		{
-			case 'check':  
-						if(util\user\checkToken($_COOKIE['user'])==1)
-						{
-							$result['type']='success';	
-							echo ($result);	
-						}
 			case 'login':
 			case 'register':
 			case 'cpass':
