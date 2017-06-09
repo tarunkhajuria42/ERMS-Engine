@@ -12,15 +12,29 @@ require('user.php');
 require('marks.php');
 require('access.php');
 require('Utils/session.php');
-require('Utils/access.php');
+require('Utils/reply.php');
 
 
 $res=util\user\checkSession();
 
-if($res <0)
+if($res<0)
 {
-	echo(utils\error(abs($res)));
-	
+	isset($_POST['type']=='user')
+	{
+		data\user();
+	}
+	else
+	{
+		if(res==-3)
+		{
+			echo(utils\reply('session','error','timeout'));
+		}
+		else
+		{
+			echo(utils\reply('session','error','invalid');
+		}
+		
+	}
 }
 else{
 	if(isset($_post['type']))
@@ -34,7 +48,7 @@ else{
 			case 'access':data\access();
 						break;
 			default:
-				echo(json_encode(utils\error(0)));	
+				echo(json_encode(utils\reply('request','error','badrequest')));	
 		}	
 	}
 }

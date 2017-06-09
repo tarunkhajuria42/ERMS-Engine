@@ -8,7 +8,7 @@ Author: Tarun Khajuria (tarunkhajuria42@gmail.com)
 Utils for Password Management
 */
 namespace data\utils\user;
-
+//Hash the password
 function hash_password($password)
 {
 	$options = [
@@ -25,6 +25,7 @@ function hash_password($password)
 	}
 }
 
+//Register 
 function register($username,$password,$name,$access)
 {
 	$pass=hash_password($password);
@@ -58,6 +59,18 @@ function check_password($email,$password)
 	else{
 		return -1;
 	}
+}
+function login($email,$password)
+{
+	if(check_password($email,$password)==1)
+	{
+		if(newSession($email)==1)
+			return 1;	
+		else
+			return -1;
+	}
+	else
+		return -1;
 }
 
 function change_password($username,$password,$newpassword){

@@ -13,7 +13,7 @@ require("database.php");
 
 //Generates Acess token for a session
 
-function newSession($uid)
+function newSession($email)
 {
 	define('valid_time',10);
 	
@@ -23,7 +23,7 @@ function newSession($uid)
 		$token= \bin2hex(\random_bytes(16));
 		$validTill=time()+(valid_time*60);
 		$valid=timeZone($validTill);
-		$arguments=[$uid,$token,$valid];
+		$arguments=[$email,$token,$valid];
 		$res=\data\utils\database\insert('INSERT into login(email,token,valid) VALUES(?,?,?)',$arguments,2);
 		if($res==1)
 		{

@@ -9,7 +9,7 @@ Author: Tarun Khajuria (tarunkhajuria42@gmail.com)
 Utils: User Access
 */	
 namespace data;
-require('Utils/error.php');
+require('Utils/reply.php');
 
 function user()
 {
@@ -17,10 +17,18 @@ function user()
 	{
 		switch($_POST['request'])
 		{
-			case 'login':
-			case 'register':
+			case 'login': $data=json_decode($_POST['data']);
+							if(\data\utils\user\login($data['email'],$data['password'])==1)
+								echo(utils\reply('user','success','login'));
+							else
+								echo(utisl\reply('user','error','badpassword'));
+
+			case 'register':$data=json_decode($_POST['data']);
+							if()
 			case 'cpass':
 			case 'forgetp':
+			case 'default':	echo(json_encode(utils\error(0)));	
+
 		}	
 	}
 	else

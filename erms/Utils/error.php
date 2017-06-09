@@ -6,13 +6,13 @@ tarunkhajuria42@gmail.com
 
 */
 namespace data\utils;
-function error($code)
+function reply($module,$reply)
 {
-	switch($code){
-		case 0:	$result['type']='error';
-				$result['code']='0';
-				$result['message']='bad request';
-				return $result;
+	$result['module']=$module;
+	$result['type']=$type;
+	$result['reply']=$reply;
+	return $result;
+		case 0:	
 		case 1:
 				$result['type']='error';
 				$result['code']='1';
