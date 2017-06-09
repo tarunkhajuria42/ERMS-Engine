@@ -1,58 +1,5 @@
 <?php
-/* Dashboard generator
-
-Examination Record Management System
-
-author:tarunkhajuria42@gmail.com
-
-*/
-namespace view;
-require('misc.php');	
-?>
-
-	<!DOCTYPE html>
-		<html lang="en">
-
-		<head>
-
-		    <meta charset="utf-8">
-		    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-		    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-		    <meta name="description" content="">
-		    <meta name="author" content="">
-		    <title>DashBoard</title>
-
-		    <!-- Bootstrap core CSS -->
-		    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-		    <!-- Custom fonts for this template -->
-		    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-		    <!-- Plugin CSS -->
-		    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-
-		    <!-- Custom styles for this template -->
-		    <link href="css/sb-admin.css" rel="stylesheet">
-            <link href="css/dashboard.css" rel="stylesheet">
-            <!-- Bootstrap core JavaScript -->
-            <script src="vendor/jquery/jquery.min.js"></script>
-            <script src="vendor/tether/tether.min.js"></script>
-            <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-
-            <!-- Plugin JavaScript -->
-            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-            <script src="vendor/chart.js/Chart.min.js"></script>
-            <script src="vendor/datatables/jquery.dataTables.js"></script>
-            <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-
-            <!-- Custom scripts for this template -->
-            <script src="js/sb-admin.min.js"></script>
-            <script src="javascript/tables.js"></script>
-		</head>
-
-<body id="page-top" onload="">
-
+$code=<<<html
     <!-- Navigation -->
     <div id='welcome'>
         <p class='welcome'>Welcome Tarun</p>
@@ -185,11 +132,138 @@ require('misc.php');
         </div>
     <!-- /.content-wrapper -->
     </div>
+
+<!--Tab 02 -->  
+    <div class="tab-pane content-wrapper py-3" id='tab-02'>
+        <div class="container-fluid" id='container'>
+
+            <!-- Breadcrumbs -->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>dat
+                <li class="breadcrumb-item active">My Dashboard</li>
+            </ol>      
+            <!-- Example Tables Card -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-table"></i> Checked Marks
+                </div>
+                <div class="card-block">
+                    Course:<select id='course' class='mb-3'>
+                        <option value='all'>All</option>
+                        <option value='CS'>Computer Science</option>
+                        <option value='ECE'>Electronics</option>
+                    </select>
+                    Batch:<select id='batch' class='mb-3'>
+                        <option value='all'>All</option>
+                        <option value='2015'>2015</option>
+                        <option value='2016'>2016</option>
+                    </select>
+                    <button onclick='subjects_select()' value='Show' class='mb-3'>Show</button>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" id="table2" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Subject Code</th>
+                                    <th>Course</th>
+                                    <th>Batch</th>
+                                    <th>Internal Practical</th>
+                                    <th>Internal Theory</th>
+                                    <th>External Practical</th>
+                                </tr>
+                            </thead>
+                            <tbody id='subjects_admin'>
+                                <tr>
+                                    <td >AA130</td>
+                                    <td>Architectural Assistantship</td>
+                                    <td>2018</td>
+                                    <td>N</td>
+                                    <td>N</td>
+                                    <td>N</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Subject Code</th>
+                                    <th>Course</th>
+                                    <th>Batch</th>
+                                    <th>Internal Practical</th>
+                                    <th>Internal Theory</th>
+                                    <th>External Practical</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                       
+                </div> 
+            </div>
+            <div class="card mb-3" id='editmarks'>
+                <div class="card-header">
+                    <i class="fa fa-table"></i> Enter Marks : Internal Practical
+                </div>
+                <div class="card-block">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" id="subject_table" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Roll No</th>
+                                    <th>Name</th>
+                                    <th>Entry 1</th>
+                                    <th>Entry 2</th>
+                                </tr>
+                            </thead>
+                            <tbody id='marks_table'>
+                                <tr>
+                                    <td >11534</td>
+                                    <td>Manas Mehta</td>
+                                    <td id='e1_11534' class='entry1'><input id='i1_11534' type='text' value='123'></td>
+                                    <td id='e2_11534' class='entry2'></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Roll No</th>
+                                    <th>Name</th>
+                                    <th>Entry 1</th>
+                                    <th>Entry 2</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                        <button id='submitButton' name='Submit' class='pull-right mr-2' onclick='submit()'>Submit</button>
+                </div>
+                <div class="card-footer small text-muted">
+                    CopyRight Board of Technical Education
+                </div>
+            </div>
+
+           
+    </div>
+    </div>
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fa fa-chevron-up"></i>
     </a>
 
-    >
-</body>
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/tether/tether.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
-</html>
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/sb-admin.min.js"></script>
+    <script src="javascript/tables.js"></script>
+
+html;
+echo($code);
+?>

@@ -24,7 +24,7 @@ function newSession($uid)
 		$validTill=time()+(valid_time*60);
 		$valid=timeZone($validTill);
 		$arguments=[$uid,$token,$valid];
-		$res=\data\utils\database\insert('INSERT into login(userid,token,valid) VALUES(?,?,?)',$arguments,2);
+		$res=\data\utils\database\insert('INSERT into login(email,token,valid) VALUES(?,?,?)',$arguments,2);
 		if($res==1)
 		{
 			setcookie('token',$token,$validTill);
@@ -45,6 +45,7 @@ function destroySession()
 	if(isset($_COOKIE['token']))
 	{
 		$arguments=[$_COOKIE['token']];
+		setcookie('token');
 		if(\data\utils\database\delete('DELETE from login where token=?',$arguments)==-1)
 		{
 			return -1;
@@ -65,12 +66,14 @@ function checkSession()
 	{
 		echo $_COOKIE['token'];
 		$arguments=[$_COOKIE['token']];
-		$result=\data\utils\database\find('SELECT userid,valid FROM login WHERE token =?',$arguments,2);
+		$result=\data\utils\database\find('SELECT email,valid,access FROM login WHERE token =?',$arguments,2);
 		if(count($result)>0)
 		{
 			echo(\time());
 			echo($result[0]['valid']);
 			if (timeZone(\time())<$result[0]['valid'])
+				destroySession();
+				newSession($result[0]['email']);
 				return $result;
 			else
 				destroySession();

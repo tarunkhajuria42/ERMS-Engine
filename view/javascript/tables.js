@@ -38,12 +38,10 @@ function fetch_marks(subject,course,batch,exam_type)
 				fill_subjects();
 			}
 		});
-
 }
 
 function fill_subjects()
 {
-	sub_click("abc_21");
 	$("#table2").DataTable();
 	fill_marks();
 	var entry;
@@ -63,6 +61,7 @@ function fill_subjects()
 
 function fill_marks()
 {	
+	$("#marks_table").empty();
 	var entry;
 	for (var i=0; i<marks.length; i++)
 	{

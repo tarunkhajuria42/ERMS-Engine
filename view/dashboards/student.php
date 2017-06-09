@@ -1,59 +1,8 @@
 <?php
-/* Dashboard generator
-
-Examination Record Management System
-
-author:tarunkhajuria42@gmail.com
-
-*/
-namespace view;
-require('misc.php');	
-?>
-
-	<!DOCTYPE html>
-		<html lang="en">
-
-		<head>
-
-		    <meta charset="utf-8">
-		    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-		    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-		    <meta name="description" content="">
-		    <meta name="author" content="">
-		    <title>DashBoard</title>
-
-		    <!-- Bootstrap core CSS -->
-		    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-		    <!-- Custom fonts for this template -->
-		    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-		    <!-- Plugin CSS -->
-		    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-
-		    <!-- Custom styles for this template -->
-		    <link href="css/sb-admin.css" rel="stylesheet">
-            <link href="css/dashboard.css" rel="stylesheet">
-            <!-- Bootstrap core JavaScript -->
-            <script src="vendor/jquery/jquery.min.js"></script>
-            <script src="vendor/tether/tether.min.js"></script>
-            <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-
-            <!-- Plugin JavaScript -->
-            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-            <script src="vendor/chart.js/Chart.min.js"></script>
-            <script src="vendor/datatables/jquery.dataTables.js"></script>
-            <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-
-            <!-- Custom scripts for this template -->
-            <script src="js/sb-admin.min.js"></script>
-            <script src="javascript/tables.js"></script>
-		</head>
-
-<body id="page-top" onload="">
-
-    <!-- Navigation -->
+function student()
+{
+	return<<<HTML
+	<!-- Navigation -->
     <div id='welcome'>
         <p class='welcome'>Welcome Tarun</p>
     </div>
@@ -61,9 +10,40 @@ require('misc.php');
         <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <?php
-        echo(misc\header());
-        ?>
+        
+	<div id='header'>
+		<img id='header_logo' src='images\logoWhite.png'>
+		<h1 id='header_title'>Board of Technical Education</h1>
+		<h2 id='header_subtitle'>Government of N.C.T. of Delhi</h2>
+		<style>
+			#header{
+				width:100%;
+				height:130px;
+				background-color: #FF931E;
+				}
+			#header_logo{
+				position:absolute;
+				height:100px;
+				top:20px;
+				right:40px;
+			}
+			#header_title{	
+				position:absolute;
+				color:white;
+				font-size:18px;
+				top:45px;
+				right:150px;
+			}
+			#header_subtitle{
+				position:absolute;
+				color:white;
+				font-size:16px;
+				top:65px;
+				right:160px;
+
+			}
+		</style>
+	</div>  
         <div class="collapse navbar-collapse" id="navbarmain">  
             <ul class="sidebar-nav navbar-nav nav-tabs" id='navlist'>
          			<li class="nav-item active">
@@ -188,8 +168,6 @@ require('misc.php');
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fa fa-chevron-up"></i>
     </a>
-
-    >
-</body>
-
-</html>
+HTML;	
+}
+?>

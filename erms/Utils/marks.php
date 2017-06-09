@@ -22,3 +22,7 @@ function view()
 {
 	
 }
+function find_subjects($batch,)
+{
+	\data\utils\database\find('SELECT * from marks where batch=? & year=? & subid=?');
+}
