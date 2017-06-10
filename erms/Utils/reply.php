@@ -11,7 +11,7 @@ function reply($module,$reply)
 	$result['module']=$module;
 	$result['type']=$type;
 	$result['reply']=$reply;
-	return $result;
+	return json_encode($result);
 		
 }
 

@@ -26,10 +26,10 @@ function hash_password($password)
 }
 
 //Register 
-function register($username,$password,$name,$access)
+function register($email,$password,$name,$access)
 {
 	$pass=hash_password($password);
-	$arguments=[$username,$pass,$name,$access];
+	$arguments=[$email,$pass,$name,$access];
 	if(\data\utils\database\insert('INSERT into user(email,password,name,access) values(?,?,?,?)',$arguments,1)==1)
 		{
 			return 1;
