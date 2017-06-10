@@ -6,7 +6,7 @@ tarunkhajuria42@gmail.com
 
 */
 namespace data\utils;
-function reply($module,$reply)
+function reply($module,$type,$reply)
 {
 	$result['module']=$module;
 	$result['type']=$type;

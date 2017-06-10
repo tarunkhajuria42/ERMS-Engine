@@ -14,30 +14,31 @@ require('access.php');
 require('Utils/session.php');
 require('Utils/reply.php');
 
-
-$res=util\user\checkSession();
+echo(json_encode($_POST));
+$res=utils\user\checkSession();
 
 if($res<0)
 {
-	isset($_POST['type']=='user')
+	if(isset($_POST['type']))
 	{
-		data\user();
+		if($_POST['type']=='user')
+			data\user();
 	}
 	else
 	{
-		if(res==-3)
+		if($res==-3)
 		{
 			echo(utils\reply('session','error','timeout'));
 		}
 		else
 		{
-			echo(utils\reply('session','error','invalid');
+			echo(utils\reply('session','error','invalid'));
 		}
 		
 	}
 }
 else{
-	if(isset($_post['type']))
+	if(isset($_POST['type']))
 	{
 		switch($_POST['type'])
 		{

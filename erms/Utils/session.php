@@ -72,12 +72,16 @@ function checkSession()
 			echo(\time());
 			echo($result[0]['valid']);
 			if (timeZone(\time())<$result[0]['valid'])
+			{
 				destroySession();
 				newSession($result[0]['email']);
 				return $result;
+			}
 			else
+			{
 				destroySession();
 				return -3;
+			}
 		}
 		else
 		{

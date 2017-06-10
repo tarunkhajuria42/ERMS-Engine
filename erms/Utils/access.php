@@ -73,12 +73,34 @@ function login($email,$password)
 		return -1;
 }
 
-function change_password($username,$password,$newpassword){
+function change_password($email,$password){
+	$pass=hash_password($password);
+	$arguments=[$pass,$email];
+	if(\data\utils\database\update('UPDATE user SET password=? where email=?',$arguments,1)==1)
+		return 1;
+	else
+		return -1;
 
 }
-function checkEmail($email)
+
+function email_verify($email)
 {
-	
+	$token=\bin2hex(\random_bytes(16));
+	$arguments=[$token,$email];
+	if(\data\utils\database\insert('UPDATE premail SET token=? where email=?'),$arguments,2)==1;
+	{
+		if(\data\utils\email\sendmail($email,$token)==1)
+			return 1;
+		else 
+			return -1;
+	}
+	else
+	{
+		return -1;
+	}
 }
+function passwordEmail($email)
+{
 
+}
 ?>

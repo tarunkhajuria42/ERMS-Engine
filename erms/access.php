@@ -9,11 +9,8 @@ function access()
 	{
 		switch($_POST['request'])
 		{
-			case ''
 		}
 	}
-
-	
 	
 }
 ?>

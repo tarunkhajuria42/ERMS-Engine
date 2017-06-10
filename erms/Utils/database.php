@@ -64,7 +64,30 @@ function insert($query,$parameters,$table)
 		return ($e->getCode());	
 	}
 }
-
+function update($query,$parameters,$table)
+{
+	if($table==1)
+	{
+		$conn=initConnection();	
+	}else{
+		$conn=initConnectionCurrent();
+	}
+	
+	try{
+		$statement=$conn->prepare($query);
+		$variables=count($parameters);
+		for ($i=0;$i<$variables;$i++)
+		{
+			$statement->bindParam($i+1,$parameters[$i]);
+		}
+			
+		$statement->execute();
+		return 1;
+	}catch(\Exception $e)
+	{
+		return ($e->getCode());	
+	}
+}
 function find($query,$parameters,$table)
 {
 	if($table==1)
