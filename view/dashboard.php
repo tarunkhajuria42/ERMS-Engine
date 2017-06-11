@@ -48,10 +48,10 @@ require('misc.php');
 
             <!-- Custom scripts for this template -->
             <script src="js/sb-admin.min.js"></script>
-            <script src="javascript/tables.js"></script>
+            <script src="javascript/test.js"></script>
 		</head>
 
-<body id="page-top" onload="dashboardGenerator()">
+<body id="page-top" onload="fakepost()">
 
     
 </body>

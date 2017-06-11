@@ -16,7 +16,7 @@ function user()
 	{
 		if(isset($_POST['data']))
 		{
-			$data=json_decode($_POST['data']);
+			$data=json_decode($_POST['data'],true);
 		}
 		switch($_POST['request'])
 		{

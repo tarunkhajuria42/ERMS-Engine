@@ -87,7 +87,7 @@ function email_verify($email)
 {
 	$token=\bin2hex(\random_bytes(16));
 	$arguments=[$token,$email];
-	if(\data\utils\database\insert('UPDATE premail SET token=? where email=?'),$arguments,2)==1;
+	if(\data\utils\database\insert('UPDATE premail SET token=? where email=?',$arguments,2)==1)
 	{
 		if(\data\utils\email\sendmail($email,$token)==1)
 			return 1;

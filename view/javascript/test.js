@@ -1,12 +1,19 @@
-function abc()
+function fakepost()
 {
-	$.post("http://localhost/ERMS-Engine/view/yah.php",
+	var abs={};
+	var data={};
+	data['email']='tarun@imfundo.io';
+	data['password']='hahaha';
+
+	$.post("http://localhost/ERMS-Engine/erms/index.php",
 	{
-		abc:'as'
+		type:'user',
+		request:'login',
+		data:JSON.stringify(data)
 	},
 	function(data,status)
 	{
-		$(data).appendTo("body");
+		console.log(data);
 	});
 	
 }

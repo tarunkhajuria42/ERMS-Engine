@@ -17,6 +17,20 @@ function revokerights()
 {
 	
 }
+function checksubjects()
+{
+	$arguments=[$email,$year];
+	$res=\utils\database\find('SELECT course from suballoc where email=? and year=?',$arguments,2);
+	if(count($res)>0)
+	{
+		return $res;
+	}
+	else
+	{
+		return -1;
+	}
+
+}
 function checkEmail($email)
 {
 	$arguments=[$email];

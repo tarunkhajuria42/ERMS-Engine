@@ -9,7 +9,6 @@ Author: Tarun Khajuria (tarunkhajuria42@gmail.com)
 Session maintainace functions
 */
 namespace data\utils\user;
-require("database.php");
 
 //Generates Acess token for a session
 

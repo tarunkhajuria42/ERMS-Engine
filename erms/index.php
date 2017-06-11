@@ -12,17 +12,20 @@ require('user.php');
 require('marks.php');
 require('access.php');
 require('Utils/session.php');
+require('Utils/marks.php');
 require('Utils/reply.php');
+require('Utils/access.php');
+require('Utils/database.php');
 
-echo(json_encode($_POST));
-$res=utils\user\checkSession();
 
+echo(utils\marks\new_session('tarun'));
+die();
 if($res<0)
 {
 	if(isset($_POST['type']))
 	{
 		if($_POST['type']=='user')
-			data\user();
+			user();
 	}
 	else
 	{
@@ -42,11 +45,13 @@ else{
 	{
 		switch($_POST['type'])
 		{
-			case 'user': data\user();
+			case 'user': user();
 						break;
-			case 'marks':data\marks();
+			case 'marks':marks();
 						break;
-			case 'access':data\access();
+			case 'access':access();
+						break;
+			case 'session':session();
 						break;
 			default:
 				echo(json_encode(utils\reply('request','error','badrequest')));	
