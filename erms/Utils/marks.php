@@ -22,12 +22,12 @@ function find_subjects($course,$institute)
 	if($course='all' && $institute=='all')
 	{
 		$subjects=\data\utils\data\find('SELECT * from subject',[],1);
-		$institutes=
+		$institutes=\data\utils\data\find('SELECT DISTINCT institute from institute',[],1);
 	}
 	else if($course=='all')
 	{
 		$arguments=[$course];
-		$res=\data\utils\data\find('SELECT * from subject where course in (SELECT course from courses where institute=?');
+		$subject=\data\utils\data\find('SELECT * from subject where course in (SELECT course from courses where institute=?');
 	}
 	else if($institute='all')
 	{
@@ -35,9 +35,13 @@ function find_subjects($course,$institute)
 		$subjects=\data\utils\data\find('SELECT * from subject where course =?',$arguments,1);
 		$institutes=\data\utils\data\find('SELECT * from courses where course =?',$arguments,1);
 	}
-	$arguments=[$course];
-	$res=\data\utils\data\find('SELECT * from subject where course in (SELECT course from courses where institute=?');
-	\data\utils\database\find('SELECT * from marks where batch=? & year=? & subid=?');
+	for($i=0;$i<count($subjects);$i++)
+	{
+		for($j=0;$j<count($institutes);$j++)
+		{
+
+		}	
+	}
 }
 function check_entry($subject,$institute,$paper)
 {
