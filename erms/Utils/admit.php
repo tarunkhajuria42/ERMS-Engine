@@ -91,11 +91,23 @@ function choice_papers($rollno)
 	else
 		return -1;
 }
-function add_record($photo,$signature,$year,$semester,$rollno,$regular,$choice,$back)
+function add_record($photo,$signature,$rollno,$regular,$choice,$back)
 {
 	$centre=allocate_center($rollno);
 	$id=\data\utils\database\find('SELECT MAX(id) from admit');
 	$id=$id[0]['MAX(id)']+1;
+	$res=\data\utils\marks\check_session();
+	if($res==-1)
+	{
+		return -1;
+	}
+	$year=$res[0]['year'];
+	$batch=\data\utils\student\get_batch($rollno);
+	if($res[0]['sessionid']>4)
+		$addsem=2;
+	else
+		$addsem=1;
+	$semester=$year-$batch+$addsem;
 	//Insert into admit
 	$arguments=[$id,$centre,$photo,$signature,$year,$semester,$rollno];
 	//Insert into asubjects

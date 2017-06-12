@@ -5,17 +5,61 @@ Examination Management System 0.1
 Utility functions
 */
 namespace data\utils\marks;
-function addMarks($marks,$type,)
+function addMarks($marks,$type,$rollno,$subject)
 {
-	$arguments=
+	$res=\data\utils\marks\check_session();
+	if($res==-1)
+	{
+		return -1;
+	}
+	$year=$res[0]['year'];
+	$arguments=[$marks,$type,$rollno,$subject,$year];
+	return(\data\utils\database\insert('INSERT into marks(marks,type,rollno,subject,year) VALUES(?,?,?,?,?)',$arguments,1));
 }
-function editMarks()
+function editMarks($rollno,$type,$subject,$marks)
 {
+	$res=\data\utils\marks\check_session();
+	if($res==-1)
+	{
+		return -1;
+	}
+	$year=$res[0]['year'];
+	$arguments=[$type,$subject,$year,$rollno,$marks];
+	return(\data\utils\database\update('UPDATE marks SET marks=? WHERE $type=? and $rollno=? and $subject=? and $year=?',$arguments,1));
 	
 }
-function getMarks()
+function getMarks($rollno,$subject,$type)
 {
-	
+	$res=\data\utils\marks\check_session();
+	if($res==-1)
+	{
+		return -1;
+	}
+	$year=$res[0]['year'];
+	$arguments=[$rollno,$subject,$year,$type];
+	$res=\data\utils\database\find('SELECT marks from marks where rollno=? and subject=? and year=? and type=?',$arguments,1);
+	if(count($res)>0)
+	{
+		return $res;
+	}
+	else
+		return -1;
+}
+function getMarks_institute($institute,$subject,$type){
+	$res=\data\utils\marks\check_session();
+	if($res==-1)
+	{
+		return -1;
+	}
+	$year=$res[0]['year'];
+	$arguments=[$subject,$year,$type,$institute];
+	$res=\data\utils\database\find('SELECT rollno,marks from marks where subject=? and year=? and type=? and rollno in(SELECT rollno from student where institute=?)',$arguments,1);
+	if(count($res)>0)
+	{
+		return $res;
+	}
+	else
+		return -1;
 }
 function find_subjects($course,$institute)
 {

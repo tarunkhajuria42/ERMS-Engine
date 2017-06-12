@@ -1,8 +1,4 @@
 <?php
-function get_course()
-{
-	
-}
 function add_subject($subject)
 {
 	if(\data\utils\database\insert('INSERT into subject(subject,course,semester,
@@ -23,9 +19,9 @@ function add_institute($institute,$course)
 		$arguments=[$institute,$course[$i]];
 		if(\data\utils\database\insert('INSERT into institute(institute,course) values(?,?)',$arguments,1)==1)
 		{
-
+			
 		}
-		else 
+		else 	
 			return -1;		
 	}
 	return 1;
