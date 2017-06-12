@@ -1,4 +1,14 @@
 <?php
+namespace data\utils\course;
+function all_institutes()
+{
+	$arguments=[];
+	$res=\data\utils\database\find('SELECT DISTINCT institute from courses',$arguments,1);
+	if($res!=-1 )
+		return $res;
+	else
+		return -1;
+}
 function add_subject($subject)
 {
 	if(\data\utils\database\insert('INSERT into subject(subject,course,semester,

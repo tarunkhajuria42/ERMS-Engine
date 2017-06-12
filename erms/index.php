@@ -11,12 +11,14 @@ namespace data;
 require('user.php');
 require('marks.php');
 require('access.php');
+require('lists.php');
 require('Utils/session.php');
 require('Utils/marks.php');
 require('Utils/reply.php');
 require('Utils/access.php');
 require('Utils/database.php');
 require('Utils/rights.php');
+require('Utils/course.php');
 
 //utils\user\newSession('tarun@imfundo.io');
 //die();

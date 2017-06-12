@@ -90,7 +90,7 @@ return <<<HTML
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Institute</th>
+                                        <th>Institutes</th>
                                         <th></th>
                                     </tr>
                                 </tfoot>
@@ -109,14 +109,13 @@ return <<<HTML
                          <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Modal Header</h4>
+                                    <h4 class="modal-title">Courses</h4>
                             </div>
                             <div class="modal-body">
                                 <div class="table-responsive">
                             <table class="table table-bordered" width="100%" id="institutes_courses" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Institute</th>
                                         <th>Courses</th>
                                     </tr>
                                 </thead>
@@ -124,12 +123,10 @@ return <<<HTML
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Institute</th>
                                         <th>Courses</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    
                                 </tbody>
                             </table>
                         </div>
