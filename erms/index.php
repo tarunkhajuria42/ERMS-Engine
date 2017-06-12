@@ -16,16 +16,27 @@ require('Utils/marks.php');
 require('Utils/reply.php');
 require('Utils/access.php');
 require('Utils/database.php');
+require('Utils/rights.php');
 
-
-echo(utils\marks\new_session('tarun'));
-die();
+//utils\user\newSession('tarun@imfundo.io');
+//die();
+$res=utils\user\checkSession();
 if($res<0)
 {
 	if(isset($_POST['type']))
 	{
 		if($_POST['type']=='user')
 			user();
+		else{
+			if($res==-3)
+			{
+				echo(utils\reply('session','error','timeout'));
+			}
+			else
+			{
+				echo(utils\reply('session','error','invalid'));
+			}
+		}
 	}
 	else
 	{
@@ -49,12 +60,18 @@ else{
 						break;
 			case 'marks':marks();
 						break;
-			case 'access':access();
+			case 'access':access($res[0]['email']);
 						break;
 			case 'session':session();
 						break;
+			case 'lists':lists();
+						break;
 			default:
-				echo(json_encode(utils\reply('request','error','badrequest')));	
+				echo(utils\reply('type','error','badrequest'));	
 		}	
+	}
+	else
+	{
+		echo(utils\reply('type','error','norequest'));
 	}
 }

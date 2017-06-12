@@ -34,7 +34,7 @@ require('misc.php');
 
 		    <!-- Custom styles for this template -->
 		    <link href="css/sb-admin.css" rel="stylesheet">
-            <link href="css/dashboard.css" rel="stylesheet">
+            
             <!-- Bootstrap core JavaScript -->
             <script src="vendor/jquery/jquery.min.js"></script>
             <script src="vendor/tether/tether.min.js"></script>
@@ -48,10 +48,11 @@ require('misc.php');
 
             <!-- Custom scripts for this template -->
             <script src="js/sb-admin.min.js"></script>
-            <script src="javascript/test.js"></script>
+            <script src="javascript/dashboard.js"></script>
+            <link href="css/dashboard.css" rel="stylesheet">
 		</head>
 
-<body id="page-top" onload="fakepost()">
+<body id="page-top" onload="generateDashboard()">
 
     
 </body>

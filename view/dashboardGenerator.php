@@ -8,16 +8,16 @@
 5: student
 */
 namespace view;
-require('dashboard/teacher.php');
-require('dashboard/principal.php');
-require('dashboard/teacher.php');
-require('dashboard/examAdmin.php');
-require('dashboard/examEntry.php');
-require('dashboard/student.php');
+require('dashboards/admin.php');
+require('dashboards/teacher.php');
+require('dashboards/principal.php');
+require('dashboards/examAdmin.php');
+require('dashboards/examEntry.php');
+require('dashboards/student.php');
 
 if($_POST['access']==0)
 {
-	echo(\view\teacher());
+	echo(\view\admin());
 }
 else if($_POST['access']==1)
 {

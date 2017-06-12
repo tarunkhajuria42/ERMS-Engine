@@ -1,8 +1,9 @@
 <?php
+namespace view;
 function student()
 {
-	return<<<HTML
-	<!-- Navigation -->
+return <<<HTML
+<!-- Navigation -->
     <div id='welcome'>
         <p class='welcome'>Welcome Tarun</p>
     </div>
@@ -168,6 +169,7 @@ function student()
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fa fa-chevron-up"></i>
     </a>
-HTML;	
-}
+
+HTML;
+}	
 ?>

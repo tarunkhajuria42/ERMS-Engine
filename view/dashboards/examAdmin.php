@@ -1,7 +1,8 @@
 <?php
+namespace view;
 function examAdmin()
 {
-	return<<<HTML 
+return <<<HTML
 <!-- Navigation -->
     <div id='welcome'>
         <p class='welcome'>Welcome Tarun</p>
@@ -169,5 +170,6 @@ function examAdmin()
         <i class="fa fa-chevron-up"></i>
     </a>
 
-}
+HTML;
+}	
 ?>

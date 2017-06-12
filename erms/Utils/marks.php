@@ -142,7 +142,6 @@ function check_entry($subject,$institute,$paper)
 		}	
 		else
 			 return -1;	
-		}
 	}
 }
 function find_batch($course)

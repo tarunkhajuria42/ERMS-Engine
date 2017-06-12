@@ -14,8 +14,7 @@ namespace data\utils\user;
 
 function newSession($email)
 {
-	define('valid_time',10);
-	
+	define('valid_time',60);
 	$i=0;
 	do
 	{
@@ -63,14 +62,11 @@ function checkSession()
 {
 	if(isset($_COOKIE['token']))	
 	{
-		echo $_COOKIE['token'];
 		$arguments=[$_COOKIE['token']];
-		$result=\data\utils\database\find('SELECT email,valid,access FROM login WHERE token =?',$arguments,2);
-		if(count($result)>0)
+		$result=\data\utils\database\find('SELECT email,valid FROM login WHERE token =?',$arguments,2);
+		if(count($result)>0 and $result!==-1)
 		{
-			echo(\time());
-			echo($result[0]['valid']);
-			if (timeZone(\time())<$result[0]['valid'])
+			if(timeZone(\time())<$result[0]['valid'])
 			{
 				destroySession();
 				newSession($result[0]['email']);

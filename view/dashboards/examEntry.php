@@ -1,10 +1,11 @@
 <?php
+namespace view;
 function examEntry()
 {
-	echo<<<HTML
-	<!-- Navigation -->
+return <<<HTML
+<!-- Navigation -->
     <div id='welcome'>
-        <p id='uname' class='welcome'>Welcome Tarun</p>
+        <p class='welcome'>Welcome Tarun</p>
     </div>
     <nav id="mainNav" class="navbar static-top navbar-toggleable-md navbar-inverse">
         <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">
@@ -168,6 +169,7 @@ function examEntry()
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fa fa-chevron-up"></i>
     </a>
-HTML;	
-}
+
+HTML;
+}	
 ?>

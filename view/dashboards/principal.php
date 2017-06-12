@@ -1,7 +1,9 @@
 <?php
+namespace view;
+
 function principal()
 {
-	return<<<HTML
+return <<<HTML
 <!-- Navigation -->
     <div id='welcome'>
         <p class='welcome'>Welcome Tarun</p>
@@ -168,6 +170,8 @@ function principal()
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fa fa-chevron-up"></i>
     </a>
-HTML;	
-}
+
+HTML;
+}	
 ?>
+
