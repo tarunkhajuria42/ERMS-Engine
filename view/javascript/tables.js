@@ -1,5 +1,6 @@
 var subjectdata=[["CC231","CS","2015","Y","N","Y"],["CC231","CS","2015","Y","N","Y"]];
 var marks=[["231","Tarun","11"],[234,"tarri",21]];
+var marksindex=[];
 function fetch_subjectdata()
 {
 	$.post("http://localhost/ERMS-Engine/erms/index.php",

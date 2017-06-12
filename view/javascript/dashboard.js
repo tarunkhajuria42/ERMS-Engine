@@ -4,40 +4,27 @@ function generateDashboard()
 	//get user module lists
 	$.post("http://localhost/ERMS-Engine/erms/test.php",
 	{
-		type='access',
-		request='module'
+		type='user',
+		request='access'
 	},userset);
 }
-function userset(data,status)
+function setview(data,status)
 {
-	var resobj=JSON.parse(data);
-		if(resobj['type']=='success')
-		{
-			$.POST('http://localhost/ERMS-Engine/view/dashboardTest.php',{code=resobj['code']},viewCallback);
-		}
-		else if(resobj['type']=='error'])
-		{
-			window.location='http://localhost/ERMS-Engine/view/error.php';
-		}
-	}
-}
-
-function viewCallback(data,status)
-{
-
-var moduleList=resdata['list'];
-			
-	for (var i=0; i<modulelist.length; i++)
+	var datah=JSON.parse(data);
+	if(datah['type']==success)
 	{
-		if(i==0)
+
+		$.post('http://localhost/ERMS-Engine/view/dashboardGenerator.php',
 		{
-			$("<li class='nav-item><p class='nav-link' onClick='changeTab(this)'"+"active"+">abc</p></li>").appendTo("#navlist");
-			$(modulecode[i]).appendTo("#")
-		}
-		else
+				access:datah['message'];
+		},function setdashboard(data,status)
 		{
-			$("<li class='nav-item><p class='nav-link' onClick='changeTab(this)'>abc</p></li>").appendTo("#navlist");
-		}
-		
+				$(data).appendTo("#page-top");
+		}	
+	}
+	else if(resobj['type']=='error'])
+	{
+		window.location='http://localhost/ERMS-Engine/view/error.php';
+	}
 	}
 }

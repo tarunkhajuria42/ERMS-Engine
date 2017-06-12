@@ -35,29 +35,71 @@ function find_subjects($course,$institute)
 		$subjects=\data\utils\data\find('SELECT * from subject where course =?',$arguments,1);
 		$institutes=\data\utils\data\find('SELECT * from courses where course =?',$arguments,1);
 	}
+	$lists=[];
 	for($i=0;$i<count($subjects);$i++)
 	{
 		for($j=0;$j<count($institutes);$j++)
 		{
-
+			if($subject['mpractical']!==0)
+			{
+				$mpractical=-1;
+			}
+			else
+			{
+				$mpractical=2;
+			}
+			if($subject['mipractical']!==0)
+			{
+				$mipractical=-1;
+			}
+			{
+				$mipractical=1;
+			}
+			if($subject['mitheory']!==0)
+			{
+				$mitheory=-1;
+			}
+			else
+			{
+				$mitheory=0;
+			}
+			if($subject['mtheory']!==0)
+			{
+				$mtheory=-1;
+			}
+			array_push($lists,
+				[$subject[$i]['subject'],
+				$institute[$i]['institute'],
+				check_entry($subject[$i]['subject'],$institute[$i]['institute'],$mitheory),
+				check_entry($subject[$i]['subject'],$institute[$i]['institute'],$mipractical),
+				check_entry($subject[$i]['subject'],$institute[$i]['institute'],$mpractical),
+				check_entry($subject[$i]['subject'],$institute[$i]['institute'],$mtheory)
+				]);
 		}	
 	}
+	echo($lists);
 }
 function check_entry($subject,$institute,$paper)
 {
-	$arguments=[$ubject,$institute];	
-	$res=\data\utils\data\find('SELECT COUNT(*) from asubjects where subject=? and year=? and id in(select id from admin where institute=?',$arguments,1);
-	if(count($res)>0)
-	{
-		$arguments2=[];
-		$res2=\data\utils\data\find('SELECT count(*) from marks where subject=? and year=? and $paper=?',$arguments,1);
-		if($res1[0][0]==$res[0][0])
-			return 1;
-		else
-			return 0;
-	}	
+	if($paper==-1)
+		return -1;
 	else
-		 return -1;
+	{
+		$arguments=[$ubject,$institute];	
+		$res=\data\utils\data\find('SELECT COUNT(*) from asubjects where subject=? and year=? and id in(select id from admin where institute=?',$arguments,1);
+		if(count($res)>0)
+		{
+			$arguments2=[];
+			$res2=\data\utils\data\find('SELECT COUNT(*) from marks where subject=? and year=? and $paper=?',$arguments,1);
+			if($res1[0]['COUNT(*)']==$res[0]['COUNT(*)'])
+				return 1;
+			else
+				return 0;
+		}	
+		else
+			 return -1;	
+		}
+	}
 }
 function find_batch($course)
 {
