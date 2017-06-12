@@ -48,4 +48,13 @@ function get_institute($rollno)
 	else 
 		echo -1;
 }
+function get_batch($rollno)
+{
+	$arguments=[$rollno];
+	$res=\data\utils\database\find('SELECT batch from student where rollno=?',$arguments,1);
+	if(count($res)>0)
+		echo $res[0]['batch'];
+	else 
+		echo -1;
+}
 ?>

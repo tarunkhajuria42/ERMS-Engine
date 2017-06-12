@@ -115,7 +115,10 @@ function check_session()
 {
 	$arguments=[0];
 	$res=\data\utils\database\find('SELECT year,sessionid from session where completed=?',$arguments,1);
+	if(count($res)>0)
 		return $res;
+	else
+		return -1;
 }
 function new_session($email)
 {
