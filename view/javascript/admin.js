@@ -4,6 +4,7 @@ function init()
 	
 	$("#institutes_courses").DataTable();
 	findInstitutes();
+	$("#courses_table").DataTable();
 }
 
 // ***********************Manage Institutes*****************************

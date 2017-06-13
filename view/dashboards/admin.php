@@ -5,6 +5,7 @@ function admin()
 return <<<HTML
 <!-- Navigation -->
     <script src="javascript/admin.js"></script>
+    <script src="javascript/tables.js"></script>
     <link href="css/admin.css" rel="stylesheet">
     <div id='welcome' onload='init()'>
         <p class='welcome'>Welcome Tarun</p>
@@ -56,13 +57,13 @@ return <<<HTML
                         <a class="nav-link" href="#tab-02" aria-controls="tab-02" role="tab" data-toggle="tab">Manage Courses</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#tab-02" aria-controls="tab-02" role="tab" data-toggle="tab">Manage Exams</a>
+                        <a class="nav-link" href="#tab-03" aria-controls="tab-02" role="tab" data-toggle="tab">Manage Exams</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#tab-02" aria-controls="tab-02" role="tab" data-toggle="tab">Manage Session</a>
+                        <a class="nav-link" href="#tab-04" aria-controls="tab-02" role="tab" data-toggle="tab">Manage Session</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#tab-02" onclick='logout()' aria-controls="tab-02" role="tab" data-toggle="tab">Log Out</a>
+                        <a class="nav-link" href="#tab-05" onclick='logout()' aria-controls="tab-02" role="tab" data-toggle="tab">Log Out</a>
                     </li>
             </ul>
         </div>
@@ -173,18 +174,102 @@ return <<<HTML
                 </div>
             </div>
         <!--tab ends-->
-        <div class="tab-pane content-wrapper py-3 " id='tab-02'>
-            <div id='two'>
-                <p id='new'>Not Active</p>
-            </div>
+        <div class="tab-pane content-wrapper py-3" id='tab-02'>
+            <div class="container-fluid" id='container'>
 
-        </div>
+                <!-- Example Tables Card -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-table"></i> Courses
+                    </div>
+                    <div class="card-block">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" id="courses_table" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Courses</th>
+                                        <th>Subjects</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='institutes_entry'>
+                                <tr>
+                                    <td>Computer Science</td>
+                                    <td><button class='btn btn-info pull-right'>Add/Edit</button></td>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Courses</th>
+                                        <th>Subjects</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div><button class='btn btn-info pull-right' onclick='newcourse()'>New Course</button></div>
+                </div>   
+            </div>
         <!--tab ends-->
         <div class="tab-pane content-wrapper py-3 " id='tab-03'>
-            <div id='two'>
-                <p id='new'>Not Active</p>
-            </div>
+            <div class="container-fluid" id='container'>
 
+                <!-- Breadcrumbs -->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                    <li class="breadcrumb-item active">My Dashboard</li>
+                </ol>      
+                <!-- Example Tables Card -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-table"></i> Checked Marks
+                    </div>
+                    <div class="card-block">
+                        Course:<select id='course' class='mb-3'>
+                            <option value='all'>All</option>
+                            <option value='CS'>Computer Science</option>
+                        </select>
+                        Institute:<select id='batch' class='mb-3'>
+                            <option value='all'>All</option>
+                            <option value='2015'>Aryabhatt Institute of Technology</option>
+                        </select>
+                        <button onclick='subjects_select()' value='Show' class='mb-3'>Show</button>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" id="exam1" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Subject Code</th>
+                                        <th>Course</th>
+                                        <th>Batch</th>
+                                        <th>Internal Practical</th>
+                                        <th>Internal Theory</th>
+                                        <th>External Practical</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='subjects_admin'>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Subject Code</th>
+                                        <th>Course</th>
+                                        <th>Batch</th>
+                                        <th>Internal Practical</th>
+                                        <th>Internal Theory</th>
+                                        <th>External Practical</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                           
+                    </div> 
+                </div>
+                </div>
         </div>
         <!--tab ends-->
         <div class="tab-pane content-wrapper py-3 " id='tab-04'>
