@@ -49,7 +49,7 @@ require('misc.php');
             <!-- Custom scripts for this template -->
             <script src="js/sb-admin.min.js"></script>
             <script src="javascript/dashboard.js"></script>
-    		
+    		<script src="javascript/logout.js"></script>
 
     		<link href="css/dashboard.css" rel="stylesheet">
             

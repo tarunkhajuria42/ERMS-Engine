@@ -14,7 +14,6 @@ function user()
 {
 	if(isset($_POST['request']))
 	{
-		var_dump($_POST['data']);
 		if(isset($_POST['data']))
 		{
 			$data=json_decode($_POST['data'],true);
@@ -27,7 +26,11 @@ function user()
 							else
 								echo(utils\reply('user','error','badpassword'));
 							break; 
-
+			case 'logout': if(utils\user\destroySession()==1)
+								echo(utils\reply('user','success','logout'));
+							else
+								echo(utils\reply('user','error','system'));
+							break;
 			case 'register':
 							$res=\utils\rights\check_token_verify($_GET['token']);
 							if(count($res)>0)

@@ -23,23 +23,21 @@ function goto($address)
 }
 function login()
 {
-	var email_input= $('#email_input').val();
-	var password_input= $('#password_input').val();
+	var email_input= $('#input_email').val();
+	var password_input= $('#input_password').val();
+	console.log(email_input);
 	var datav={};
 	datav['email']=email_input;
 	datav['password']=password_input;
-	var a={
-		type:'user',	
-		request:'login',
-		data:datav
-	}
+	console.log(datav);
+	var a={};
+	a['type']='user';
+	a['request']='login';
+	a['data']=JSON.stringify(datav);
+
 	console.log(a);
 	$.post("http://localhost/ERMS-Engine/erms/index.php",
-	{
-		type:'user',	
-		request:'login',
-		data:datav
-	},
+	a,
 	function login_result(data,status)
 	{
 		console.log(data);

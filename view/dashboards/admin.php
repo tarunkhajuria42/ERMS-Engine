@@ -62,7 +62,7 @@ return <<<HTML
                         <a class="nav-link" href="#tab-02" aria-controls="tab-02" role="tab" data-toggle="tab">Manage Session</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#tab-02" aria-controls="tab-02" role="tab" data-toggle="tab">Log Out</a>
+                        <a class="nav-link" href="#tab-02" onclick='logout()' aria-controls="tab-02" role="tab" data-toggle="tab">Log Out</a>
                     </li>
             </ul>
         </div>

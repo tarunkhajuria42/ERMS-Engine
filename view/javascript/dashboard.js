@@ -24,6 +24,6 @@ function setview(data,status)
 	}
 	else if(datah['type']=='error')
 	{
-		//window.location='http://localhost/ERMS-Engine/view/error.php';
+		window.location='http://localhost/ERMS-Engine/view/login.php';
 	}
 }
