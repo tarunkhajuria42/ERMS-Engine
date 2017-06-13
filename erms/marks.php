@@ -18,7 +18,9 @@ function marks(){
 		}
 		switch($_POST['request'])
 		{
-			
+			case 'get_marks':
+							break;
+			default:
 
 		}	
 	}

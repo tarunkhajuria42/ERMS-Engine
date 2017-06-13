@@ -20,6 +20,7 @@ require('Utils/database.php');
 require('Utils/rights.php');
 require('Utils/course.php');
 
+utils\user\register('deepankar@imfundo.io','deepankar','deepankar',5);
 //utils\user\newSession('tarun@imfundo.io');
 //die();
 $res=utils\user\checkSession();

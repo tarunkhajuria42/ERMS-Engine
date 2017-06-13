@@ -10,7 +10,6 @@ User management Pages
 */
 namespace view;
 require('misc.php');
-require('..\config.php');
 ?>
 <html>
 	<head >
@@ -27,9 +26,9 @@ require('..\config.php');
 	<div id='main'>
 		<form id='login_form' class='form'>
 			<h2 id='login_title' class='form_title'>Login</h2>
-			<div class='encap'><p id='Email' class='form_tag'>Email</p><input class='form_input' type='email' name='email' required></div>
-			<div class='encap'><p id='pword' class='form_tag'>Password</p><input class='form_input' type='password' name='password' required></div>
-			<div class='encap'><p id='sign_in' class='link'>Sign In</p></div>
+			<div class='encap'><p id='Email' class='form_tag'>Email</p><input id ='input_email' class='form_input' type='email' name='email' required></div>
+			<div class='encap'><p id='pword' class='form_tag'>Password</p><input id='input_password' class='form_input' type='password' name='password' required></div>
+			<div class='encap'><p id='sign_in' class='link' onclick='login()'>Sign In</p></div>
 			<div class='encap'><p id='fpass' class='link'>Forgot Password?</p><p class='link' id='register' onclick='goto("register")'>Register</p></div>
 		</form>
 	</div>

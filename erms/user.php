@@ -14,6 +14,7 @@ function user()
 {
 	if(isset($_POST['request']))
 	{
+		var_dump($_POST['data']);
 		if(isset($_POST['data']))
 		{
 			$data=json_decode($_POST['data'],true);

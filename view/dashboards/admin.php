@@ -4,8 +4,8 @@ function admin()
 {
 return <<<HTML
 <!-- Navigation -->
-    <link href="css/admin.css" rel="stylesheet">
     <script src="javascript/admin.js"></script>
+    <link href="css/admin.css" rel="stylesheet">
     <div id='welcome' onload='init()'>
         <p class='welcome'>Welcome Tarun</p>
     </div>
@@ -83,7 +83,7 @@ return <<<HTML
                                 <thead>
                                     <tr>
                                         <th>Institutes</th>
-                                        <th></th>
+                                        <th>Courses</th>
                                     </tr>
                                 </thead>
                                 <tbody id='institutes_entry'>
@@ -91,7 +91,7 @@ return <<<HTML
                                 <tfoot>
                                     <tr>
                                         <th>Institutes</th>
-                                        <th></th>
+                                        <th>Courses</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -100,10 +100,11 @@ return <<<HTML
                             </table>
                         </div>
                     </div>
-                     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+                </div>
+                <div><button class='btn btn-info pull-right' onclick='newinstitute()'>New Institute</button></div>
                 </div>
                 
-                </div>
                 <div class="modal fade" id="myModal" role="dialog">
                     <div class="modal-dialog modal-lg">
                          <div class="modal-content">
@@ -132,7 +133,40 @@ return <<<HTML
                         </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal" onclick='submit_courses1()'>Close</button>
+                            </div>
+                        </div>   
+                    </div>
+                </div>
+                <div class="modal fade" id="myModal2" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                         <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Courses</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" id="institutes_courses" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Courses</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='institutes_entry'>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Courses</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal" onclick='new_submit_courses1()'>Close</button>
                             </div>
                         </div>   
                     </div>
@@ -146,6 +180,28 @@ return <<<HTML
 
         </div>
         <!--tab ends-->
+        <div class="tab-pane content-wrapper py-3 " id='tab-03'>
+            <div id='two'>
+                <p id='new'>Not Active</p>
+            </div>
+
+        </div>
+        <!--tab ends-->
+        <div class="tab-pane content-wrapper py-3 " id='tab-04'>
+            <div id='two'>
+                <p id='new'>Not Active</p>
+            </div>
+
+        </div>
+        <!--tab ends-->
+        <div class="tab-pane content-wrapper py-3 " id='tab-05'>
+            <div id='two'>
+                <p id='new'>Not Active</p>
+            </div>
+
+        </div>
+        <!--tab ends-->
+        
         </div>
     </div>
     <a class="scroll-to-top rounded" href="#page-top">

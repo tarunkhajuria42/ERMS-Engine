@@ -10,7 +10,6 @@ function generateDashboard()
 }
 function setview(data,status)
 {
-	console.log(data);
 	var datah=JSON.parse(data);
 	if(datah['type']=='success')
 	{
