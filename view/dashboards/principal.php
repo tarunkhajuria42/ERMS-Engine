@@ -5,6 +5,8 @@ function principal()
 {
 return <<<HTML
 <!-- Navigation -->
+    <script src="javascript/principal.js"></script>
+    <script src="javascript/tables.js"></script>
     <div id='welcome'>
         <p class='welcome'>Welcome Tarun</p>
     </div>
@@ -52,26 +54,20 @@ return <<<HTML
                     	<a class="nav-link" href="#tab-01" aria-controls="tab-01" role="tab" data-toggle="tab">Marks</a>
                 	</li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#tab-02" aria-controls="tab-02" role="tab" data-toggle="tab">Session</a>
+                        <a class="nav-link" href="#tab-02" aria-controls="tab-02" role="tab" data-toggle="tab">Generate Id</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#tab-02" aria-controls="tab-04" role="tab" data-toggle="tab">Manage Courses</a>
+                        <a class="nav-link" href="#tab-03" aria-controls="tab-03" role="tab" data-toggle="tab">Rights Management</a>
                     </li>   	
                     <li class="nav-item">
-                        <a class="nav-link" href="#tab-02" aria-controls="tab-05" role="tab" data-toggle="tab">Logout</a>
+                        <a class="nav-link" onclick='logout()' href="#tab-04" aria-controls="tab-04" role="tab" data-toggle="tab">Logout</a>
                     </li>   
             </ul>
         </div>
     </nav>	
     <div class='tab-content'>
     <div class="tab-pane content-wrapper py-3 active" id='tab-01'>
-        <div class="container-fluid" id='container'>
-
-            <!-- Breadcrumbs -->
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item active">My Dashboard</li>
-            </ol>      
+        <div class="container-fluid" id='container'>    
             <!-- Example Tables Card -->
             <div class="card mb-3">
                 <div class="card-header">
@@ -81,33 +77,32 @@ return <<<HTML
                     Course:<select id='course' class='mb-3'>
                         <option value='all'>All</option>
                         <option value='CS'>Computer Science</option>
-                        <option value='ECE'>Electronics</option>
-                    </select>
-                    Batch:<select id='batch' class='mb-3'>
-                        <option value='all'>All</option>
-                        <option value='2015'>2015</option>
-                        <option value='2016'>2016</option>
                     </select>
                     <button onclick='subjects_select()' value='Show' class='mb-3'>Show</button>
                     <div class="table-responsive">
-                        <table class="table table-bordered" width="100%" id="dataTable1" cellspacing="0">
+                        <table class="table table-bordered" width="100%" id="marks" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>Subject Code</th>
                                     <th>Course</th>
-                                    <th>Batch</th>
                                     <th>Internal Practical</th>
                                     <th>Internal Theory</th>
                                     <th>External Practical</th>
                                 </tr>
                             </thead>
                             <tbody id='subjects_admin'>
+                                <tr>
+                                        <td>CS01</th>
+                                        <td>Computer Science</th>
+                                        <td>N</th>
+                                        <td>N</th>
+                                        <td>N</th>
+                                </tr>
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <th>Subject Code</th>
                                     <th>Course</th>
-                                    <th>Batch</th>
                                     <th>Internal Practical</th>
                                     <th>Internal Theory</th>
                                     <th>External Practical</th>
@@ -121,44 +116,7 @@ return <<<HTML
                        
                 </div> 
             </div>
-            <div class="card mb-3" id='editmarks'>
-                <div class="card-header">
-                    <i class="fa fa-table"></i> Enter Marks : Internal Practical
-                </div>
-                <div class="card-block">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" width="100%" id="dataTable" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Roll No</th>
-                                    <th>Name</th>
-                                    <th>Entry 1</th>
-                                    <th>Entry 2</th>
-                                </tr>
-                            </thead>
-                            <tbody id='marks_table'>
-                                <tr>
-                                    <td >11534</td>
-                                    <td>Manas Mehta</td>
-                                    <td id='e1_11534' class='entry1'><input id='i1_11534' type='text' value='123'></td>
-                                    <td id='e2_11534' class='entry2'></td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Roll No</th>
-                                    <th>Name</th>
-                                    <th>Entry 1</th>
-                                    <th>Entry 2</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                
-                            </tbody>
-                        </table>
-                    </div>
-                        <button id='submitButton' name='Submit' class='pull-right mr-2' onclick='submit()'>Submit</button>
-                </div>
+            
                 <div class="card-footer small text-muted">
                     CopyRight Board of Technical Education
                 </div>
@@ -166,11 +124,88 @@ return <<<HTML
             
         </div>
     <!-- /.content-wrapper -->
-    </div>
+    <div class="tab-pane content-wrapper py-3" id='tab-02'>
+        <div class="container-fluid" id='container'>
+
+                <!-- Example Tables Card -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-table"></i> Ids
+                    </div>
+                    <div class="card-block">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" id="ids_table" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='institutes_entry'>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Institutes</th>
+                                        <th>Courses</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div><button class='btn btn-info pull-right' onclick='newinstitute()'>New Id</button></div>
+                </div>
+            
+        </div>
+        <div class="tab-pane content-wrapper py-3" id='tab-03'>
+        <div class="container-fluid" id='container'>
+
+                <!-- Example Tables Card -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-table"></i> Allotment
+                    </div>
+                    <div class="card-block">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" id="ids_table" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Email</th>
+                                        <th>Courses</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='institutes_entry'>
+                                    <tr>
+                                    <td>mayank@imfundo.io</td>
+                                    <td><button class='btn btn-info pull-right'>Add/Edit</button></td>
+                                    </tr>
+                                </tbody>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Email</th>
+                                        <th>Courses</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div><button class='btn btn-info pull-right' onclick='newinstitute()'>New Person</button></div>
+                </div>
+            
+        </div>
+
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fa fa-chevron-up"></i>
     </a>
-
+    </div>
 HTML;
 }	
 ?>

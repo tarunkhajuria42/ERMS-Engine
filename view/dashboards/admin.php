@@ -242,20 +242,28 @@ return <<<HTML
                                 <thead>
                                     <tr>
                                         <th>Subject Code</th>
+                                        <th>Institute</th>
                                         <th>Course</th>
-                                        <th>Batch</th>
                                         <th>Internal Practical</th>
                                         <th>Internal Theory</th>
                                         <th>External Practical</th>
                                     </tr>
                                 </thead>
                                 <tbody id='subjects_admin'>
+                                    <tr>
+                                        <td>CS01</th>
+                                        <td>Aryabhatt Institute of Technology</td>
+                                        <td>Computer Science</th>
+                                        <td>N</th>
+                                        <td>N</th>
+                                        <td>N</th>
+                                    </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <th>Subject Code</th>
+                                        <th>Institute</th>
                                         <th>Course</th>
-                                        <th>Batch</th>
                                         <th>Internal Practical</th>
                                         <th>Internal Theory</th>
                                         <th>External Practical</th>
@@ -272,12 +280,48 @@ return <<<HTML
                 </div>
         </div>
         <!--tab ends-->
-        <div class="tab-pane content-wrapper py-3 " id='tab-04'>
-            <div id='two'>
-                <p id='new'>Not Active</p>
-            </div>
+        <div class="tab-pane content-wrapper py-3" id='tab-04'>
+            <div class="container-fluid" id='container'>
 
-        </div>
+                <!-- Example Tables Card -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-table"></i> Session
+                    </div>
+                    <div class="card-block">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" id="courses_table" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Semester</th>
+                                        <th>Year</th>
+                                        <th>Session</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='institutes_entry'>
+                                <tr>
+                                    <td>1</td>
+                                    <td>2017</td>
+                                    <td>Registration</td>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Semester</th>
+                                        <th>Year</th>
+                                        <th>Session</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div><button class='btn btn-info pull-right' onclick='newcourse()'>Next Session</button></div>
+                </div>   
+            </div>
         <!--tab ends-->
         <div class="tab-pane content-wrapper py-3 " id='tab-05'>
             <div id='two'>
