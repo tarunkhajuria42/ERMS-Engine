@@ -23,6 +23,7 @@ require('misc.php');
 		    <meta name="author" content="">
 		    <title>DashBoard</title>
 
+		    <link href="css/dashboard.css" rel="stylesheet">
 		    <!-- Bootstrap core CSS -->
 		    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -51,7 +52,7 @@ require('misc.php');
             <script src="javascript/dashboard.js"></script>
     		<script src="javascript/logout.js"></script>
 
-    		<link href="css/dashboard.css" rel="stylesheet">
+    		
             
 		</head>
 

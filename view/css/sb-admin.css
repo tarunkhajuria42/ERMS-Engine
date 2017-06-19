@@ -194,7 +194,7 @@ background-color: red;
         #mainNav .navbar-collapse .navbar-nav.sidebar-nav > .nav-item .sidebar-third-level > li > a {
           padding-left: 3em; }
       #mainNav .navbar-collapse .navbar-nav.sidebar-nav li.active a {
-        color: black;
+        color: white ;
         background-color: #FF931E; }
         #mainNav .navbar-collapse .navbar-nav.sidebar-nav li.active a:hover, #mainNav .navbar-collapse .navbar-nav.sidebar-nav li.active a:focus {
           color: white; }

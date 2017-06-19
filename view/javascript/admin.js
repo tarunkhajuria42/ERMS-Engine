@@ -1,7 +1,8 @@
 init();
+var institutes_table;
 function init()
 {
-	
+	institutes_table=$("#institutes_table").DataTable();
 	$("#institutes_courses").DataTable();
 	findInstitutes();
 	$("#courses_table").DataTable();
@@ -10,9 +11,14 @@ function init()
 }
 
 // ***********************Manage Institutes*****************************
-
-var institutes=[];
-var courses=[];
+var institutemode1=0;
+var clicknew1=0;
+var institutes1=[];
+var courses1=[];
+var newcourses1=[];
+var all_courses=[];
+var deleted_courses=[];
+var deleted_institutes=[];
 function findInstitutes()
 {
 	$.post("http://localhost/ERMS-Engine/erms/index.php",
@@ -31,18 +37,15 @@ function findInstitutes()
 			var entry;
 			for (var i=0; i<institutes.length;i++)
 			{
-				entry=`<tr id=institute_`+i+`>
-		           <td id='instiname_`+i+`'>`+institutes[i]+`</td>
-		           <td ><button id='button_`+i+`' onclick='course1(this.id)' data-toggle="modal" data-target="#myModal" class='btn btn-info pull-right'>Add/Edit</button></td> 
-		             </tr>`;
-		        $(entry).appendTo("#institutes_entry");	
+				institutes_table.row.add([institutes[i],
+					`<button id='button_`+i+`' onclick='add_course1(this.id)' data-toggle="modal" data-target="#myModal" class='btn btn-info pull-right'>Add/Edit</button>`]);
 			}
-			$("#institutes_table").DataTable();
+			institutes_table.draw();
 		}
 	});
 }
 
-function course1(id)
+function add_course1(id)
 {
 	var type= id.substring(0, id.indexOf("_"));
 	var no=id.substring(id.indexOf("_")+1,id.length);
@@ -55,7 +58,8 @@ function course1(id)
 				data: institute[no]	
 			},
 			populate_courses1
-			);		
+			);
+
 	}
 	else
 	{
@@ -71,18 +75,20 @@ function course1(id)
 }
 
 
-var institutemode=0;
+
 function newinstitute()
 {
-	if(institutemode==0)
+	if(institutemode1==0)
 	{
 		var i=institutes.length;
-		var entry=`<tr id=institute_`+i+`>
-		           <td id='instiname_`+i+`'><input type='text' id='instientry_`+i+`'></td>
-		           <td ><button id='buttonnew_`+i+`' onclick='course1(this.id)' data-toggle="modal" data-target="#myModal2" class='btn btn-info pull-right'>Add</button></td> 
-		             </tr>`;
-		$(entry).appendTo("#institutes_entry");	
-		newmode=1;	
+		institutes_table.row.add([`<input id='new_text' type='text'>`,
+			`<button id='new_button' onclick='add_course1(this.id)' data-toggle="modal" data-target="#myModal" class='btn btn-info pull-right'>Add</button>`]);
+		institutes_table.draw();
+		institutemode1=1;
+	}
+	else
+	{
+
 	}
 }
 function populate_courses1(data,status)
@@ -93,15 +99,40 @@ function populate_courses1(data,status)
 		if(datah['type']=='success')
 		{
 			courses=datah['reply'];
-			var entry;
 			for(var i=0; i<courses.length;i++)
 			{
-
+				course_table1.row.add([courses[i][0],
+					`<button id='button_`+i+`' onclick='remove_course(this.id)'  class='btn btn-info pull-right'>Remove Course</button>`
+					])	
 			}
 		}
 	}
 }
-var newcourses1=[];
+function new_courses()
+{
+	
+}
+function findall_courses1()
+{
+	$.post("http://localhost/ERMS-Engine/erms/index.php",
+		{
+				type:'lists',
+				request:'get_courses',
+				data: 'all'	
+		},
+		function all_courses_reply(data,status)
+		{
+			if(replay=='success')
+			{
+				datah=JSON.oarse(data);
+				if(datah['type']=='success')
+				{
+					all_courses=datah['reply']
+				}
+			}
+		})
+}
+
 function new_courses1()
 {
 
@@ -114,3 +145,8 @@ function new_submit_courses1()
 {
 
 }
+
+
+
+
+/**************************************************** Manage Courses ********************************************/

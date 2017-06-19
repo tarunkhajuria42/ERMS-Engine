@@ -1,3 +1,7 @@
+
+.nav-tabs.nav-link.active{
+	background-color: blue;
+}
 #welcome{
 	position:fixed;
 	top:50px;
