@@ -22,6 +22,27 @@ function lists()
 								else
 									echo(utils\reply('list','error','system'));
 								break;
+			case 'get_courses':
+								$cor=utils\course\get_courses($data);
+								if(cor!=-1)
+								{
+									$courses=[];
+									for($i=0; $i<count($cor);$i++)
+									{
+										array_push($courses,$cor[$i]['course']);
+									}
+									echo(utils\reply('list','success',$courses));
+								}
+								else
+									echo(utils\reply('list','error','system'));
+								break;
+			case 'all_courses':
+								$courses=utils\course\all_courses();
+								if(cor!=-1)
+									echo(utils\reply('list','success',$courses));
+								else
+									echo(utils\reply('list','error','system'));
+								break;
 			case 'add_subjects':
 			default: echo(utils\reply('list','error','badrequest'));
 			
