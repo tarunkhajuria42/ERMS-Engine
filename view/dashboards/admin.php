@@ -119,6 +119,7 @@ return <<<HTML
                                 <thead>
                                     <tr>
                                         <th>Courses</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody id='institutes_entry'>
@@ -126,6 +127,7 @@ return <<<HTML
                                 <tfoot>
                                     <tr>
                                         <th>Courses</th>
+                                        <th></th>
                                     </tr>
                                 </tfoot>
                                 <tbody>

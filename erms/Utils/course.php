@@ -39,11 +39,9 @@ function add_institute($institute,$course)
 function get_courses($institute)
 {
 	$arguments=[$institute];
-	$res=\data\utils\database\find('SELECT course from institute where institute=?',$arguments,1);
+	$res=\data\utils\database\find('SELECT course from courses where institute=?',$arguments,1);
 	if($res !=-1)
-	{
 		return $res;
-	}
 	else
 		return -1;
 }

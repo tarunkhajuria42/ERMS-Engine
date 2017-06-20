@@ -5,8 +5,11 @@ function lists()
 	if(isset($_POST['request']))
 	{
 		if(isset($_POST['data']))
+		{
+			echo($_POST['data']);
 			$data=json_decode($_POST['data'],true);
 			var_dump($data);
+		}
 		switch($_POST['request'])
 		{
 			case 'all_institutes':
@@ -24,7 +27,7 @@ function lists()
 									echo(utils\reply('list','error','system'));
 								break;
 			case 'get_courses':
-								$cor=utils\course\get_courses($data);
+								$cor=utils\course\get_courses($_POST['value']);
 								if($cor!=-1)
 								{
 									$courses=[];

@@ -1,11 +1,13 @@
 init();
 var institutes_table;
+var institutes_courses1;
+var course_table2;
 function init()
 {
 	institutes_table=$("#institutes_table").DataTable();
-	$("#institutes_courses").DataTable();
+	institutes_courses1=$("#institutes_courses").DataTable();
 	findInstitutes();
-	$("#courses_table").DataTable();
+	courses_table2=$("#courses_table").DataTable();
 	$("#exam1").DataTable();
 	$("#session").DataTable();
 }
@@ -57,20 +59,16 @@ function add_course1(id)
 	}
 	else
 	{
-		selected_insti=	$('instientry_'+i).val();	
 		newcourse_selected=true;
 	}
 	var post_arguments={};
 	post_arguments['type']='lists';
 	post_arguments['request']='get_courses';
-	post_arguments['data']=selected_insti;	
-
+	post_arguments['value']=selected_insti;	
+	console.log(post_arguments);
+	console.log(selected_insti);
 	$.post("http://localhost/ERMS-Engine/erms/index.php",
-			{
-				type:'lists',
-				request:'get_courses',
-				data: selected_insti	
-			},
+			post_arguments,
 			populate_courses1
 			);
 }
@@ -94,17 +92,17 @@ function populate_courses1(data,status)
 {
 	if(status=='success')
 	{
-		console.log(data);
 		var datah= JSON.parse(data);
 		if(datah['type']=='success')
 		{
 			courses=datah['reply'];
 			for(var i=0; i<courses.length;i++)
 			{
-				course_table1.row.add([courses[i][0],
-					`<button id='button_`+i+`' onclick='remove_course(this.id)'  class='btn btn-info pull-right'>Remove Course</button>`
+				institutes_courses1.row.add([courses[i],
+					`<button id='buttoncourses1_`+i+`' onclick='remove_course1(this.id)'  class='btn btn-info pull-right'>Remove Course</button>`
 					]);	
 			}
+			institutes_courses1.draw();	
 		}
 	}
 }
@@ -146,14 +144,36 @@ function new_courses1()
 {
 
 }
+function remove_course1(id)
+{
+	var no=id.substring(id.indexOf('_')+1,id.length);
+	var indextemp=new_courses1.indexof(courses[no]);
+	if(indextemp!=-1)
+		new_courses1.splice(indextemp,1);
+	else
+		courses_remove=courses[no];
+	courses.splice(no,1);
+	institutes_courses1.row($('#'+id).parents('tr')).remove().draw();
+}
 function submit_courses1()
 {
+	if(newcourse_selected)
+	{
+		if(courses_new.length>0)
+		{
 
-}
-function new_submit_courses1()
-{
+		}
+		else
+		{
+			institutes_table.row($('#new_button').parents('tr')).remove().draw();
+		}
+	}
+	else
+	{
 
+	}
 }
+
 
 
 
