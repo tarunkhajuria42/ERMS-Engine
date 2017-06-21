@@ -17,7 +17,8 @@ var institutemode1=0;
 var clicknew1=0;
 var institutes1=[];
 var courses1=[];
-var newcourses1=[];
+var new_courses1=[];
+var selected_insti;
 var all_courses=[];
 var deleted_courses=[];
 var deleted_institutes=[];
@@ -52,7 +53,7 @@ function add_course1(id)
 {
 	var type= id.substring(0, id.indexOf("_"));
 	var no=id.substring(id.indexOf("_")+1,id.length);
-	var selected_insti;
+	
 	if(type=='button')
 	{
 		selected_insti=institutes[no];
@@ -96,6 +97,7 @@ function populate_courses1(data,status)
 		if(datah['type']=='success')
 		{
 			courses=datah['reply'];
+			institutes_courses1.clear();
 			for(var i=0; i<courses.length;i++)
 			{
 				institutes_courses1.row.add([courses[i],
@@ -140,14 +142,12 @@ function findall_courses1()
 		});
 }
 
-function new_courses1()
-{
-
-}
 function remove_course1(id)
 {
 	var no=id.substring(id.indexOf('_')+1,id.length);
-	var indextemp=new_courses1.indexof(courses[no]);
+	console.log(new_courses1.length);
+	if(new_courses1.length==0)
+		var indextemp=new_courses1.indexOf(courses[no]);
 	if(indextemp!=-1)
 		new_courses1.splice(indextemp,1);
 	else
@@ -157,25 +157,41 @@ function remove_course1(id)
 }
 function submit_courses1()
 {
-	if(newcourse_selected)
+	if(courses_new.length>0)
 	{
-		if(courses_new.length>0)
-		{
+		var post_arguments={};
+		post_arguments['type']='lists';
+		post_arguments['request']='add_courses';
+		var temp_dict={};
+		temp_dict['courses']=courses_new;
+		temp_dict['insitute']=selected_insti;
+		post_arguments['data']=JSON.stringify(temp_dict);
+		$.post(address,post_arguments,
+			function handle_submit(data,status)
+			{
+				if(status=='success'){
+					if(data!=null)
+					{
+						datah=JSON.parse(data);
+						if(datah['type']=='success')
+						{
 
-		}
-		else
-		{
-			institutes_table.row($('#new_button').parents('tr')).remove().draw();
-		}
+						}
+						else
+						{
+
+						}
+					}
+				}
+			});
 	}
 	else
 	{
-
+		institutes_table.row($('#new_button').parents('tr')).remove().draw();
+	}
+	if(courses_remove.length>0)
+	{
+		var post_arguments={};
 	}
 }
-
-
-
-
-
 /**************************************************** Manage Courses ********************************************/

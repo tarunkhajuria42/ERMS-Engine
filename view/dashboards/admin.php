@@ -69,7 +69,7 @@ return <<<HTML
         </div>
     </nav>  
     <div class='tab-content'>
-    <!--tab 01-->
+    <!--************************************************tab 01*****************************************************-->
         <div class="tab-pane content-wrapper py-3 active" id='tab-01'>
             <div class="container-fluid" id='container'>
 
@@ -122,7 +122,7 @@ return <<<HTML
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody id='institutes_entry'>
+                                <tbody >
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -133,16 +133,18 @@ return <<<HTML
                                 <tbody>
                                 </tbody>
                             </table>
+                        <div><button class='btn btn-info pull-right mt-2' onclick='newcourse1()'>Add Course</button></div>
                         </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal" onclick='submit_courses1()'>Close</button>
+
+                                <button type="button" class="btn btn-warning" data-dismiss="modal" onclick='submit_courses1()'>Submit</button>
                             </div>
                         </div>   
                     </div>
                 </div>
             </div>
-        <!--tab ends-->
+        <!--*****************************************tab ends************************************************-->
         <div class="tab-pane content-wrapper py-3" id='tab-02'>
             <div class="container-fluid" id='container'>
 
