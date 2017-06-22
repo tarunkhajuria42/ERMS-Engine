@@ -1,3 +1,4 @@
+var address="http://localhost/ERMS-Engine/erms/index.php";
 function generateDashboard()
 {
 	//check if user is logged 

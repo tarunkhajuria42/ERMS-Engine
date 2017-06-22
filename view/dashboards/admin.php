@@ -103,10 +103,10 @@ return <<<HTML
                     </div>
 
                 </div>
-                <div><button class='btn btn-info pull-right' onclick='newinstitute()'>New Institute</button></div>
+                <div><button class='btn btn-info pull-right' onclick='new_institute1()'>New Institute</button></div>
                 </div>
                 
-                <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal fade" id="myModal" role="dialog" data-backdrop='static'>
                     <div class="modal-dialog modal-lg">
                          <div class="modal-content">
                             <div class="modal-header">
@@ -133,18 +133,18 @@ return <<<HTML
                                 <tbody>
                                 </tbody>
                             </table>
-                        <div><button class='btn btn-info pull-right mt-2' onclick='newcourse1()'>Add Course</button></div>
+                        <div><button class='btn btn-info pull-right mt-2' onclick='add_course_button1()'>Add Course</button></div>
                         </div>
                             </div>
                             <div class="modal-footer">
 
-                                <button type="button" class="btn btn-warning" data-dismiss="modal" onclick='submit_courses1()'>Submit</button>
+                                <button type="button" class="btn btn-warning"  onclick='save_courses1()'>Save changes</button>
                             </div>
                         </div>   
                     </div>
                 </div>
             </div>
-        <!--*****************************************tab ends************************************************-->
+        <!--*****************************************tab ends 02************************************************-->
         <div class="tab-pane content-wrapper py-3" id='tab-02'>
             <div class="container-fluid" id='container'>
 

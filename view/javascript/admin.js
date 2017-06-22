@@ -4,28 +4,30 @@ var institutes_courses1;
 var course_table2;
 function init()
 {
-	institutes_table=$("#institutes_table").DataTable();
+	institutes_table1=$("#institutes_table").DataTable();
 	institutes_courses1=$("#institutes_courses").DataTable();
 	findInstitutes();
+	//*** Tab 2*****
 	courses_table2=$("#courses_table").DataTable();
 	$("#exam1").DataTable();
 	$("#session").DataTable();
 }
 
 // ***********************Manage Institutes*****************************
-var institutemode1=0;
-var clicknew1=0;
 var institutes1=[];
 var courses1=[];
 var new_courses1=[];
-var selected_insti;
+var selected_insti1;
 var all_courses=[];
-var deleted_courses=[];
-var deleted_institutes=[];
-var newcourse_selected=false;
+var deleted_courses1=[];
+var deleted_institutes1=[];
+var new_institute_selected1=false;
+var new_course_opened1=false;
+var new_instutue_opened1=false;
+var click_new=false;
 function findInstitutes()
 {
-	$.post("http://localhost/ERMS-Engine/erms/index.php",
+	$.post(address,
 	{
 		type:'lists',
 		request:'all_institutes'
@@ -37,14 +39,14 @@ function findInstitutes()
 		
 		if(datah['type']=='success')
 		{
-			institutes=datah['reply'];
+			institutes1=datah['reply'];
 			var entry;
-			for (var i=0; i<institutes.length;i++)
+			for (var i=0; i<institutes1.length;i++)
 			{
-				institutes_table.row.add([institutes[i],
+				institutes_table1.row.add([institutes1[i],
 					`<button id='button_`+i+`' onclick='add_course1(this.id)' data-toggle="modal" data-target="#myModal" class='btn btn-info pull-right'>Add/Edit</button>`]);
 			}
-			institutes_table.draw();
+			institutes_table1.draw();
 		}
 	});
 }
@@ -56,39 +58,38 @@ function add_course1(id)
 	
 	if(type=='button')
 	{
-		selected_insti=institutes[no];
+		selected_insti1=institutes1[no];
 	}
 	else
 	{
-		newcourse_selected=true;
+		new_institute_selected1=true;
 	}
 	var post_arguments={};
 	post_arguments['type']='lists';
 	post_arguments['request']='get_courses';
-	post_arguments['value']=selected_insti;	
-	console.log(post_arguments);
-	console.log(selected_insti);
-	$.post("http://localhost/ERMS-Engine/erms/index.php",
+	post_arguments['value']=selected_insti1;	
+	$.post(address,
 			post_arguments,
 			populate_courses1
 			);
 }
 
-function newinstitute()
+function new_institute1()
 {
-	if(institutemode1==0)
+	if(!institute_institute_opened)
 	{
-		var i=institutes.length;
-		institutes_table.row.add([`<input id='new_text' type='text'>`,
+		var i=institutes1.length;
+		institutes_table1.row.add([`<input id='new_text' type='text'>`,
 			`<button id='new_button' onclick='add_course1(this.id)' data-toggle="modal" data-target="#myModal" class='btn btn-info pull-right'>Add</button>`]);
-		institutes_table.draw();
-		institutemode1=1;
+		institutes_table1.draw();
+		new_institute_opened=true;
 	}
 	else
 	{
 
 	}
 }
+// Courses functions
 function populate_courses1(data,status)
 {
 	if(status=='success')
@@ -96,12 +97,12 @@ function populate_courses1(data,status)
 		var datah= JSON.parse(data);
 		if(datah['type']=='success')
 		{
-			courses=datah['reply'];
-			institutes_courses1.clear();
-			for(var i=0; i<courses.length;i++)
+			reset_all_courses();
+			courses1=datah['reply'];
+			for(var i=0; i<courses1.length;i++)
 			{
-				institutes_courses1.row.add([courses[i],
-					`<button id='buttoncourses1_`+i+`' onclick='remove_course1(this.id)'  class='btn btn-info pull-right'>Remove Course</button>`
+				institutes_courses1.row.add([courses1[i],
+					`<button id='buttoncourses1_`+i+`' onclick='remove_course1(this.id)'  class='btn btn-info pull-right'>Remove</button>`
 					]);	
 			}
 			institutes_courses1.draw();	
@@ -109,22 +110,62 @@ function populate_courses1(data,status)
 	}
 }
 
-function new_course1()
+function add_course_button1()
 {
-	if(state_newcourse==0)
+	if(!new_course_opened1)
 	{
-		course_table1.row.add([`<input id='courses_new' type='text'>`,
-			`<button id='courses_button_new' onclick='delete_course(this.id)'>Delete </button>`]).draw();		
-		state_newcourse=1;
+		institutes_courses1.row.add([`<input id='courses_new_input' type='text'>`,
+			`<button id='courses_button_new' class='btn pull-right btn-info'onclick='new_course_add()'>Add </button>`]).draw();		
+		new_course_opened1=true;
 	}
 	else
 	{
 
 	}	
 }
-function findall_courses1()
+
+function new_course_add()
 {
-	$.post("http://localhost/ERMS-Engine/erms/index.php",
+	var temp_new_course=$('#courses_new_input').val()
+	if(temp_new_course!='')
+	{
+		if(courses1.indexOf(temp_new_course)==-1)
+		{	
+			courses1.push(temp_new_course);
+			var temp_index_deleted=deleted_courses1.indexOf(temp_new_course)
+			if(temp_index_deleted!=-1)
+			{
+				deleted_courses1.splice(temp_index_deleted,1);
+			}
+			else
+			{
+				new_courses1.push(temp_new_course);
+			}
+			institutes_courses1.row($('#courses_new_input').parents('tr')).remove().draw();
+			institutes_courses1.row.add([temp_new_course,
+				`<button id='buttoncourses1_`+courses1.length+`' onclick='remove_course1(this.id)'  class='btn btn-info pull-right'>Remove</button>`
+				]).draw();
+			new_course_opened1=false;	
+		}
+		error_courses1('Already in list');
+	}
+	else
+	{
+		error_courses1('Empty field');
+	}
+}
+function reset_all_courses()
+{
+	institutes_courses1.clear();
+	all_courses=[];
+	new_courses1=[];
+	courses1=[];
+	deleted_courses1=[];
+
+}
+function fill_all_courses()
+{
+	$.post(address,
 		{
 				type:'lists',
 				request:'all_courses',	
@@ -147,24 +188,30 @@ function remove_course1(id)
 	var no=id.substring(id.indexOf('_')+1,id.length);
 	console.log(new_courses1.length);
 	if(new_courses1.length==0)
-		var indextemp=new_courses1.indexOf(courses[no]);
+		var indextemp=new_courses1.indexOf(courses1[no]);
 	if(indextemp!=-1)
 		new_courses1.splice(indextemp,1);
 	else
-		courses_remove=courses[no];
-	courses.splice(no,1);
+		deleted_courses1.push(courses1[no]);
+	courses1.splice(no,1);
 	institutes_courses1.row($('#'+id).parents('tr')).remove().draw();
 }
-function submit_courses1()
+function save_courses1()
 {
-	if(courses_new.length>0)
+	console.log(new_courses1);
+	console.log(courses1);
+	console.log(deleted_courses1);
+	var add_reply=0;
+	var delete_reply=0;
+	if(new_courses1.length>0)
 	{
+		add_reply=1;
 		var post_arguments={};
 		post_arguments['type']='lists';
 		post_arguments['request']='add_courses';
 		var temp_dict={};
-		temp_dict['courses']=courses_new;
-		temp_dict['insitute']=selected_insti;
+		temp_dict['courses']=new_courses1;
+		temp_dict['insitute']=selected_insti1;
 		post_arguments['data']=JSON.stringify(temp_dict);
 		$.post(address,post_arguments,
 			function handle_submit(data,status)
@@ -174,24 +221,66 @@ function submit_courses1()
 					{
 						datah=JSON.parse(data);
 						if(datah['type']=='success')
-						{
-
-						}
+							add_reply=2;
 						else
-						{
-
-						}
+							add_reply=3;
 					}
+					else
+						add_reply=3;
 				}
+				else
+					add_reply=3;
 			});
 	}
 	else
 	{
-		institutes_table.row($('#new_button').parents('tr')).remove().draw();
+		institutes_table1.row($('#new_button').parents('tr')).remove().draw();
 	}
-	if(courses_remove.length>0)
+	if(deleted_courses1.length>0)
 	{
-		var post_arguments={};
+		post_arguments={};
+		post_arguments['type']='lists';
+		post_arguments['request']='delete_courses';
+		temp_dict={};
+		temp_dict['institute']=selected_insti1;
+		temp_dict['courses']=deleted_courses1;
+		post_arguments['data']=JSON.stringify(temp_dict);
+		$.post(address,
+			post_arguments,
+			function handle_submit_deleted(data,status)
+			{
+				if(status=='success')
+				{
+					if(data!='')
+						datah=JSON.parse(data);
+						if(datah['type']=='success')
+							delete_reply=2;
+						else
+							delete_reply=3;
+					else
+						delete_reply=3;
+				}
+				else 
+					delete_reply=3;
+			});
 	}
+	while(add_reply==1 || delete_reply ==1);
+	if(add_reply==3 || delete_reply==3)
+		error_courses1("Error ! Could not save, Try later");
+	else
+		if(new_institute_selected1)
+		{
+			save_institue();
+		}
+		error_courses1("Success");
+}
+
+function error_courses1(text)
+{
+
+}
+function error_insitute(text)
+{
+
 }
 /**************************************************** Manage Courses ********************************************/
