@@ -101,7 +101,7 @@ return <<<HTML
                             </table>
                         </div>
                     </div>
-
+                    <div><p id='info_institute' class='text-center'</p></div>
                 </div>
                 <div><button class='btn btn-info pull-right' onclick='new_institute1()'>New Institute</button></div>
                 </div>
@@ -136,8 +136,8 @@ return <<<HTML
                         <div><button class='btn btn-info pull-right mt-2' onclick='add_course_button1()'>Add Course</button></div>
                         </div>
                             </div>
+                            <div><p id='info_courses' class='text-center'></p></div>
                             <div class="modal-footer">
-
                                 <button type="button" class="btn btn-warning"  onclick='save_courses1()'>Save changes</button>
                             </div>
                         </div>   
@@ -290,6 +290,7 @@ return <<<HTML
                     </div>
 
                 </div>
+
                 <div><button class='btn btn-info pull-right' onclick='newcourse()'>Next Session</button></div>
                 </div>   
             </div>

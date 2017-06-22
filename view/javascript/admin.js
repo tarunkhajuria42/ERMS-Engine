@@ -238,6 +238,7 @@ function save_courses1()
 	}
 	if(deleted_courses1.length>0)
 	{
+		delete_reply=1;
 		post_arguments={};
 		post_arguments['type']='lists';
 		post_arguments['request']='delete_courses';
@@ -252,11 +253,13 @@ function save_courses1()
 				if(status=='success')
 				{
 					if(data!='')
+					{
 						datah=JSON.parse(data);
 						if(datah['type']=='success')
 							delete_reply=2;
 						else
 							delete_reply=3;
+					}
 					else
 						delete_reply=3;
 				}
@@ -264,23 +267,25 @@ function save_courses1()
 					delete_reply=3;
 			});
 	}
-	while(add_reply==1 || delete_reply ==1);
+	while(add_reply==1 || delete_reply==1);
 	if(add_reply==3 || delete_reply==3)
 		error_courses1("Error ! Could not save, Try later");
 	else
+		{
 		if(new_institute_selected1)
 		{
 			save_institue();
 		}
 		error_courses1("Success");
+	}
 }
 
-function error_courses1(text)
+function error_courses1(text)	
 {
-
+	$('#info_courses').text(text);
 }
 function error_insitute(text)
 {
-
+	$('#info_institute').text(text);
 }
 /**************************************************** Manage Courses ********************************************/
