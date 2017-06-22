@@ -23,7 +23,7 @@ var deleted_courses1=[];
 var deleted_institutes1=[];
 var new_institute_selected1=false;
 var new_course_opened1=false;
-var new_instutue_opened1=false;
+var new_institute_opened1=false;
 var click_new=false;
 function findInstitutes()
 {
@@ -76,17 +76,17 @@ function add_course1(id)
 
 function new_institute1()
 {
-	if(!institute_institute_opened)
+	if(!new_institute_opened1)
 	{
 		var i=institutes1.length;
 		institutes_table1.row.add([`<input id='new_text' type='text'>`,
 			`<button id='new_button' onclick='add_course1(this.id)' data-toggle="modal" data-target="#myModal" class='btn btn-info pull-right'>Add</button>`]);
 		institutes_table1.draw();
-		new_institute_opened=true;
+		new_institute_opened1=true;
 	}
 	else
 	{
-
+		error_insitute1('One institute at a time Please');
 	}
 }
 // Courses functions
@@ -117,10 +117,11 @@ function add_course_button1()
 		institutes_courses1.row.add([`<input id='courses_new_input' type='text'>`,
 			`<button id='courses_button_new' class='btn pull-right btn-info'onclick='new_course_add()'>Add </button>`]).draw();		
 		new_course_opened1=true;
+		error_courses1("");
 	}
 	else
 	{
-
+		error_courses1("One course a time please!!");
 	}	
 }
 
@@ -146,8 +147,10 @@ function new_course_add()
 				`<button id='buttoncourses1_`+courses1.length+`' onclick='remove_course1(this.id)'  class='btn btn-info pull-right'>Remove</button>`
 				]).draw();
 			new_course_opened1=false;	
+			error_courses1("");
 		}
-		error_courses1('Already in list');
+		else
+			error_courses1('Already in list');
 	}
 	else
 	{
@@ -284,7 +287,7 @@ function error_courses1(text)
 {
 	$('#info_courses').text(text);
 }
-function error_insitute(text)
+function error_insitute1(text)
 {
 	$('#info_institute').text(text);
 }

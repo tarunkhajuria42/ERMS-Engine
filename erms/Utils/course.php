@@ -22,12 +22,12 @@ function add_subject($subject)
 			return -1;		
 
 }
-function add_institute($institute,$course)
+function add_courses($institute,$course)
 {
 	for ($i=0; $i<count($course); $i++)
 	{	
 		$arguments=[$institute,$course[$i]];
-		if(\data\utils\database\insert('INSERT into institute(institute,course) values(?,?)',$arguments,1)==1)
+		if(\data\utils\database\insert('INSERT into courses(institute,course) values(?,?)',$arguments,1)==1)
 		{
 			
 		}
@@ -35,6 +35,20 @@ function add_institute($institute,$course)
 			return -1;		
 	}
 	return 1;
+}
+function delete_courses($institute,$course)
+{
+	for ($i=0; $i<count($course); $i++)
+	{	
+		$arguments=[$institute,$course[$i]];
+		if(\data\utils\database\delete('DELETE from courses where institute=? and course=?',$arguments,1)==1)
+		{
+			
+		}
+		else 	
+			return -1;		
+	}
+	return 1;	
 }
 function get_courses($institute)
 {

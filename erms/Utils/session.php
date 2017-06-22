@@ -44,7 +44,7 @@ function destroySession()
 	{
 		$arguments=[$_COOKIE['token']];
 		setcookie('token');
-		if(\data\utils\database\delete('DELETE from login where token=?',$arguments)==-1)
+		if(\data\utils\database\delete('DELETE from login where token=?',$arguments,2)==-1)
 		{
 			return -1;
 		}

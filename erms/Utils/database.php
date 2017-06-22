@@ -120,9 +120,12 @@ function find($query,$parameters,$table)
 	}
 	
 }
-function delete($query,$parameters)
+function delete($query,$parameters,$table)
 {
-	$conn=initConnectionCurrent();
+	if($table==1)
+		$conn=initConnection();
+	else
+		$conn=initConnectionCurrent();
 	try{
 		$statement=$conn->prepare($query);
 		$variables=count($parameters);
