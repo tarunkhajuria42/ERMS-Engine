@@ -6,7 +6,7 @@ function init()
 {
 	institutes_table1=$("#institutes_table").DataTable();
 	institutes_courses1=$("#institutes_courses").DataTable();
-	findInstitutes();
+	load_institutes();
 	//*** Tab 2*****
 	courses_table2=$("#courses_table").DataTable();
 	$("#exam1").DataTable();
@@ -25,8 +25,9 @@ var new_institute_selected1=false;
 var new_course_opened1=false;
 var new_institute_opened1=false;
 var click_new=false;
-function findInstitutes()
+function load_institutes()
 {
+	institutes1=[];
 	$.post(address,
 	{
 		type:'lists',
@@ -34,7 +35,6 @@ function findInstitutes()
 	},
 	function institutes_fill(data,status)
 	{
-		console.log(data);
 		datah=JSON.parse(data);
 		
 		if(datah['type']=='success')
@@ -44,7 +44,7 @@ function findInstitutes()
 			for (var i=0; i<institutes1.length;i++)
 			{
 				institutes_table1.row.add([institutes1[i],
-					`<button id='button_`+i+`' onclick='add_course1(this.id)' data-toggle="modal" data-target="#myModal" class='btn btn-info pull-right'>Add/Edit</button>`]);
+					`<button id='button_`+i+`' onclick='add_course1(this.id)' data-toggle="modal" data-target="#courses1" class='btn btn-info pull-right'>Add/Edit</button>`]);
 			}
 			institutes_table1.draw();
 		}
@@ -62,6 +62,7 @@ function add_course1(id)
 	}
 	else
 	{
+		selected_insti1=$('#new_institute1').val();
 		new_institute_selected1=true;
 	}
 	var post_arguments={};
@@ -78,9 +79,8 @@ function new_institute1()
 {
 	if(!new_institute_opened1)
 	{
-		var i=institutes1.length;
-		institutes_table1.row.add([`<input id='new_text' type='text'>`,
-			`<button id='new_button' onclick='add_course1(this.id)' data-toggle="modal" data-target="#myModal" class='btn btn-info pull-right'>Add</button>`]);
+		institutes_table1.row.add([`<input id='new_institute1' type='text'>`,
+			`<button id='new_button' onclick='add_course1(this.id)' data-toggle="modal" data-target="#courses1" class='btn btn-info pull-right'>Add</button>`]);
 		institutes_table1.draw();
 		new_institute_opened1=true;
 	}
@@ -214,11 +214,13 @@ function save_courses1()
 		post_arguments['request']='add_courses';
 		var temp_dict={};
 		temp_dict['courses']=new_courses1;
-		temp_dict['insitute']=selected_insti1;
+		temp_dict['institute']=selected_insti1;
 		post_arguments['data']=JSON.stringify(temp_dict);
+		console.log(post_arguments);
 		$.post(address,post_arguments,
 			function handle_submit(data,status)
 			{
+				console.log(data);
 				if(status=='success'){
 					if(data!=null)
 					{
@@ -253,6 +255,7 @@ function save_courses1()
 			post_arguments,
 			function handle_submit_deleted(data,status)
 			{
+				console.log(data);
 				if(status=='success')
 				{
 					if(data!='')
@@ -269,18 +272,14 @@ function save_courses1()
 				else 
 					delete_reply=3;
 			});
-	}
-	while(add_reply==1 || delete_reply==1);
+	}	
 	if(add_reply==3 || delete_reply==3)
 		error_courses1("Error ! Could not save, Try later");
 	else
 		{
-		if(new_institute_selected1)
-		{
-			save_institue();
-		}
+		
 		error_courses1("Success");
-	}
+		}
 }
 
 function error_courses1(text)	
@@ -292,3 +291,28 @@ function error_insitute1(text)
 	$('#info_institute').text(text);
 }
 /**************************************************** Manage Courses ********************************************/
+function findCourses2()
+{
+	$.post(address,
+	{
+		type:'lists',
+		request:'all_courses'
+	},
+	function courses_fill(data,status)
+	{
+		console.log(data);
+		datah=JSON.parse(data);
+		
+		if(datah['type']=='success')
+		{
+			institutes1=datah['reply'];
+			var entry;
+			for (var i=0; i<institutes1.length;i++)
+			{
+				institutes_table1.row.add([institutes1[i],
+					`<button id='button_`+i+`' onclick='add_course1(this.id)' data-toggle="modal" data-target="#subjects2" class='btn btn-info pull-right'>Add/Edit</button>`]);
+			}
+			institutes_table1.draw();
+		}
+	});
+}

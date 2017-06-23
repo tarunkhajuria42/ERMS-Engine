@@ -49,7 +49,7 @@ function lists()
 			case 'add_courses':
 								$courses=$data['courses'];
 								$institute=$data['institute'];
-								if(utils\course\add_courses($institute,$course)!=-1)
+								if(utils\course\add_courses($institute,$courses)!=-1)
 									utils\reply('list','success','courses_added');
 								else
 									utils\reply('list','error','already_added');
@@ -57,7 +57,7 @@ function lists()
 			case 'delete_courses':
 								$courses=$data['courses'];
 								$institute=$data['institute'];
-								if(utils\course\delete_courses($institute,$course)!=-1)
+								if(utils\course\delete_courses($institute,$courses)!=-1)
 									utils\reply('list','success','courses_added');
 								else
 									utils\reply('list','error','already_added');

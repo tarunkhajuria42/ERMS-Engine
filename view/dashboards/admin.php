@@ -106,11 +106,11 @@ return <<<HTML
                 <div><button class='btn btn-info pull-right' onclick='new_institute1()'>New Institute</button></div>
                 </div>
                 
-                <div class="modal fade" id="myModal" role="dialog" data-backdrop='static'>
+                <div class="modal fade" id="courses1" role="dialog" data-backdrop='static'>
                     <div class="modal-dialog modal-lg">
                          <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <button type="button" class="close" onclick='load_institutes()' data-dismiss="modal">&times;</button>
                                     <h4 class="modal-title">Courses</h4>
                             </div>
                             <div class="modal-body">
@@ -181,9 +181,11 @@ return <<<HTML
                     </div>
 
                 </div>
-                <div><button class='btn btn-info pull-right' onclick='newcourse()'>New Course</button></div>
+                <div><button class='btn btn-info pull-right' onclick='new_course2()'>New Course</button></div>
                 </div>   
+            
             </div>
+
         <!--tab ends-->
         <div class="tab-pane content-wrapper py-3 " id='tab-03'>
             <div class="container-fluid" id='container'>
