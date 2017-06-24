@@ -62,8 +62,8 @@ function get_courses($institute)
 function all_courses()
 {
 	$courses=[];
-	$res=\data\utils\database\find('SELECT DISTINCT course from subjects');
-	if($res!=-1 and count($res >0))
+	$res=\data\utils\database\find('SELECT DISTINCT course from subject',$courses,1);
+	if($res!=-1)
 	{
 		for($i=0; $i<count($res); $i++)
 		{

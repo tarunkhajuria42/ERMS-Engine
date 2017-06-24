@@ -20,10 +20,10 @@ function lists()
 									{
 										array_push($institutes,$insti[$i]['institute']);
 									}
-									echo(utils\reply('list','success',$institutes));	
+									echo(utils\reply('all_institutes','success',$institutes));	
 								}
 								else
-									echo(utils\reply('list','error','system'));
+									echo(utils\reply('all_institutes','error','system'));
 								break;
 			case 'get_courses':
 								$cor=utils\course\get_courses($_POST['value']);
@@ -34,33 +34,33 @@ function lists()
 									{
 										array_push($courses,$cor[$i]['course']);
 									}
-									echo(utils\reply('list','success',$courses));
+									echo(utils\reply('get_courses','success',$courses));
 								}
 								else
-									echo(utils\reply('list','error','system'));
+									echo(utils\reply('get_courses','error','system'));
 								break;
 			case 'all_courses':
 								$courses=utils\course\all_courses();
-								if(cor!=-1)
-									echo(utils\reply('list','success',$courses));
+								if($courses!=-1)
+									echo(utils\reply('all_courses','success',$courses));
 								else
-									echo(utils\reply('list','error','system'));
+									echo(utils\reply('all_courses','error','system'));
 								break;
 			case 'add_courses':
 								$courses=$data['courses'];
 								$institute=$data['institute'];
 								if(utils\course\add_courses($institute,$courses)!=-1)
-									utils\reply('list','success','courses_added');
+									utils\reply('add_courses','success','courses_added');
 								else
-									utils\reply('list','error','already_added');
+									utils\reply('add_courses','error','already_added');
 								break;
 			case 'delete_courses':
 								$courses=$data['courses'];
 								$institute=$data['institute'];
 								if(utils\course\delete_courses($institute,$courses)!=-1)
-									utils\reply('list','success','courses_added');
+									utils\reply('delete_courses','success','courses_added');
 								else
-									utils\reply('list','error','already_added');
+									utils\reply('delete_courses','error','already_added');
 								break;
 			case 'add_subjects':
 			default: echo(utils\reply('list','error','badrequest'));

@@ -1,17 +1,12 @@
 init();
 var institutes_table;
 var institutes_courses1;
-var courses_table2;
-var courses_subjects2;
+
 var all_courses=[];
 function init()
 {
-	institutes_table1=$("#institutes_table").DataTable();
-	institutes_courses1=$("#institutes_courses").DataTable();
-	load_institutes();
-	//*** Tab 2*****
-	courses_table2=$("#courses_table").DataTable();
-	courses_subjects2=$("#courses_subjects").DataTable();
+	init_tab1();
+	init_tab2();
 	$("#exam1").DataTable();
 	$("#session").DataTable();
 }
@@ -28,6 +23,13 @@ var new_institute_selected1=false;
 var new_course_opened1=false;
 var new_institute_opened1=false;
 var click_new=false;
+function init_tab1()
+{
+	institutes_table1=$("#institutes_table").DataTable();
+	institutes_courses1=$("#institutes_courses").DataTable();
+	load_institutes();
+
+}
 function load_institutes()
 {
 	institutes1=[];
@@ -302,8 +304,16 @@ function error_insitute1(text)
 	$('#info_institute').text(text);
 }
 /**************************************************** Manage Courses ********************************************/
-
-function fillCourses2()
+var courses_table2;
+var courses_subjects2;
+var new_course_opened2=false;
+function init_tab2()
+{
+	courses_table2=$("#courses_table").DataTable();
+	//courses_subjects2=$("#courses_subjects").DataTable();
+	fill_courses2();
+}
+function fill_courses2()
 {
 	$.post(address,
 	{
@@ -312,6 +322,7 @@ function fillCourses2()
 	},
 	function courses_fill(data,status)
 	{
+		console.log(data);
 		datah=JSON.parse(data);
 		if(datah['type']=='success')
 		{
@@ -326,4 +337,21 @@ function fillCourses2()
 	});
 }
 
-
+function new_course2()
+{
+	if(!new_course_opened1)
+	{
+		courses_table2.row.add([`<input id='new_institute1' type='text'>`,
+			`<button id='new_button' onclick='add_course1(this.id)' data-toggle="modal" data-target="#courses1" class='btn btn-info pull-right'>Add</button>`]);
+		courses_table2.draw();
+		new_course_opened2=true;
+	}
+	else
+	{
+		error_course2('One institute at a time Please');
+	}
+}
+function error_course2(text)
+{
+	$('').text(text);
+}

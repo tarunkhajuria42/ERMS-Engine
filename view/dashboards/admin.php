@@ -147,7 +147,6 @@ return <<<HTML
         <!--*****************************************tab  02************************************************-->
         <div class="tab-pane content-wrapper py-3" id='tab-02'>
             <div class="container-fluid" id='container'>
-
                 <!-- Example Tables Card -->
                 <div class="card mb-3">
                     <div class="card-header">
@@ -163,9 +162,6 @@ return <<<HTML
                                     </tr>
                                 </thead>
                                 <tbody id='institutes_entry'>
-                                <tr>
-                                    <td>Computer Science</td>
-                                    <td><button class='btn btn-info pull-right'>Add/Edit</button></td>
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -173,16 +169,13 @@ return <<<HTML
                                         <th>Subjects</th>
                                     </tr>
                                 </tfoot>
-                                <tbody>
-                                    
-                                </tbody>
                             </table>
                         </div>
                     </div>
-
                 </div>
                 <div><button class='btn btn-info pull-right' onclick='new_course2()'>New Course</button></div>
-                </div>   
+            </div> 
+
                 <div class="modal fade" id="subjects2" role="dialog" data-backdrop='static'>
                     <div class="modal-dialog modal-lg">
                          <div class="modal-content">
