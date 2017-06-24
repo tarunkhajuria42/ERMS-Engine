@@ -154,7 +154,7 @@ return <<<HTML
                     </div>
                     <div class="card-block">
                         <div class="table-responsive">
-                            <table class="table table-bordered" width="100%" id="courses_table" cellspacing="0">
+                            <table class="table table-bordered" width="100%" id="courses_table2" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>Courses</th>
@@ -172,6 +172,7 @@ return <<<HTML
                             </table>
                         </div>
                     </div>
+                    <div><p id='info_courses2' class='text-center'</p></div>
                 </div>
                 <div><button class='btn btn-info pull-right' onclick='new_course2()'>New Course</button></div>
             </div> 
@@ -185,7 +186,7 @@ return <<<HTML
                             </div>
                             <div class="modal-body">
                                 <div class="table-responsive">
-                            <table class="table table-bordered" width="100%" id="institutes_courses" cellspacing="0">
+                            <table class="table table-bordered" width="100%" id="subjects_table2" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>Subject</th>
@@ -223,12 +224,12 @@ return <<<HTML
                                 <tbody>
                                 </tbody>
                             </table>
-                        <div><button class='btn btn-info pull-right mt-2' onclick='add_course_button1()'>Add Course</button></div>
+                        <div><button class='btn btn-info pull-right mt-2' onclick='add_subject_button2()'>Add Subject</button></div>
                         </div>
                             </div>
-                            <div><p id='info_courses' class='text-center'></p></div>
+                            <div><p id='info_subjects2' class='text-center'></p></div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-warning"  onclick='save_courses1()'>Save changes</button>
+                                <button type="button" class="btn btn-warning"  onclick='save_subjects2()'>Save changes</button>
                             </div>
                         </div>   
                     </div>

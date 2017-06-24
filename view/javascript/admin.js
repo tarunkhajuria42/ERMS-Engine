@@ -307,9 +307,11 @@ function error_insitute1(text)
 var courses_table2;
 var courses_subjects2;
 var new_course_opened2=false;
+var selected_course2;
 function init_tab2()
 {
-	courses_table2=$("#courses_table").DataTable();
+	courses_table2=$("#courses_table2").DataTable();
+	subjects_table2=$("#subjects_table2").DataTable();
 	//courses_subjects2=$("#courses_subjects").DataTable();
 	fill_courses2();
 }
@@ -339,19 +341,66 @@ function fill_courses2()
 
 function new_course2()
 {
-	if(!new_course_opened1)
+	if(!new_course_opened2)
 	{
-		courses_table2.row.add([`<input id='new_institute1' type='text'>`,
-			`<button id='new_button' onclick='add_course1(this.id)' data-toggle="modal" data-target="#courses1" class='btn btn-info pull-right'>Add</button>`]);
+		courses_table2.row.add([`<input id='new_course2' type='text'>`,
+			`<button id='new_button' onclick='check_subjects2(this.id)' data-toggle="modal" data-target="#subjects2" class='btn btn-info pull-right'>Add</button>`]);
 		courses_table2.draw();
 		new_course_opened2=true;
 	}
 	else
 	{
-		error_course2('One institute at a time Please');
+		error_course2('One course at a time Please');
 	}
 }
+function add_subjects2(id)
+{
+	var type= id.substring(0, id.indexOf("_"));
+	var no=id.substring(id.indexOf("_")+1,id.length);
+	
+	if(type=='coursesbutton')
+	{
+		selected_course2=all_courses[no];
+	}
+	else
+	{
+		selected_course2=$('#new_course2').val();
+	}
+	var post_arguments={};
+	post_arguments['type']='lists';
+	post_arguments['request']='get_subjects';
+	post_arguments['value']=selected_insti1;	
+	$.post(address,
+			post_arguments,
+			populate_subjects2
+			);
+}
+//Subject functions
+function populate_subjects2(data,status)
+{
+	if(status=='success')
+	{
+		var datah= JSON.parse(data);
+		if(datah['type']=='success')
+		{
+			reset_all_subjects2();
+			subjects2=datah['reply'];
+			for(var i=0; i<courses2.length;i++)
+			{
+				subjects_table2.row.add([subjects2[i],
+					`<button id='buttonsubjects2_`+i+`' onclick='remove_course1(this.id)'  class='btn btn-info pull-right'>Remove</button>`
+					]);	
+			}
+			institutes_courses1.draw();	
+		}
+	}
+}
+
 function error_course2(text)
 {
-	$('').text(text);
+	$('#info_courses2').text(text);
+}
+function error_subjects2(text)
+{
+	$('#info_subjects2').text(text);	
 }
