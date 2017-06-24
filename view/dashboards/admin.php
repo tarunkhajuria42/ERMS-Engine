@@ -144,7 +144,7 @@ return <<<HTML
                     </div>
                 </div>
             </div>
-        <!--*****************************************tab ends 02************************************************-->
+        <!--*****************************************tab  02************************************************-->
         <div class="tab-pane content-wrapper py-3" id='tab-02'>
             <div class="container-fluid" id='container'>
 
@@ -183,10 +183,66 @@ return <<<HTML
                 </div>
                 <div><button class='btn btn-info pull-right' onclick='new_course2()'>New Course</button></div>
                 </div>   
-            
+                <div class="modal fade" id="subjects2" role="dialog" data-backdrop='static'>
+                    <div class="modal-dialog modal-lg">
+                         <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" onclick='load_courses()' data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Subjects</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" id="institutes_courses" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Subject</th>
+                                        <th>Semester</th>
+                                        <th>Passing Internal Practical</th>
+                                        <th>Maximum Internal Practical</th>
+                                        <th>Passing External Practical</th>
+                                        <th>Maximum Enternal Practical</th>
+                                        <th>Passing Internal Theory</th>
+                                        <th>Maximum Internal Theory</th>
+                                        <th>Passing External Theory</th>
+                                        <th>Maximum External Theory</th>
+                                        <th>Optional</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Subject</th>
+                                        <th>Semester</th>
+                                        <th>Passing Internal Practical</th>
+                                        <th>Maximum Internal Practical</th>
+                                        <th>Passing External Practical</th>
+                                        <th>Maximum Enternal Practical</th>
+                                        <th>Passing Internal Theory</th>
+                                        <th>Maximum Internal Theory</th>
+                                        <th>Passing External Theory</th>
+                                        <th>Maximum External Theory</th>
+                                        <th>Optional</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        <div><button class='btn btn-info pull-right mt-2' onclick='add_course_button1()'>Add Course</button></div>
+                        </div>
+                            </div>
+                            <div><p id='info_courses' class='text-center'></p></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-warning"  onclick='save_courses1()'>Save changes</button>
+                            </div>
+                        </div>   
+                    </div>
+                </div>
             </div>
 
-        <!--tab ends-->
+        <!--**********************************************tab ends**********************************************-->
         <div class="tab-pane content-wrapper py-3 " id='tab-03'>
             <div class="container-fluid" id='container'>
 

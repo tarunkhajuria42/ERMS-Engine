@@ -1,7 +1,9 @@
 init();
 var institutes_table;
 var institutes_courses1;
-var course_table2;
+var courses_table2;
+var courses_subjects2;
+var all_courses=[];
 function init()
 {
 	institutes_table1=$("#institutes_table").DataTable();
@@ -9,6 +11,7 @@ function init()
 	load_institutes();
 	//*** Tab 2*****
 	courses_table2=$("#courses_table").DataTable();
+	courses_subjects2=$("#courses_subjects").DataTable();
 	$("#exam1").DataTable();
 	$("#session").DataTable();
 }
@@ -18,7 +21,7 @@ var institutes1=[];
 var courses1=[];
 var new_courses1=[];
 var selected_insti1;
-var all_courses=[];
+
 var deleted_courses1=[];
 var deleted_institutes1=[];
 var new_institute_selected1=false;
@@ -28,6 +31,9 @@ var click_new=false;
 function load_institutes()
 {
 	institutes1=[];
+	institutes_table1.clear();
+	new_institute_opened1=false;
+
 	$.post(address,
 	{
 		type:'lists',
@@ -51,6 +57,22 @@ function load_institutes()
 	});
 }
 
+
+
+function new_institute1()
+{
+	if(!new_institute_opened1)
+	{
+		institutes_table1.row.add([`<input id='new_institute1' type='text'>`,
+			`<button id='new_button' onclick='add_course1(this.id)' data-toggle="modal" data-target="#courses1" class='btn btn-info pull-right'>Add</button>`]);
+		institutes_table1.draw();
+		new_institute_opened1=true;
+	}
+	else
+	{
+		error_insitute1('One institute at a time Please');
+	}
+}
 function add_course1(id)
 {
 	var type= id.substring(0, id.indexOf("_"));
@@ -73,21 +95,6 @@ function add_course1(id)
 			post_arguments,
 			populate_courses1
 			);
-}
-
-function new_institute1()
-{
-	if(!new_institute_opened1)
-	{
-		institutes_table1.row.add([`<input id='new_institute1' type='text'>`,
-			`<button id='new_button' onclick='add_course1(this.id)' data-toggle="modal" data-target="#courses1" class='btn btn-info pull-right'>Add</button>`]);
-		institutes_table1.draw();
-		new_institute_opened1=true;
-	}
-	else
-	{
-		error_insitute1('One institute at a time Please');
-	}
 }
 // Courses functions
 function populate_courses1(data,status)
@@ -157,6 +164,8 @@ function new_course_add()
 		error_courses1('Empty field');
 	}
 }
+
+//Resets the courses
 function reset_all_courses()
 {
 	institutes_courses1.clear();
@@ -166,6 +175,8 @@ function reset_all_courses()
 	deleted_courses1=[];
 
 }
+
+//Gets all courses for the dropdown menu
 function fill_all_courses()
 {
 	$.post(address,
@@ -186,6 +197,7 @@ function fill_all_courses()
 		});
 }
 
+// Handles remove course button click
 function remove_course1(id)
 {
 	var no=id.substring(id.indexOf('_')+1,id.length);
@@ -199,11 +211,11 @@ function remove_course1(id)
 	courses1.splice(no,1);
 	institutes_courses1.row($('#'+id).parents('tr')).remove().draw();
 }
+
+
+/* Implementation of save button for courses*/
 function save_courses1()
 {
-	console.log(new_courses1);
-	console.log(courses1);
-	console.log(deleted_courses1);
 	var add_reply=0;
 	var delete_reply=0;
 	if(new_courses1.length>0)
@@ -255,7 +267,6 @@ function save_courses1()
 			post_arguments,
 			function handle_submit_deleted(data,status)
 			{
-				console.log(data);
 				if(status=='success')
 				{
 					if(data!='')
@@ -291,7 +302,8 @@ function error_insitute1(text)
 	$('#info_institute').text(text);
 }
 /**************************************************** Manage Courses ********************************************/
-function findCourses2()
+
+function fillCourses2()
 {
 	$.post(address,
 	{
@@ -300,19 +312,18 @@ function findCourses2()
 	},
 	function courses_fill(data,status)
 	{
-		console.log(data);
 		datah=JSON.parse(data);
-		
 		if(datah['type']=='success')
 		{
-			institutes1=datah['reply'];
-			var entry;
-			for (var i=0; i<institutes1.length;i++)
+			all_courses=datah['reply'];
+			for (var i=0; i<all_courses.length;i++)
 			{
-				institutes_table1.row.add([institutes1[i],
-					`<button id='button_`+i+`' onclick='add_course1(this.id)' data-toggle="modal" data-target="#subjects2" class='btn btn-info pull-right'>Add/Edit</button>`]);
+				courses_table2.row.add([all_courses[i],
+					`<button id='coursesbutton_`+i+`' onclick='add_subject2(this.id)' data-toggle="modal" data-target="#subjects2" class='btn btn-info pull-right'>Add/Edit</button>`]);
 			}
-			institutes_table1.draw();
+			courses_table2.draw();	
 		}
 	});
 }
+
+
