@@ -189,14 +189,15 @@ return <<<HTML
                             <table class="table table-bordered" width="100%" id="subjects_table2" cellspacing="0">
                                 <thead>
                                     <tr>
+                                        <th>Code</th>
                                         <th>Subject</th>
                                         <th>Semester</th>
                                         <th>Passing Internal Practical</th>
                                         <th>Maximum Internal Practical</th>
-                                        <th>Passing External Practical</th>
-                                        <th>Maximum Enternal Practical</th>
                                         <th>Passing Internal Theory</th>
                                         <th>Maximum Internal Theory</th>
+                                        <th>Passing External Practical</th>
+                                        <th>Maximum Enternal Practical</th>
                                         <th>Passing External Theory</th>
                                         <th>Maximum External Theory</th>
                                         <th>Optional</th>
@@ -207,14 +208,15 @@ return <<<HTML
                                 </tbody>
                                 <tfoot>
                                     <tr>
+                                        <th>Code</th>
                                         <th>Subject</th>
                                         <th>Semester</th>
                                         <th>Passing Internal Practical</th>
                                         <th>Maximum Internal Practical</th>
-                                        <th>Passing External Practical</th>
-                                        <th>Maximum Enternal Practical</th>
                                         <th>Passing Internal Theory</th>
                                         <th>Maximum Internal Theory</th>
+                                        <th>Passing External Practical</th>
+                                        <th>Maximum Enternal Practical</th>
                                         <th>Passing External Theory</th>
                                         <th>Maximum External Theory</th>
                                         <th>Optional</th>

@@ -63,6 +63,13 @@ function lists()
 									utils\reply('delete_courses','error','already_added');
 								break;
 			case 'add_subjects':
+			case 'get_subjects':$subjects=utils\course\get_subjects($_POST['value']);
+								if($subjects!=-1)
+									echo(utils\reply('get_subjects','success',$subjects));
+								else
+									echo(utils\reply('get_subjects','error','system'));
+								break;
+
 			default: echo(utils\reply('list','error','badrequest'));
 			
 

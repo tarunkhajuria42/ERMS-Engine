@@ -308,6 +308,12 @@ var courses_table2;
 var courses_subjects2;
 var new_course_opened2=false;
 var selected_course2;
+var edit_subject_inprogress=false;
+var subjects2=[];
+var new_subjects2=[];
+var deleted_subjects2=[];
+var edited_subjects2=[];
+
 function init_tab2()
 {
 	courses_table2=$("#courses_table2").DataTable();
@@ -332,7 +338,7 @@ function fill_courses2()
 			for (var i=0; i<all_courses.length;i++)
 			{
 				courses_table2.row.add([all_courses[i],
-					`<button id='coursesbutton_`+i+`' onclick='add_subject2(this.id)' data-toggle="modal" data-target="#subjects2" class='btn btn-info pull-right'>Add/Edit</button>`]);
+					`<button id='coursesbutton_`+i+`' onclick='add_subjects2(this.id)' data-toggle="modal" data-target="#subjects2" class='btn btn-info pull-right'>Add/Edit</button>`]);
 			}
 			courses_table2.draw();	
 		}
@@ -369,7 +375,7 @@ function add_subjects2(id)
 	var post_arguments={};
 	post_arguments['type']='lists';
 	post_arguments['request']='get_subjects';
-	post_arguments['value']=selected_insti1;	
+	post_arguments['value']=selected_course2;	
 	$.post(address,
 			post_arguments,
 			populate_subjects2
@@ -378,24 +384,99 @@ function add_subjects2(id)
 //Subject functions
 function populate_subjects2(data,status)
 {
+	var optional=['No','Yes'];
 	if(status=='success')
 	{
+		console.log(data);
 		var datah= JSON.parse(data);
 		if(datah['type']=='success')
 		{
 			reset_all_subjects2();
 			subjects2=datah['reply'];
-			for(var i=0; i<courses2.length;i++)
+			for(var i=0; i<subjects2.length;i++)
 			{
-				subjects_table2.row.add([subjects2[i],
-					`<button id='buttonsubjects2_`+i+`' onclick='remove_course1(this.id)'  class='btn btn-info pull-right'>Remove</button>`
+				subjects_table2.row.add([
+					subjects2[i]['subject_code'],
+					subjects2[i]['subject'],
+					subjects2[i]['semester'],
+					subjects2[i]['pipractical'],
+					subjects2[i]['mipractical'],
+					subjects2[i]['pitheory'],
+					subjects2[i]['mitheory'],
+					subjects2[i]['ppractical'],
+					subjects2[i]['mpractical'],
+					subjects2[i]['ptheory'],
+					subjects2[i]['mtheory'],
+					optional[subjects2[i]['optional']],
+					`<button id='buttonsubjects2_`+i+`' onclick='remove_subject2(this.id)'  class='btn btn-info pull-right'>Remove</button>`
 					]);	
 			}
-			institutes_courses1.draw();	
+			subjects_table2.draw();	
 		}
 	}
 }
+function reset_all_subjects2()
+{
+	subjects_table2.clear();
+	subjects2=[];
+	new_subjects2=[];
+	deleted_subjects2=[];
 
+}
+// Handles remove course button click
+function remove_subject2(id)
+{
+	var no=id.substring(id.indexOf('_')+1,id.length);
+	if(new_subjects2.length!=0)
+	{
+		var indextemp=new_subjects2.indexOf(courses1[no]);
+		if(indextemp!=-1)
+			new_subjects2.splice(indextemp,1);
+		else
+			deleted_subjects2.push(subjects2[no]);
+	}
+	subjects2.splice(no,1);
+	subjects_table2.row($('#'+id).parents('tr')).remove().draw();
+}
+
+function edit_subject1(id)
+{
+	if(!edit_subject_inprogress)
+	{
+		var no=id.substring(id.indexOf('_')+1,id.length);
+		subjects_table2.row($('#buttonsubjects2_'+no).parents('tr')).remove().draw();
+		subjects_table2.row.add([
+					subjects2[no]['subject_code'],
+					subjects2[no]['subject'],
+					`<input type='text' id='edit_semester2_`+no+`' value='`+subjects2[no]['semester']+`'>`,
+					`<input type='text' id='edit_pipractical2_`+no+`' value='`+subjects2[no]['pipractical'],
+					`<input type='text' id='edit_mipractical2_`+no+`' value='`+subjects2[no]['mipractical'],
+					`<input type='text' id='edit_pitheory2_`+no+`' value='`+subjects2[no]['pitheory'],
+					`<input type='text' id='edit_mitheory2_`+no+`' value='`+subjects2[no]['mitheory'],
+					`<input type='text' id='edit_ppractical2_`+no+`' value='`+subjects2[no]['ppractical'],
+					`<input type='text' id='edit_mpractical2_`+no+`' value='`+subjects2[no]['mpractical'],
+					`<input type='text' id='edit_ptheory2_`+no+`' value='`+subjects2[no]['ptheory'],
+					`<input type='text' id='edit_mtheory2_`+no+`' value='`+subjects2[no]['mtheory'],
+					`<select id='edit_optional2_'`+no+`>
+						<option value='0'>Yes</option>
+						<option value='1'>No</option>
+					</select>`
+					`<button id='submit_edit2_button_`+no+`' onclick='submit_edit2(this.id)'  class='btn btn-info pull-right'>Done</button>`
+					]).draw();
+		$('#edit_optional2').attr("selected",true);
+		edit_subject_inprogress=true;	
+	}
+	else
+		error_subjects2('Edit, one at a time !!');
+	
+}
+function submit_edit2()
+{
+	edited_subjects2.push([$("#edit)
+		])
+
+
+}
 function error_course2(text)
 {
 	$('#info_courses2').text(text);

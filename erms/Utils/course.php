@@ -9,19 +9,6 @@ function all_institutes()
 	else
 		return -1;
 }
-function add_subject($subject)
-{
-	if(\data\utils\database\insert('INSERT into subject(subject,course,semester,
-		pitheory,mitheory,
-		pipractical,mipractical,
-		ppractical,mpractical,
-		ptheory,mtheory
-		) values(?,?,?,?,?,?,?,?,?,?,?)',$subject,1)==1)
-			return 1;
-		else 
-			return -1;		
-
-}
 function add_courses($institute,$course)
 {
 	for ($i=0; $i<count($course); $i++)
@@ -76,5 +63,27 @@ function all_courses()
 		return -1;
 	}
 }
-
+function get_subjects($course)
+{
+	$arguments=[$course];
+	$res=\data\utils\database\find('SELECT * from subject where course=?',$arguments,1);
+	return $res;
+}
+function add_subject($subject)
+{
+	if(\data\utils\database\insert('INSERT into subject(subject,course,semester,
+		pitheory,mitheory,
+		pipractical,mipractical,
+		ppractical,mpractical,
+		ptheory,mtheory
+		) values(?,?,?,?,?,?,?,?,?,?,?)',$subject,1)==1)
+			return 1;
+		else 
+			return -1;		
+}
+function delete_subject($subject_code)
+{
+	$arguments=[$subject_code];
+	return (\data\utils\database\delete('DELETE from subject where subject_code=?',$arguments,1));
+}
 ?>
