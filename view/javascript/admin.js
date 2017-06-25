@@ -203,14 +203,11 @@ function fill_all_courses()
 function remove_course1(id)
 {
 	var no=id.substring(id.indexOf('_')+1,id.length);
-	console.log(new_courses1.length);
-	if(new_courses1.length==0)
-		var indextemp=new_courses1.indexOf(courses1[no]);
+	var indextemp=new_courses1.indexOf(courses1[no]);
 	if(indextemp!=-1)
 		new_courses1.splice(indextemp,1);
 	else
 		deleted_courses1.push(courses1[no]);
-	courses1.splice(no,1);
 	institutes_courses1.row($('#'+id).parents('tr')).remove().draw();
 }
 
@@ -240,7 +237,10 @@ function save_courses1()
 					{
 						datah=JSON.parse(data);
 						if(datah['type']=='success')
+						{
+							new_courses1=[];
 							add_reply=2;
+						}
 						else
 							add_reply=3;
 					}
@@ -265,17 +265,23 @@ function save_courses1()
 		temp_dict['institute']=selected_insti1;
 		temp_dict['courses']=deleted_courses1;
 		post_arguments['data']=JSON.stringify(temp_dict);
+		console.log(post_arguments);
 		$.post(address,
 			post_arguments,
 			function handle_submit_deleted(data,status)
 			{
 				if(status=='success')
 				{
+					console.log(data);
 					if(data!='')
 					{
+						console.log(data);
 						datah=JSON.parse(data);
 						if(datah['type']=='success')
+						{
 							delete_reply=2;
+							deleted_courses1=[];
+						}	
 						else
 							delete_reply=3;
 					}
@@ -435,7 +441,6 @@ function remove_subject2(id)
 		else
 			deleted_subjects2.push(subjects2[no]);
 	}
-	subjects2.splice(no,1);
 	subjects_table2.row($('#'+id).parents('tr')).remove().draw();
 }
 
@@ -468,13 +473,33 @@ function edit_subject1(id)
 	}
 	else
 		error_subjects2('Edit, one at a time !!');
-	
 }
-function submit_edit2()
+function submit_edit2(id)
 {
-	edited_subjects2.push([$("#edit)
-		])
+	var no=id.substring(id.indexOf('_')+1,id.length);
+	edited_subjects2.push();
 
+	subjects_table2.row($(this).parents('tr')).remove();
+}
+
+function submit_subjects2()
+{
+
+}
+function submit_add_subjects()
+{
+
+}
+function submit_delete_subjects()
+{
+
+}
+function submit_edited_subjects2()
+{
+
+}
+function submit_add_subjects2()
+{
 
 }
 function error_course2(text)
