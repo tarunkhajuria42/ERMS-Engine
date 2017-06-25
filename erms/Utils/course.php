@@ -29,7 +29,7 @@ function delete_courses($institute,$course)
 		$arguments=[$institute,$course[$i]];
 		if(\data\utils\database\delete('DELETE from courses where institute=? and course=?',$arguments,1)!=-1)
 		{
-			var_dump($course[$i]);
+			
 		}
 		else 	
 			return -1;		

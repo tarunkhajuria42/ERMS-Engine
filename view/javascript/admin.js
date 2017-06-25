@@ -141,7 +141,6 @@ function new_course_add()
 	{
 		if(courses1.indexOf(temp_new_course)==-1)
 		{	
-			courses1.push(temp_new_course);
 			var temp_index_deleted=deleted_courses1.indexOf(temp_new_course)
 			if(temp_index_deleted!=-1)
 			{
@@ -155,6 +154,7 @@ function new_course_add()
 			institutes_courses1.row.add([temp_new_course,
 				`<button id='buttoncourses1_`+courses1.length+`' onclick='remove_course1(this.id)'  class='btn btn-info pull-right'>Remove</button>`
 				]).draw();
+			courses1.push(temp_new_course);
 			new_course_opened1=false;	
 			error_courses1("");
 		}
@@ -229,7 +229,7 @@ function save_courses1()
 		post_arguments['data']=JSON.stringify(temp_dict);
 		console.log(post_arguments);
 		$.post(address,post_arguments,
-			function handle_submit(data,status)
+			function handle_submit_added(data,status)
 			{
 				console.log(data);
 				if(status=='success'){
@@ -270,12 +270,11 @@ function save_courses1()
 			post_arguments,
 			function handle_submit_deleted(data,status)
 			{
+				console.log(data);
 				if(status=='success')
 				{
-					console.log(data);
 					if(data!='')
 					{
-						console.log(data);
 						datah=JSON.parse(data);
 						if(datah['type']=='success')
 						{
@@ -292,6 +291,7 @@ function save_courses1()
 					delete_reply=3;
 			});
 	}	
+
 	if(add_reply==3 || delete_reply==3)
 		error_courses1("Error ! Could not save, Try later");
 	else
@@ -433,14 +433,11 @@ function reset_all_subjects2()
 function remove_subject2(id)
 {
 	var no=id.substring(id.indexOf('_')+1,id.length);
-	if(new_subjects2.length!=0)
-	{
 		var indextemp=new_subjects2.indexOf(courses1[no]);
 		if(indextemp!=-1)
 			new_subjects2.splice(indextemp,1);
 		else
 			deleted_subjects2.push(subjects2[no]);
-	}
 	subjects_table2.row($('#'+id).parents('tr')).remove().draw();
 }
 
@@ -481,7 +478,20 @@ function submit_edit2(id)
 
 	subjects_table2.row($(this).parents('tr')).remove();
 }
-
+function add_course_button1()
+{
+	if(!new_course_opened1)
+	{
+		institutes_courses1.row.add([`<input id='courses_new_input' type='text'>`,
+			`<button id='courses_button_new' class='btn pull-right btn-info'onclick='new_course_add()'>Add </button>`]).draw();		
+		new_course_opened1=true;
+		error_courses1("");
+	}
+	else
+	{
+		error_courses1("One course a time please!!");
+	}	
+}
 function submit_subjects2()
 {
 

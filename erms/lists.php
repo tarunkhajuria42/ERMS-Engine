@@ -6,7 +6,6 @@ function lists()
 	{
 		if(isset($_POST['data']))
 		{
-			echo($_POST['data']);
 			$data=json_decode($_POST['data'],true);
 		}
 		switch($_POST['request'])
@@ -50,17 +49,17 @@ function lists()
 								$courses=$data['courses'];
 								$institute=$data['institute'];
 								if(utils\course\add_courses($institute,$courses)!=-1)
-									utils\reply('add_courses','success','courses_added');
+									echo(utils\reply('add_courses','success','courses_added'));
 								else
-									utils\reply('add_courses','error','already_added');
+									echo(utils\reply('add_courses','error','already_added'));
 								break;
 			case 'delete_courses':
 								$courses=$data['courses'];
 								$institute=$data['institute'];
 								if(utils\course\delete_courses($institute,$courses)!=-1)
-									utils\reply('delete_courses','success','courses_added');
+									echo(utils\reply('delete_courses','success','courses_deleted'));
 								else
-									utils\reply('delete_courses','error','already_added');
+									echo(utils\reply('delete_courses','error','already_deleted'));
 								break;
 			case 'add_subjects':
 			case 'get_subjects':$subjects=utils\course\get_subjects($_POST['value']);
