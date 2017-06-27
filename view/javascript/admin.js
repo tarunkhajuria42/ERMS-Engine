@@ -456,6 +456,22 @@ function edit_subject2(id)
 	{
 		var no=id.substring(id.indexOf('_')+1,id.length);
 		subjects_table2.row($('#buttonsubjects2_'+no).parents('tr')).remove().draw();
+		var optional_string;
+		if(subjects2[no]['optional']==0)
+		{
+				optional_string=`'>
+						<option value='0'>No</option>
+						<option value='1'>Yes</option>
+					</select>`
+		}
+		else
+		{
+			optional_string=`'>
+						<option value='1'>Yes</option>
+						<option value='0'>No</option>
+					</select>`
+		}
+
 		subjects_table2.row.add([
 					subjects2[no]['subject_code'],
 					subjects2[no]['subject'],
@@ -468,13 +484,10 @@ function edit_subject2(id)
 					`<input type='text' id='edit_mpractical2_`+no+`' value='`+subjects2[no]['mpractical']+`'/>`,
 					`<input type='text' id='edit_ptheory2_`+no+`' value='`+subjects2[no]['ptheory']+`'/>`,
 					`<input type='text' id='edit_mtheory2_`+no+`' value='`+subjects2[no]['mtheory']+`'/>`,
-					`<select id='edit_optional2_`+no+`'>
-						<option value='0'>Yes</option>
-						<option value='1'>No</option>
-					</select>`,'_',
+					`<select id='edit_optional2_`+no+optional_string,'_',
 					`<button id='submitedit2button_`+no+`' onclick='submit_edit2(this.id)'  class='btn btn-info pull-right'>Done</button>`
 					]);
-		$('#edit_optional2 option[value="0"]').attr("selected",true);
+		$("option[value='10']").attr('selected','selected');
 		subjects_table2.draw();
 		edit_subject_inprogress=true;	
 	}
@@ -484,20 +497,38 @@ function edit_subject2(id)
 function submit_edit2(id)
 {
 	var no=id.substring(id.indexOf('_')+1,id.length);
-	var temp_dict={};
-	temp_dict['subject_code']=subjects2[no]['subject_code'];
-	temp_dict['subject']=subjects2[no]['subject'];
-	temp_dict['semester']=$('#edit_semester2_'+no).val();
-	temp_dict['pipractical']=$('#edit_pipractical2_'+no).val();
-	temp_dict['mipractical']=$('#edit_mipractical2_'+no).val();
-	temp_dict['pitheory']=$('#edit_pitheory2_'+no).val();
-	temp_dict['mitheory']=$('#edit_mitheory2_'+no).val();
-	temp_dict['ppractical']=$('#edit_ppractical2_'+no).val();
-	temp_dict['mpractical']=$('#edit_mpractical2_'+no).val();
-	temp_dict['ptheory']=$('#edit_ptheory2_'+no).val();
-	temp_dict['mtheory']=$('#edit_mtheory2_'+no).val();
-	temp_dict['optional']=$('#edit_optional2_'+no).val();
-	edited_subjects2.push(temp_dict);
+	var edit_index=find_element(edited_subjects2,'subject_code',subjects2[no]['subject_code']);
+	if(edit_index!=-1)
+	{
+		edited_subjects2[edit_index]['semester']=$('#edit_semester2_'+no).val();
+		edited_subjects2[edit_index]['pipractical']=$('#edit_pipractical2_'+no).val();
+		edited_subjects2[edit_index]['mipractical']=$('#edit_mipractical2_'+no).val();
+		edited_subjects2[edit_index]['pitheory']=$('#edit_pitheory2_'+no).val();
+		edited_subjects2[edit_index]['mitheory']=$('#edit_mitheory2_'+no).val();
+		edited_subjects2[edit_index]['ppractical']=$('#edit_ppractical2_'+no).val();
+		edited_subjects2[edit_index]['mpractical']=$('#edit_mpractical2_'+no).val();
+		edited_subjects2[edit_index]['ptheory']=$('#edit_ptheory2_'+no).val();
+		edited_subjects2[edit_index]['mtheory']=$('#edit_mtheory2_'+no).val();
+		edited_subjects2[edit_index]['optional']=$('#edit_optional2_'+no).val();
+	}
+	else
+	{
+		var temp_dict={};
+		temp_dict['subject_code']=subjects2[no]['subject_code'];
+		temp_dict['subject']=subjects2[no]['subject'];
+		temp_dict['semester']=$('#edit_semester2_'+no).val();
+		temp_dict['pipractical']=$('#edit_pipractical2_'+no).val();
+		temp_dict['mipractical']=$('#edit_mipractical2_'+no).val();
+		temp_dict['pitheory']=$('#edit_pitheory2_'+no).val();
+		temp_dict['mitheory']=$('#edit_mitheory2_'+no).val();
+		temp_dict['ppractical']=$('#edit_ppractical2_'+no).val();
+		temp_dict['mpractical']=$('#edit_mpractical2_'+no).val();
+		temp_dict['ptheory']=$('#edit_ptheory2_'+no).val();
+		temp_dict['mtheory']=$('#edit_mtheory2_'+no).val();
+		temp_dict['optional']=$('#edit_optional2_'+no).val();
+		edited_subjects2.push(temp_dict);	
+	}
+	
 	//change in subject2
 	subjects2[no]['semester']=$('#edit_semester2_'+no).val();
 	subjects2[no]['pipractical']=$('#edit_pipractical2_'+no).val();
@@ -528,6 +559,7 @@ function submit_edit2(id)
 					`<button id='buttonsubjects2_`+no+`' onclick='remove_subject2(this.id)'  class='btn btn-info pull-right'>Remove</button>`
 					]).draw();
 	edit_subject_inprogress=false;	
+	console.log(edited_subjects2);
 }
 function new_subject2()
 {
@@ -545,8 +577,8 @@ function new_subject2()
 					`<input type='text' id='edit_ptheory2_`+no+`' value='`+subjects2[no]['ptheory'],
 					`<input type='text' id='edit_mtheory2_`+no+`' value='`+subjects2[no]['mtheory'],
 					`<select id='edit_optional2_'`+no+`>
-						<option value='0'>Yes</option>
-						<option value='1'>No</option>
+						<option value='0'>No</option>
+						<option value='1'>Yes</option>
 					</select>`,
 			`<button id='subjectsButtonNew_`+no`' class='btn pull-right btn-info'onclick='new_subject_add(this.id)'>Done</button>`]).draw();		
 		new_subject_opened1=true;
@@ -560,7 +592,7 @@ function new_subject2()
 function new_subject_add(id)
 {
 	var no=id.substring(id.indexOf('_')+1,id.length);
-	
+
 }
 function submit_new_subjects()
 {
@@ -582,4 +614,16 @@ function error_course2(text)
 function error_subjects2(text)
 {
 	$('#info_subjects2').text(text);	
+}
+//******************************************************Utility Functions ****************************************
+function find_element(object,key,value)
+{
+	for (var i=0;i<object.length;i++)
+	{
+		if(object[i][key]==value)
+		{
+			return i
+		}
+	}
+	return -1;
 }
