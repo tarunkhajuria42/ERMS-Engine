@@ -229,7 +229,7 @@ return <<<HTML
                                 </tbody>
                             </table>
                             </div>
-                            <div><button class='btn btn-info pull-right mt-2' onclick='add_subject_button2()'>Add Subject</button></div>
+                            <div><button class='btn btn-info pull-right mt-2' onclick='new_subject2()'>Add Subject</button></div>
                         </div>
                             <div><p id='info_subjects2' class='text-center'></p></div>
                             <div class="modal-footer">
