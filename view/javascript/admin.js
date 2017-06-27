@@ -392,7 +392,7 @@ function add_subjects2(id)
 //Subject functions
 function populate_subjects2(data,status)
 {
-	var optional=['No','Yes'];
+	
 	if(status=='success')
 	{
 		console.log(data);
@@ -401,7 +401,15 @@ function populate_subjects2(data,status)
 		{
 			reset_all_subjects2();
 			subjects2=datah['reply'];
-			for(var i=0; i<subjects2.length;i++)
+			show_subjects2();
+		}
+	}
+}
+function show_subjects2()
+{
+	var optional=['No','Yes'];
+	subjects_table2.clear();
+	for(var i=0; i<subjects2.length;i++)
 			{
 				subjects_table2.row.add([
 					subjects2[i]['subject_code'],
@@ -421,12 +429,10 @@ function populate_subjects2(data,status)
 					]);	
 			}
 			subjects_table2.draw();	
-		}
-	}
 }
 function reset_all_subjects2()
 {
-	subjects_table2.clear();
+	
 	subjects2=[];
 	new_subjects2=[];
 	deleted_subjects2=[];
@@ -462,11 +468,11 @@ function edit_subject2(id)
 					`<input type='text' id='edit_mpractical2_`+no+`' value='`+subjects2[no]['mpractical']+`'/>`,
 					`<input type='text' id='edit_ptheory2_`+no+`' value='`+subjects2[no]['ptheory']+`'/>`,
 					`<input type='text' id='edit_mtheory2_`+no+`' value='`+subjects2[no]['mtheory']+`'/>`,
-					`<select id='edit_optional2_'`+no+`>
+					`<select id='edit_optional2_`+no+`'>
 						<option value='0'>Yes</option>
 						<option value='1'>No</option>
 					</select>`,'_',
-					`<button id='submit_edit2_button_`+no+`' onclick='submit_edit2(this.id)'  class='btn btn-info pull-right'>Done</button>`
+					`<button id='submitedit2button_`+no+`' onclick='submit_edit2(this.id)'  class='btn btn-info pull-right'>Done</button>`
 					]);
 		$('#edit_optional2 option[value="0"]').attr("selected",true);
 		subjects_table2.draw();
@@ -478,7 +484,50 @@ function edit_subject2(id)
 function submit_edit2(id)
 {
 	var no=id.substring(id.indexOf('_')+1,id.length);
-	subjects_table2.row($('#'+id).parents('tr')).remove().draw();
+	var temp_dict={};
+	temp_dict['subject_code']=subjects2[no]['subject_code'];
+	temp_dict['subject']=subjects2[no]['subject'];
+	temp_dict['semester']=$('#edit_semester2_'+no).val();
+	temp_dict['pipractical']=$('#edit_pipractical2_'+no).val();
+	temp_dict['mipractical']=$('#edit_mipractical2_'+no).val();
+	temp_dict['pitheory']=$('#edit_pitheory2_'+no).val();
+	temp_dict['mitheory']=$('#edit_mitheory2_'+no).val();
+	temp_dict['ppractical']=$('#edit_ppractical2_'+no).val();
+	temp_dict['mpractical']=$('#edit_mpractical2_'+no).val();
+	temp_dict['ptheory']=$('#edit_ptheory2_'+no).val();
+	temp_dict['mtheory']=$('#edit_mtheory2_'+no).val();
+	temp_dict['optional']=$('#edit_optional2_'+no).val();
+	edited_subjects2.push(temp_dict);
+	//change in subject2
+	subjects2[no]['semester']=$('#edit_semester2_'+no).val();
+	subjects2[no]['pipractical']=$('#edit_pipractical2_'+no).val();
+	subjects2[no]['mipractical']=$('#edit_mipractical2_'+no).val();
+	subjects2[no]['pitheory']=$('#edit_pitheory2_'+no).val();
+	subjects2[no]['mitheory']=$('#edit_mitheory2_'+no).val();
+	subjects2[no]['ppractical']=$('#edit_ppractical2_'+no).val();
+	subjects2[no]['mpractical']=$('#edit_mpractical2_'+no).val();
+	subjects2[no]['ptheory']=$('#edit_ptheory2_'+no).val();
+	subjects2[no]['mtheory']=$('#edit_mtheory2_'+no).val();
+	subjects2[no]['optional']=$('#edit_optional2_'+no).val();
+	var optional=['No','Yes'];
+	subjects_table2.row($('#'+id).parents('tr')).remove();
+	subjects_table2.row.add([
+					subjects2[no]['subject_code'],
+					subjects2[no]['subject'],
+					subjects2[no]['semester'],
+					subjects2[no]['pipractical'],
+					subjects2[no]['mipractical'],
+					subjects2[no]['pitheory'],
+					subjects2[no]['mitheory'],
+					subjects2[no]['ppractical'],
+					subjects2[no]['mpractical'],
+					subjects2[no]['ptheory'],
+					subjects2[no]['mtheory'],
+					optional[subjects2[no]['optional']],
+					`<button id='editsubjects2_`+no+`' onclick='edit_subject2(this.id)'  class='btn btn-info pull-right'>Edit</button>`,	
+					`<button id='buttonsubjects2_`+no+`' onclick='remove_subject2(this.id)'  class='btn btn-info pull-right'>Remove</button>`
+					]).draw();
+	edit_subject_inprogress=false;	
 }
 function new_subject2()
 {
@@ -499,7 +548,7 @@ function new_subject2()
 						<option value='0'>Yes</option>
 						<option value='1'>No</option>
 					</select>`,
-			`<button id='subjects_button_new' class='btn pull-right btn-info'onclick='new_course_add()'>Done</button>`]).draw();		
+			`<button id='subjectsButtonNew_`+no`' class='btn pull-right btn-info'onclick='new_subject_add(this.id)'>Done</button>`]).draw();		
 		new_subject_opened1=true;
 		error_subjects2("Success");
 	}
@@ -508,7 +557,11 @@ function new_subject2()
 		error_subjects2("One course at a time please!!");
 	}	
 }
-
+function new_subject_add(id)
+{
+	var no=id.substring(id.indexOf('_')+1,id.length);
+	
+}
 function submit_new_subjects()
 {
 
@@ -521,10 +574,7 @@ function submit_edited_subjects2()
 {
 
 }
-function submit_add_subjects2()
-{
 
-}
 function error_course2(text)
 {
 	$('#info_courses2').text(text);
