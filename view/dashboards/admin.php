@@ -202,6 +202,7 @@ return <<<HTML
                                         <th>Maximum External Theory</th>
                                         <th>Optional</th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody >
@@ -221,14 +222,15 @@ return <<<HTML
                                         <th>Maximum External Theory</th>
                                         <th>Optional</th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                 </tbody>
                             </table>
-                        <div><button class='btn btn-info pull-right mt-2' onclick='add_subject_button2()'>Add Subject</button></div>
-                        </div>
                             </div>
+                            <div><button class='btn btn-info pull-right mt-2' onclick='add_subject_button2()'>Add Subject</button></div>
+                        </div>
                             <div><p id='info_subjects2' class='text-center'></p></div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-warning"  onclick='save_subjects2()'>Save changes</button>
