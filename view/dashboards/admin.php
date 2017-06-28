@@ -229,7 +229,7 @@ return <<<HTML
                                 </tbody>
                             </table>
                             </div>
-                            <div><button class='btn btn-info pull-right mt-2' onclick='new_subject2()'>Add Subject</button></div>
+                            <div><button class='btn btn-info pull-right mt-2' onclick='new_subject_button2()'>Add Subject</button></div>
                         </div>
                             <div><p id='info_subjects2' class='text-center'></p></div>
                             <div class="modal-footer">
@@ -240,32 +240,26 @@ return <<<HTML
                 </div>
             </div>
 
-        <!--**********************************************tab ends**********************************************-->
+        <!--********************************************** Marks (Tab3)*****************************************-->
         <div class="tab-pane content-wrapper py-3 " id='tab-03'>
             <div class="container-fluid" id='container'>
 
-                <!-- Breadcrumbs -->
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                    <li class="breadcrumb-item active">My Dashboard</li>
-                </ol>      
                 <!-- Example Tables Card -->
                 <div class="card mb-3">
                     <div class="card-header">
                         <i class="fa fa-table"></i> Checked Marks
                     </div>
                     <div class="card-block">
-                        Course:<select id='course' class='mb-3'>
+                    <div>
+                        Course:<select id='courses3' class='mb-3 mr-3'>
                             <option value='all'>All</option>
-                            <option value='CS'>Computer Science</option>
                         </select>
-                        Institute:<select id='batch' class='mb-3'>
+                        Institute:<select id='institute3' class='mb-3 mr-3'>
                             <option value='all'>All</option>
-                            <option value='2015'>Aryabhatt Institute of Technology</option>
                         </select>
-                        <button onclick='subjects_select()' value='Show' class='mb-3'>Show</button>
+                        <button onclick='subjects_select()'  class=' btn btn-info btn-sm'>Select</button></div>
                         <div class="table-responsive">
-                            <table class="table table-bordered" width="100%" id="exam1" cellspacing="0">
+                            <table class="table table-bordered" width="100%" id="batch_table3" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>Subject Code</th>
@@ -276,15 +270,7 @@ return <<<HTML
                                         <th>External Practical</th>
                                     </tr>
                                 </thead>
-                                <tbody id='subjects_admin'>
-                                    <tr>
-                                        <td>CS01</th>
-                                        <td>Aryabhatt Institute of Technology</td>
-                                        <td>Computer Science</th>
-                                        <td>N</th>
-                                        <td>N</th>
-                                        <td>N</th>
-                                    </tr>
+                                <tbody >
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -305,8 +291,47 @@ return <<<HTML
                     </div> 
                 </div>
                 </div>
+                <div class="modal fade" id="marks3" role="dialog" data-backdrop='static'>
+                    <div class="modal-dialog modal-lg">
+                         <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" onclick='load_marks3()' data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Marks</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" id="marks_table3" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Roll No</th>
+                                        <th>Name</th>
+                                        <th>Marks</th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Roll No</th>
+                                        <th>Name</th>
+                                        <th>Marks</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        <div><button class='btn btn-info pull-right mt-2' onclick='add_course_button1()'>Add Course</button></div>
+                        </div>
+                            </div>
+                            <div><p id='info_courses' class='text-center'></p></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-warning"  onclick='save_courses1()'>Save changes</button>
+                            </div>
+                        </div>   
+                    </div>
+                </div>
         </div>
-        <!--tab ends-->
+        <!--********************************************* Session (Tab 4) **************************************-->
         <div class="tab-pane content-wrapper py-3" id='tab-04'>
             <div class="container-fluid" id='container'>
 

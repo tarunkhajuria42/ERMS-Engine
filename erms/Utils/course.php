@@ -68,10 +68,11 @@ function get_subjects($course)
 	$res=\data\utils\database\find('SELECT * from subject where course=?',$arguments,1);
 	return $res;
 }
-function add_subjects($subjects,$course)
+function add_subjects($course,$subjects)
 {
 
-	for($i=0;$i<count(arguments);$i++)
+	echo(count($subjects));
+	for($i=0;$i<count($subjects);$i++)
 	{
 		$arguments=[
 				$subjects[$i]['subject_code'],
@@ -89,6 +90,7 @@ function add_subjects($subjects,$course)
 				$subjects[$i]['optional'],
 
 				];
+				var_dump($arguments);
 	if(\data\utils\database\insert('INSERT into subject(subject_code,
 		subject,
 		semester,
@@ -102,19 +104,20 @@ function add_subjects($subjects,$course)
 		ptheory,
 		mtheory,
 		optional
-		) values(?,?,?,?,?,?,?,?,?,?,?)',$arguments,1)!=-1)
-			{}
+		) values(?,?,?,?,?,?,?,?,?,?,?,?,?)',$arguments,1)!=-1)
+			{
+			}
 		else 
 			return -1;		
 	}
 	return 1;
 }
-function delete_subjects($subjects,$course)
+function delete_subjects($course,$subjects)
 {
 	for ($i=0; $i<count($subjects);$i++)
 	{
 		$arguments=[$subjects[$i]['subject_code']];
-		if(\data\utils\database\delete('DELETE from subject where subjects_code=?',$arguments,1)!=-1)	
+		if(\data\utils\database\delete('DELETE from subject where subject_code=?',$arguments,1)!=-1)	
 			{
 
 			}
@@ -123,7 +126,7 @@ function delete_subjects($subjects,$course)
 	}
 	return 1;
 }
-function edit_subjects($subjects,$course)
+function edit_subjects($course,$subjects)
 {
 	for($i=0;$i<count($subjects);$i++)
 	{

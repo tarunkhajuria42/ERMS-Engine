@@ -30,7 +30,6 @@ function initConnectionCurrent()
 		$conn=new \PDO("mysql:host=$GLOBALS[servername];dbname=$GLOBALS[dDbname]",$GLOBALS['dUsername'],$GLOBALS['dpassword']);
 		$conn->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION);
 		return $conn;
-		echo($GLOBALS['dpassword']);
 	}
 	catch(\Exception $e)
 	{
@@ -61,7 +60,7 @@ function insert($query,$parameters,$table)
 		return 1;
 	}catch(\Exception $e)
 	{
-		return ($e->getCode());	
+		return -1;
 	}
 }
 function update($query,$parameters,$table)
@@ -85,7 +84,7 @@ function update($query,$parameters,$table)
 		return 1;
 	}catch(\Exception $e)
 	{
-		return ($e->getCode());	
+		return -1;
 	}
 }
 function find($query,$parameters,$table)

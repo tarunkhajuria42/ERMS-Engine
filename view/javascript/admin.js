@@ -7,7 +7,7 @@ function init()
 {
 	init_tab1();
 	init_tab2();
-	$("#exam1").DataTable();
+	init_tab3();
 	$("#session").DataTable();
 }
 
@@ -341,6 +341,7 @@ function init_tab2()
 }
 function fill_courses2()
 {
+	reset_all2();
 	$.post(address,
 	{
 		type:'lists',
@@ -348,7 +349,7 @@ function fill_courses2()
 	},
 	function courses_fill(data,status)
 	{
-		console.log(data);
+		console.log(data)
 		courses_table2.clear();
 		datah=JSON.parse(data);
 		if(datah['type']=='success')
@@ -516,18 +517,23 @@ function submit_edit2(id)
 	var no=id.substring(id.indexOf('_')+1,id.length);
 	var edit_index=find_element(edited_subjects2,'subject_code',subjects2[no]['subject_code']);
 	var new_index=find_element(new_subjects2,'subject_code',subjects2[no]['subject_code']);
+	console.log(new_index);
+	console.log(new_subjects2);
+	console.log(subjects2);
+	console.log(deleted_subjects2);
+	console.log(edited_subjects2);
 	if(new_index!=-1)
 	{
-		add_subjects2[new_index]['semester']=$('#edit_semester2_'+no).val();
-		add_subjects2[new_index]['pipractical']=$('#edit_pipractical2_'+no).val();
-		add_subjects2[new_index]['mipractical']=$('#edit_mipractical2_'+no).val();
-		add_subjects2[new_index]['pitheory']=$('#edit_pitheory2_'+no).val();
-		add_subjects2[new_index]['mitheory']=$('#edit_mitheory2_'+no).val();
-		add_subjects2[new_index]['ppractical']=$('#edit_ppractical2_'+no).val();
-		add_subjects2[new_index]['mpractical']=$('#edit_mpractical2_'+no).val();
-		add_subjects2[new_index]['ptheory']=$('#edit_ptheory2_'+no).val();
-		add_subjects2[new_index]['mtheory']=$('#edit_mtheory2_'+no).val();
-		add_subjects2[new_index]['optional']=$('#edit_optional2_'+no).val();	
+		new_subjects2[new_index]['semester']=$('#edit_semester2_'+no).val();
+		new_subjects2[new_index]['pipractical']=$('#edit_pipractical2_'+no).val();
+		new_subjects2[new_index]['mipractical']=$('#edit_mipractical2_'+no).val();
+		new_subjects2[new_index]['pitheory']=$('#edit_pitheory2_'+no).val();
+		new_subjects2[new_index]['mitheory']=$('#edit_mitheory2_'+no).val();
+		new_subjects2[new_index]['ppractical']=$('#edit_ppractical2_'+no).val();
+		new_subjects2[new_index]['mpractical']=$('#edit_mpractical2_'+no).val();
+		new_subjects2[new_index]['ptheory']=$('#edit_ptheory2_'+no).val();
+		new_subjects2[new_index]['mtheory']=$('#edit_mtheory2_'+no).val();
+		new_subjects2[new_index]['optional']=$('#edit_optional2_'+no).val();	
 	}
 	else if(edit_index!=-1)
 	{
@@ -591,7 +597,7 @@ function submit_edit2(id)
 					]).draw();
 	edit_subject_inprogress=false;	
 }
-function new_subject2()
+function new_subject_button2()
 {
 	if(!new_subject_opened2)
 	{
@@ -680,16 +686,17 @@ function submit_new_subjects2()
 {
 	 var argument={};
 	 argument['type']='lists';
-	 argument['request']='new_subjects';
+	 argument['request']='add_subjects';
 	 var temp_dict={};
 	 temp_dict['course']=selected_course2;
 	 temp_dict['subjects']=new_subjects2;
-	 argument['data']=temp_dict;
-$.post(address,arguments,
+	 argument['data']=JSON.stringify(temp_dict);
+$.post(address,argument,
 	function handle_new_subjects2(data,status)
 	{
 		if(status='success')
 		{
+			console.log(data);
 			var datah=JSON.parse(data);
 			if(datah['type']='success')
 				new_subjects2=[];
@@ -710,12 +717,13 @@ function submit_delete_subjects2()
 	 var temp_dict={};
 	 temp_dict['course']=selected_course2;
 	 temp_dict['subjects']=deleted_subjects2;
-	 argument['data']=temp_dict;
-$.post(address,arguments,
-	function handle_delete_subjects2(data,status)
+	 argument['data']=JSON.stringify(temp_dict);
+$.post(address,argument,
+	function handle_delete_subjects2(data,successtatus)
 	{
 		if(status='success')
 		{
+			console.log(data);
 			var datah=JSON.parse(data);
 			if(datah['type']='success')
 			{
@@ -726,7 +734,6 @@ $.post(address,arguments,
 						submit_edited_subjects2();	
 					else if(new_subjects2.length>0)
 						submit_new_subjects2();
-
 				}
 			}
 			else
@@ -745,8 +752,8 @@ function submit_edited_subjects2()
 	 var temp_dict={};
 	 temp_dict['course']=selected_course2;
 	 temp_dict['subjects']=edited_subjects2;
-	 argument['data']=temp_dict;
-$.post(address,arguments,
+	 argument['data']=JSON.stringify(temp_dict);
+$.post(address,argument,
 	function handle_edited_subjects2(data,status)
 	{
 		if(status='success')
@@ -767,10 +774,10 @@ $.post(address,arguments,
 }
 function save_subjects2()
 {
-	console.log(deleted_subjects2);
+	
+	console.log(new_subjects2);
 	if(deleted_subjects2.length>0)
 	{
-		console.log('this');	
 		submit_delete_subjects2();	
 	}
 	else if(edited_subjects2.length>0)
@@ -791,6 +798,81 @@ function error_subjects2(text)
 {
 	$('#info_subjects2').text(text);	
 }
+//****************************************************** Marks Functions *****************************************
+var batches=[];
+var marks=[];
+var edited_marks=[];
+var institutes3=[];
+var batch_table3;
+var marks_table3;
+function init_tab3()
+{
+	batch_table3=$('#batch_table3').DataTable();
+	marks_table3=$('#marks_table3').DataTable();
+}
+function load_institutes3()
+{
+	
+	$.post(address,
+	{
+		type:'lists',
+		request:'all_institutes'
+	},
+	function institutes_fill(data,status)
+	{
+		datah=JSON.parse(data);
+		
+		if(datah['type']=='success')
+		{
+			institutes3=datah['reply'];
+		
+			for (var i=0; i<institutes1.length;i++)
+			{
+				$('#mySelect').append($('<option>', {
+    				value: 1,
+    				text: 'My option'}));
+			}
+			institutes_table1.draw();
+		}
+	});
+}
+function change_institutes()
+{
+
+}
+function load_courses()
+{
+
+}
+function reset_tab3()
+{
+
+}
+function load_batch3()
+{
+
+}
+function display_batch3()
+{
+
+}
+// Marks functions
+function load_marks()
+{
+
+}
+function fill_marks()
+{
+
+}
+function edit_marks(id)
+{
+
+}
+function submit_edit_marks(id)
+{
+
+}
 //******************************************************Utility Functions ****************************************
 function find_element(object,key,value)
 {
@@ -798,7 +880,7 @@ function find_element(object,key,value)
 	{
 		if(object[i][key]==value)
 		{
-			return i
+			return i;
 		}
 	}
 	return -1;
