@@ -181,7 +181,7 @@ return <<<HTML
                     <div class="modal-dialog modal-lg">
                          <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" onclick='load_courses()' data-dismiss="modal">&times;</button>
+                                <button type="button" class="close" onclick='fill_courses2()' data-dismiss="modal">&times;</button>
                                     <h4 class="modal-title">Subjects</h4>
                             </div>
                             <div class="modal-body">
