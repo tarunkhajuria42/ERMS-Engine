@@ -719,7 +719,7 @@ function submit_delete_subjects2()
 	 temp_dict['subjects']=deleted_subjects2;
 	 argument['data']=JSON.stringify(temp_dict);
 $.post(address,argument,
-	function handle_delete_subjects2(data,successtatus)
+	function handle_delete_subjects2(data,status)
 	{
 		if(status='success')
 		{
@@ -803,6 +803,7 @@ var batches=[];
 var marks=[];
 var edited_marks=[];
 var institutes3=[];
+var courses3=[];
 var selected_list_insti3='all';
 var selected_list_course3='all';
 var batch_table3;
@@ -812,6 +813,12 @@ function init_tab3()
 	batch_table3=$('#batch_table3').DataTable();
 	marks_table3=$('#marks_table3').DataTable();
 	load_institutes3();
+	$('#institues_list3').change(
+		function change_institute3()
+		{
+			selected_list_insti3=$('#institutes_list3').val();
+			load_courses();
+		})
 }
 function load_institutes3()
 {
@@ -840,16 +847,41 @@ function load_institutes3()
 		}
 	});
 }
-function change_institutes()
-{
 
-}
 function load_courses()
 {
 	var post_arguments={};
 	post_arguments['type']='lists';
-	post_arguments['']
-	$.post(address,)
+	post_arguments['request']='get_courses';
+	post_arguemnts['value']=selected_list_insti3;
+	$.post(address,post_arguments,
+		function list_courses3(data,status)
+		{
+			if(status=='success')
+			{
+				var datah=JSON.parse(data);
+				if(datah['type']=='success')
+				{
+					courses3=datah['reply'];
+					$('#courses_list3').empty();
+					$('#courses_list3').append($('<option>', {
+    				value: 'all',
+    				text: 'All'}));
+					for(var i=0; i<courses3.length;i++)
+					{
+						$('#courses_list3').append($('<option>', {
+    						value: courses3[i],
+    						text: courses3[i]}));
+
+					}
+				}
+			}
+		});
+}
+function click_submit3()
+{
+	selected_list_course3=$('#courses_list3').val();
+	load_batch3();
 }
 function reset_tab3()
 {
@@ -857,10 +889,29 @@ function reset_tab3()
 }
 function load_batch3()
 {
-
+	var  post_arguments={};
+	post_arguments['type']='marks';
+	post_arguments['request']='get_subjects';
+	var temp_dict={};
+	temp_dict['course']=selected_list_course3;
+	temp_dict['institute']=selected_list_insti3;
+	post_arguments['data']=JSON.stringify(temp_dict);
+	$.post(address,post_arguments,display_batch3)
 }
-function display_batch3()
+function display_batch3(data,status)
 {
+	if(status=='success')
+	{
+		var datah=JSON.decode(data);
+		if(datah['type']=='success')
+		{
+			batches3=datah['reply'];
+			for(var i=0; i<batches3.length; i++)
+			{
+					
+			}
+		}
+	}
 
 }
 // Marks functions
