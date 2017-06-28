@@ -68,21 +68,99 @@ function get_subjects($course)
 	$res=\data\utils\database\find('SELECT * from subject where course=?',$arguments,1);
 	return $res;
 }
-function add_subject($subject)
+function add_subjects($subjects,$course)
 {
-	if(\data\utils\database\insert('INSERT into subject(subject,course,semester,
-		pitheory,mitheory,
-		pipractical,mipractical,
-		ppractical,mpractical,
-		ptheory,mtheory
-		) values(?,?,?,?,?,?,?,?,?,?,?)',$subject,1)==1)
-			return 1;
+
+	for($i=0;$i<count(arguments);$i++)
+	{
+		$arguments=[
+				$subjects[$i]['subject_code'],
+				$subjects[$i]['subject'],
+				$subjects[$i]['semester'],
+				$course,
+				$subjects[$i]['pipractical'],
+				$subjects[$i]['mipractical'],
+				$subjects[$i]['pitheory'],
+				$subjects[$i]['mitheory'],
+				$subjects[$i]['ppractical'],
+				$subjects[$i]['mpractical'],
+				$subjects[$i]['ptheory'],
+				$subjects[$i]['mtheory'],
+				$subjects[$i]['optional'],
+
+				];
+	if(\data\utils\database\insert('INSERT into subject(subject_code,
+		subject,
+		semester,
+		course,
+		pipractical,
+		mipractical,
+		pitheory,
+		mitheory,
+		ppractical,
+		mpractical,
+		ptheory,
+		mtheory,
+		optional
+		) values(?,?,?,?,?,?,?,?,?,?,?)',$arguments,1)!=-1)
+			{}
 		else 
 			return -1;		
+	}
+	return 1;
 }
-function delete_subject($subject_code)
+function delete_subjects($subjects,$course)
 {
-	$arguments=[$subject_code];
-	return (\data\utils\database\delete('DELETE from subject where subject_code=?',$arguments,1));
+	for ($i=0; $i<count($subjects);$i++)
+	{
+		$arguments=[$subjects[$i]['subject_code']];
+		if(\data\utils\database\delete('DELETE from subject where subjects_code=?',$arguments,1)!=-1)	
+			{
+
+			}
+		else
+			return -1;
+	}
+	return 1;
+}
+function edit_subjects($subjects,$course)
+{
+	for($i=0;$i<count($subjects);$i++)
+	{
+		$arguments=[
+				$subjects[$i]['subject'],
+				$subjects[$i]['semester'],
+				$course,
+				$subjects[$i]['pipractical'],
+				$subjects[$i]['mipractical'],
+				$subjects[$i]['pitheory'],
+				$subjects[$i]['mitheory'],
+				$subjects[$i]['ppractical'],
+				$subjects[$i]['mpractical'],
+				$subjects[$i]['ptheory'],
+				$subjects[$i]['mtheory'],
+				$subjects[$i]['optional'],
+				$subjects[$i]['subject_code']
+
+				];
+	if(\data\utils\database\update('UPDATE subject SET
+		subject=?,
+		semester=?,
+		course=?,
+		pipractical=?,
+		mipractical=?,
+		pitheory=?,
+		mitheory=?,
+		ppractical=?,
+		mpractical=?,
+		ptheory=?,
+		mtheory=?,
+		optional=?
+		where subject_code=?',$arguments,1)!=-1)
+			{}
+		else 
+			return -1;		
+	}
+	return 1;
 }
 ?>

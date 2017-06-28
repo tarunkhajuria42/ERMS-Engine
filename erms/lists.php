@@ -62,6 +62,29 @@ function lists()
 									echo(utils\reply('delete_courses','error','already_deleted'));
 								break;
 			case 'add_subjects':
+								$course=$data['courses'];
+								$subjects=$data['subjects'];
+								if(utils\course\add_subjects($course,$subjects)!=-1)
+									echo(utils\reply('add_subjects','success','subjects_added'));
+								else
+									echo(utils\reply('add_subjects','error','system_error'));
+								break;
+			case 'delete_subjects':
+								$course=$data['courses'];
+								$subjects=$data['subjects'];
+								if(utils\course\delete_subjects($course,$subjects)!=-1)
+									echo(utils\reply('delete_subjects','success','deleted'));
+								else
+									echo(utils\reply('delete_subjects','error','system_error'));
+								break;
+			case 'edit_subjects':
+								$course=$data['courses'];
+								$subjects=$data['subjects'];
+								if(utils\course\edit_subjects($course,$subjects)!=-1)
+									echo(utils\reply('edit_subjects','success','edited'));
+								else
+									echo(utils\reply('edit_subjects','error','system_error'));
+								break;
 			case 'get_subjects':$subjects=utils\course\get_subjects($_POST['value']);
 								if($subjects!=-1)
 									echo(utils\reply('get_subjects','success',$subjects));

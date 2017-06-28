@@ -452,11 +452,14 @@ function reset_all_subjects2()
 function remove_subject2(id)
 {
 	var no=id.substring(id.indexOf('_')+1,id.length);
-	var indextemp=find_element(subjects2,'subject_code',subjects2[no]['subject_code']);
+	var indextemp=find_element(new_subjects2,'subject_code',subjects2[no]['subject_code']);
+	console.log(indextemp);
 	if(indextemp!=-1)
 		new_subjects2.splice(indextemp,1);
 	else
+	{
 		deleted_subjects2.push(subjects2[no]);
+	}
 	var indexedited=find_element(edited_subjects2,'subject_code',subjects2[no]['subject_code']);
 	if(indexedited!=-1)
 	{
@@ -764,7 +767,7 @@ $.post(address,arguments,
 }
 function save_subjects2()
 {
-	
+	console.log(deleted_subjects2);
 	if(deleted_subjects2.length>0)
 	{
 		console.log('this');	
