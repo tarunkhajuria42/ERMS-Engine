@@ -349,6 +349,7 @@ function fill_courses2()
 	function courses_fill(data,status)
 	{
 		console.log(data);
+		courses_table2.clear();
 		datah=JSON.parse(data);
 		if(datah['type']=='success')
 		{
@@ -451,16 +452,16 @@ function reset_all_subjects2()
 function remove_subject2(id)
 {
 	var no=id.substring(id.indexOf('_')+1,id.length);
-		var indextemp=find_element(subjects2,'subject_code',subjects2[no]['subject_code']);
-		if(indextemp!=-1)
-			new_subjects2.splice(indextemp,1);
-		else
-			deleted_subjects2.push(subjects2[no]);
-		var indexedited=find_element(edited_subjects2,'subject_code',subjects2[no]['subject_code']);
-		if(indexedited!=-1)
-		{
-			edited_subjects2.splice(indexedited,1);
-		}
+	var indextemp=find_element(subjects2,'subject_code',subjects2[no]['subject_code']);
+	if(indextemp!=-1)
+		new_subjects2.splice(indextemp,1);
+	else
+		deleted_subjects2.push(subjects2[no]);
+	var indexedited=find_element(edited_subjects2,'subject_code',subjects2[no]['subject_code']);
+	if(indexedited!=-1)
+	{
+		edited_subjects2.splice(indexedited,1);
+	}
 	subjects_table2.row($('#'+id).parents('tr')).remove().draw();
 }
 
@@ -511,7 +512,21 @@ function submit_edit2(id)
 {
 	var no=id.substring(id.indexOf('_')+1,id.length);
 	var edit_index=find_element(edited_subjects2,'subject_code',subjects2[no]['subject_code']);
-	if(edit_index!=-1)
+	var new_index=find_element(new_subjects2,'subject_code',subjects2[no]['subject_code']);
+	if(new_index!=-1)
+	{
+		add_subjects2[new_index]['semester']=$('#edit_semester2_'+no).val();
+		add_subjects2[new_index]['pipractical']=$('#edit_pipractical2_'+no).val();
+		add_subjects2[new_index]['mipractical']=$('#edit_mipractical2_'+no).val();
+		add_subjects2[new_index]['pitheory']=$('#edit_pitheory2_'+no).val();
+		add_subjects2[new_index]['mitheory']=$('#edit_mitheory2_'+no).val();
+		add_subjects2[new_index]['ppractical']=$('#edit_ppractical2_'+no).val();
+		add_subjects2[new_index]['mpractical']=$('#edit_mpractical2_'+no).val();
+		add_subjects2[new_index]['ptheory']=$('#edit_ptheory2_'+no).val();
+		add_subjects2[new_index]['mtheory']=$('#edit_mtheory2_'+no).val();
+		add_subjects2[new_index]['optional']=$('#edit_optional2_'+no).val();	
+	}
+	else if(edit_index!=-1)
 	{
 		edited_subjects2[edit_index]['semester']=$('#edit_semester2_'+no).val();
 		edited_subjects2[edit_index]['pipractical']=$('#edit_pipractical2_'+no).val();
@@ -654,17 +669,115 @@ function new_subject_add(id)
 	}
 
 }
-function submit_new_subjects()
-{
+var add_reply2=0;
+var edited_reply2=0;
+var deleted_reply2=0;
 
-}
-function submit_delete_subjects()
+function submit_new_subjects2()
 {
+	 var argument={};
+	 argument['type']='lists';
+	 argument['request']='new_subjects';
+	 var temp_dict={};
+	 temp_dict['course']=selected_course2;
+	 temp_dict['subjects']=new_subjects2;
+	 argument['data']=temp_dict;
+$.post(address,arguments,
+	function handle_new_subjects2(data,status)
+	{
+		if(status='success')
+		{
+			var datah=JSON.parse(data);
+			if(datah['type']='success')
+				new_subjects2=[];
+			else
+				error_subjects2('Could not add courses');
+		}
+		else
+			error_subjects2('Network Error');
+	});
+}
+
+
+function submit_delete_subjects2()
+{
+	var argument={};
+	 argument['type']='lists';
+	 argument['request']='delete_subjects';
+	 var temp_dict={};
+	 temp_dict['course']=selected_course2;
+	 temp_dict['subjects']=deleted_subjects2;
+	 argument['data']=temp_dict;
+$.post(address,arguments,
+	function handle_delete_subjects2(data,status)
+	{
+		if(status='success')
+		{
+			var datah=JSON.parse(data);
+			if(datah['type']='success')
+			{
+				deleted_subjects2=[];
+				if(edited_subjects2)
+				{
+					if(edited_subjects2.length>0)
+						submit_edited_subjects2();	
+					else if(new_subjects2.length>0)
+						submit_new_subjects2();
+
+				}
+			}
+			else
+				error_subjects2('Could not delete courses');
+		}
+		else
+			error_subjects2('Network Error');
+	});
 
 }
 function submit_edited_subjects2()
 {
-
+	var argument={};
+	 argument['type']='lists';
+	 argument['request']='edit_subjects';
+	 var temp_dict={};
+	 temp_dict['course']=selected_course2;
+	 temp_dict['subjects']=edited_subjects2;
+	 argument['data']=temp_dict;
+$.post(address,arguments,
+	function handle_edited_subjects2(data,status)
+	{
+		if(status='success')
+		{
+			var datah=JSON.parse(data);
+			if(datah['type']='success')
+			{
+				edited_subjects2=[];
+				if(new_subjects2.length>0)
+					submit_new_subjects2();
+			}
+			else
+				error_subjects2('Could not edit courses');
+		}
+		else
+			error_subjects2('Network Error');
+	});
+}
+function save_subjects2()
+{
+	
+	if(deleted_subjects2.length>0)
+	{
+		console.log('this');	
+		submit_delete_subjects2();	
+	}
+	else if(edited_subjects2.length>0)
+	{
+		submit_edited_subjects2();
+	}
+	else if(new_subjects2.length>0)
+	{
+		submit_new_subjects2();
+	}
 }
 
 function error_course2(text)
