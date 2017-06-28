@@ -38,12 +38,25 @@ function delete_courses($institute,$course)
 }
 function get_courses($institute)
 {
-	$arguments=[$institute];
-	$res=\data\utils\database\find('SELECT course from courses where institute=?',$arguments,1);
-	if($res !=-1)
-		return $res;
+	$arguments=[];
+	if($institute='all')
+	{
+		$res=\data\utils\database\find('SELECT DISTINCT course from courses',$arguments,1);
+		if($res !=-1)
+			return $res;
+		else
+			return -1;	
+	}
 	else
-		return -1;
+	{
+		$arguments=[$institute];
+		$res=\data\utils\database\find('SELECT course from courses where institute=?',$arguments,1);
+		if($res !=-1)
+			return $res;
+		else
+			return -1;	
+	}
+	
 }
 function all_courses()
 {

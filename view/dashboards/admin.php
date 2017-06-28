@@ -51,16 +51,16 @@ return <<<HTML
         <div class="collapse navbar-collapse" id="navbarmain">  
             <ul class="sidebar-nav navbar-nav nav-tabs" id='navlist'>
                     <li class="nav-item active">
-                        <a class="nav-link" href="#tab-01" aria-controls="tab-01" role="tab" data-toggle="tab">Manage Institutes</a>
+                        <a class="nav-link" href="#tab-01" aria-controls="tab-01" role="tab" onclick='init_tab1()' data-toggle="tab">Manage Institutes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#tab-02" aria-controls="tab-02" role="tab" data-toggle="tab">Manage Courses</a>
+                        <a class="nav-link" href="#tab-02" aria-controls="tab-02" role="tab" onclick='init_tab2()' data-toggle="tab">Manage Courses</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#tab-03" aria-controls="tab-02" role="tab" data-toggle="tab">Manage Exams</a>
+                        <a class="nav-link" href="#tab-03" aria-controls="tab-03" onclick='init_tab3()' role="tab" data-toggle="tab">Manage Exams</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#tab-04" aria-controls="tab-02" role="tab" data-toggle="tab">Manage Session</a>
+                        <a class="nav-link" href="#tab-04" aria-controls="tab-04"  role="tab" data-toggle="tab">Manage Session</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#tab-05" onclick='logout()' aria-controls="tab-02" role="tab" data-toggle="tab">Log Out</a>
@@ -161,7 +161,7 @@ return <<<HTML
                                         <th>Subjects</th>
                                     </tr>
                                 </thead>
-                                <tbody id='institutes_entry'>
+                                <tbody>
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -251,10 +251,10 @@ return <<<HTML
                     </div>
                     <div class="card-block">
                     <div>
-                        Course:<select id='courses3' class='mb-3 mr-3'>
+                        Institute:<select id='institutes_list3' class='mb-3 mr-3'>
                             <option value='all'>All</option>
                         </select>
-                        Institute:<select id='institute3' class='mb-3 mr-3'>
+                        Course:<select id='courses3' class='mb-3 mr-3'>
                             <option value='all'>All</option>
                         </select>
                         <button onclick='subjects_select()'  class=' btn btn-info btn-sm'>Select</button></div>

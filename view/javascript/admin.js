@@ -803,12 +803,15 @@ var batches=[];
 var marks=[];
 var edited_marks=[];
 var institutes3=[];
+var selected_list_insti3='all';
+var selected_list_course3='all';
 var batch_table3;
 var marks_table3;
 function init_tab3()
 {
 	batch_table3=$('#batch_table3').DataTable();
 	marks_table3=$('#marks_table3').DataTable();
+	load_institutes3();
 }
 function load_institutes3()
 {
@@ -818,21 +821,22 @@ function load_institutes3()
 		type:'lists',
 		request:'all_institutes'
 	},
-	function institutes_fill(data,status)
+	function institutes_fill3(data,status)
 	{
 		datah=JSON.parse(data);
-		
 		if(datah['type']=='success')
 		{
 			institutes3=datah['reply'];
-		
-			for (var i=0; i<institutes1.length;i++)
+			$('#institutes_list3').empty();
+			$('#institutes_list3').append($('<option>', {
+    				value: 'all',
+    				text: 'all'}));
+			for (var i=0; i<institutes3.length;i++)
 			{
-				$('#mySelect').append($('<option>', {
-    				value: 1,
-    				text: 'My option'}));
+				$('#institutes_list3').append($('<option>', {
+    				value: institutes3[i],
+    				text: institutes3[i]}));
 			}
-			institutes_table1.draw();
 		}
 	});
 }
@@ -842,7 +846,10 @@ function change_institutes()
 }
 function load_courses()
 {
-
+	var post_arguments={};
+	post_arguments['type']='lists';
+	post_arguments['']
+	$.post(address,)
 }
 function reset_tab3()
 {
