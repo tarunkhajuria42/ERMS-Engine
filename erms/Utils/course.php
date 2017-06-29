@@ -38,9 +38,9 @@ function delete_courses($institute,$course)
 }
 function get_courses($institute)
 {
-	$arguments=[];
-	if($institute='all')
+	if($institute=='all')
 	{
+		$arguments=[];
 		$res=\data\utils\database\find('SELECT DISTINCT course from course',$arguments,1);
 		if($res !=-1)
 			return $res;

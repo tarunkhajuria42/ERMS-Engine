@@ -65,63 +65,62 @@ function find_subjects($course,$institute)
 {
 	if($course='all' && $institute=='all')
 	{
-		$subjects=\data\utils\data\find('SELECT * from subject',[],1);
-		$institutes=\data\utils\data\find('SELECT DISTINCT institute from institute',[],1);
+		$subjects_$insitute=\data\utils\data\find('SELECT subject.* , courses.institute  from subject INNER JOIN courses ON subject.institute=courses.institute',[],1);
 	}
 	else if($course=='all')
 	{
 		$arguments=[$course];
-		$subject=\data\utils\data\find('SELECT * from subject where course in (SELECT course from courses where institute=?');
+		$subjects_institute=\data\utils\data\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.institute=course.institute and courses.institute=?',$arguments,1);
 	}
 	else if($institute='all')
 	{
 		$arguments=[$course];
-		$subjects=\data\utils\data\find('SELECT * from subject where course =?',$arguments,1);
-		$institutes=\data\utils\data\find('SELECT * from courses where course =?',$arguments,1);
+		$subjects_institute=\data\utils\data\find('SELECT subject.*, course.institute from subject INNER JOIN courses ON subject.institute=course.institute and courses.course=?',$arguments,1);
 	}
 	$lists=[];
-	for($i=0;$i<count($subjects);$i++)
+	for($i=0;$i<count($subjects_institute);$i++)
 	{
-		for($j=0;$j<count($institutes);$j++)
+		if($subjects_institute['mpractical']!==0)
 		{
-			if($subject['mpractical']!==0)
-			{
-				$mpractical=-1;
-			}
-			else
-			{
-				$mpractical=2;
-			}
-			if($subject['mipractical']!==0)
-			{
-				$mipractical=-1;
-			}
-			{
-				$mipractical=1;
-			}
-			if($subject['mitheory']!==0)
-			{
-				$mitheory=-1;
-			}
-			else
-			{
-				$mitheory=0;
-			}
-			if($subject['mtheory']!==0)
-			{
-				$mtheory=-1;
-			}
-			array_push($lists,
-				[$subject[$i]['subject'],
-				$institute[$i]['institute'],
-				check_entry($subject[$i]['subject'],$institute[$i]['institute'],$mitheory),
-				check_entry($subject[$i]['subject'],$institute[$i]['institute'],$mipractical),
-				check_entry($subject[$i]['subject'],$institute[$i]['institute'],$mpractical),
-				check_entry($subject[$i]['subject'],$institute[$i]['institute'],$mtheory)
-				]);
+			$mpractical=-1;
+		}
+		else
+		{
+			$mpractical=2;
+		}
+		if($subjects_institute['mipractical']!==0)
+		{
+			$mipractical=-1;
+		}
+		else
+		{
+			$mipractical=1;
+		}
+		if($subjects_institute['mitheory']!==0)
+		{
+			$mitheory=-1;
+		}
+		else
+		{
+			$mitheory=0;
 		}	
+		if($subjects_institute['mtheory']!==0)
+		{
+			$mtheory=-1;
+		}
+		else
+		{
+			$mtheory=1;
+		}
+		$temp_dict={};
+		$temp_dict['subject_code']=$subjects_institute['subject_code'];
+		$temp_dict['institute']=$subjects_institute['institute'];
+		$temp_dict['internal_theory']=check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],$mipractical);
+		$temp_dict['internal_practical']=check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],$mitheory);
+		$temp_dict['external_practical']=check_entry($subjects_institute[$i]['subject'],$institute[$i]['institute'],$mpractical);
+		$temp_dict['external_theory']=check_entry($subjects_institute[$i]['subject']),$subjects_institute['institute'],$mtheory);
+		array_push($lists,$temp_dict);	
 	}
-	echo($lists);
 }
 function check_entry($subject,$institute,$paper)
 {
@@ -197,7 +196,7 @@ function new_session($email)
 function prev_session($email)
 {
 
-}
+}	
 function timeZone($time)
 {
 	$tz = 'Asia/Calcutta';

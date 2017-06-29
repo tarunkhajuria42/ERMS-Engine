@@ -254,7 +254,7 @@ return <<<HTML
                         Institute:<select id='institutes_list3' class='mb-3 mr-3'>
                             <option value='all'>All</option>
                         </select>
-                        Course:<select id='courses3' class='mb-3 mr-3'>
+                        Course:<select id='courses_list3' class='mb-3 mr-3'>
                             <option value='all'>All</option>
                         </select>
                         <button onclick='subjects_select()'  class=' btn btn-info btn-sm'>Select</button></div>

@@ -79,7 +79,6 @@ function add_course1(id)
 {
 	var type= id.substring(0, id.indexOf("_"));
 	var no=id.substring(id.indexOf("_")+1,id.length);
-	
 	if(type=='button')
 	{
 		selected_insti1=institutes1[no];
@@ -103,6 +102,7 @@ function populate_courses1(data,status)
 {
 	if(status=='success')
 	{
+		console.log(data);
 		var datah= JSON.parse(data);
 		if(datah['type']=='success')
 		{
@@ -813,11 +813,13 @@ function init_tab3()
 	batch_table3=$('#batch_table3').DataTable();
 	marks_table3=$('#marks_table3').DataTable();
 	load_institutes3();
-	$('#institues_list3').change(
+	selected_list_insti3=$('#institutes_list3').val();
+	load_courses3();
+	$('#institutes_list3').change(
 		function change_institute3()
 		{
 			selected_list_insti3=$('#institutes_list3').val();
-			load_courses();
+			load_courses3();
 		})
 }
 function load_institutes3()
@@ -848,15 +850,15 @@ function load_institutes3()
 	});
 }
 
-function load_courses()
+function load_courses3()
 {
 	var post_arguments={};
 	post_arguments['type']='lists';
 	post_arguments['request']='get_courses';
-	post_arguemnts['value']=selected_list_insti3;
+	post_arguments['value']=selected_list_insti3;
 	$.post(address,post_arguments,
 		function list_courses3(data,status)
-		{
+		{	
 			if(status=='success')
 			{
 				var datah=JSON.parse(data);
@@ -872,7 +874,6 @@ function load_courses()
 						$('#courses_list3').append($('<option>', {
     						value: courses3[i],
     						text: courses3[i]}));
-
 					}
 				}
 			}
@@ -908,16 +909,15 @@ function display_batch3(data,status)
 			batches3=datah['reply'];
 			for(var i=0; i<batches3.length; i++)
 			{
-					
+
 			}
 		}
 	}
-
 }
 // Marks functions
 function load_marks()
 {
-
+	$.post()
 }
 function fill_marks()
 {
