@@ -6,7 +6,7 @@ Educational Institutions
 Version 0.1 
 Author: Tarun Khajuria (tarunkhajuria42@gmail.com)
 ----------------------------------------------------
-User management Pages
+Marks Management
 */
 namespace data;
 function marks(){
@@ -19,8 +19,20 @@ function marks(){
 		switch($_POST['request'])
 		{
 			case 'get_marks':
+
 							break;
+			case 'get_subjects':
+							$institute=$data['institute'];
+							$course=$data['course'];
+							if(utils\marks\find_subjects($course,$institute)!=-1)
+							{
+								
+							}
+							break;
+			case 'add_marks':
+			case 'edit_marks':
 			default:
+					echo(utils\reply('marks','error','badrequest'));	
 
 		}	
 	}

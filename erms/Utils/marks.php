@@ -65,7 +65,7 @@ function find_subjects($course,$institute)
 {
 	if($course='all' && $institute=='all')
 	{
-		$subjects_$insitute=\data\utils\data\find('SELECT subject.* , courses.institute  from subject INNER JOIN courses ON subject.institute=courses.institute',[],1);
+		$subjects_insitute=\data\utils\data\find('SELECT subject.* , courses.institute  from subject INNER JOIN courses ON subject.institute=courses.institute',[],1);
 	}
 	else if($course=='all')
 	{
@@ -112,15 +112,35 @@ function find_subjects($course,$institute)
 		{
 			$mtheory=1;
 		}
-		$temp_dict={};
 		$temp_dict['subject_code']=$subjects_institute['subject_code'];
 		$temp_dict['institute']=$subjects_institute['institute'];
-		$temp_dict['internal_theory']=check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],$mipractical);
-		$temp_dict['internal_practical']=check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],$mitheory);
-		$temp_dict['external_practical']=check_entry($subjects_institute[$i]['subject'],$institute[$i]['institute'],$mpractical);
-		$temp_dict['external_theory']=check_entry($subjects_institute[$i]['subject']),$subjects_institute['institute'],$mtheory);
+		if(check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],$mipractical)!=-1)
+		{
+			$temp_dict['internal_theory']=check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],$mipractical);	
+		}
+		else 
+			return -1;
+		if(check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],$mitheory)!=-1)
+		{
+			$temp_dict['internal_practical']=check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],$mitheory);
+		}
+		else 
+			return -1;
+		if(check_entry($subjects_institute[$i]['subject'],$institute[$i]['institute'],$mpractical)!=-1)
+		{
+			$temp_dict['external_practical']=check_entry($subjects_institute[$i]['subject'],$institute[$i]['institute'],$mpractical);	
+		}
+		else 
+			return -1;
+		if(check_entry($subjects_institute[$i]['subject'],$subjects_institute['institute'],$mtheory)!=-1)
+		{
+			$temp_dict['external_theory']=check_entry($subjects_institute[$i]['subject'],$subjects_institute['institute'],$mtheory);	
+		}
+		else
+			return -1;		
 		array_push($lists,$temp_dict);	
 	}
+	return $lists;
 }
 function check_entry($subject,$institute,$paper)
 {
@@ -130,7 +150,7 @@ function check_entry($subject,$institute,$paper)
 	{
 		$arguments=[$ubject,$institute];	
 		$res=\data\utils\data\find('SELECT COUNT(*) from asubjects where subject=? and year=? and id in(select id from admin where institute=?',$arguments,1);
-		if(count($res)>0)
+		if($res!=-1)
 		{
 			$arguments2=[];
 			$res2=\data\utils\data\find('SELECT COUNT(*) from marks where subject=? and year=? and $paper=?',$arguments,1);

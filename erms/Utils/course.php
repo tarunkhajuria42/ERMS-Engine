@@ -41,7 +41,7 @@ function get_courses($institute)
 	if($institute=='all')
 	{
 		$arguments=[];
-		$res=\data\utils\database\find('SELECT DISTINCT course from course',$arguments,1);
+		$res=\data\utils\database\find('SELECT DISTINCT course from courses',$arguments,1);
 		if($res !=-1)
 			return $res;
 		else

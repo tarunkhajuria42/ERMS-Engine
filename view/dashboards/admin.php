@@ -257,7 +257,7 @@ return <<<HTML
                         Course:<select id='courses_list3' class='mb-3 mr-3'>
                             <option value='all'>All</option>
                         </select>
-                        <button onclick='subjects_select()'  class=' btn btn-info btn-sm'>Select</button></div>
+                        <button onclick='select_submit3()'  class=' btn btn-info btn-sm'>Select</button></div>
                         <div class="table-responsive">
                             <table class="table table-bordered" width="100%" id="batch_table3" cellspacing="0">
                                 <thead>
@@ -268,6 +268,7 @@ return <<<HTML
                                         <th>Internal Practical</th>
                                         <th>Internal Theory</th>
                                         <th>External Practical</th>
+                                        <th>External Theory</th>
                                     </tr>
                                 </thead>
                                 <tbody >
@@ -280,6 +281,7 @@ return <<<HTML
                                         <th>Internal Practical</th>
                                         <th>Internal Theory</th>
                                         <th>External Practical</th>
+                                        <th>External Theory</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -306,6 +308,7 @@ return <<<HTML
                                         <th>Roll No</th>
                                         <th>Name</th>
                                         <th>Marks</th>
+                                        <th><th>
                                     </tr>
                                 </thead>
                                 <tbody >
@@ -315,6 +318,7 @@ return <<<HTML
                                         <th>Roll No</th>
                                         <th>Name</th>
                                         <th>Marks</th>
+                                        <th><th>
                                     </tr>
                                 </tfoot>
                                 <tbody>

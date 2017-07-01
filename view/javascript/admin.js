@@ -208,7 +208,6 @@ function remove_course1(id)
 		new_courses1.splice(indextemp,1);
 	else
 		deleted_courses1.push(courses1[no]);
-	console.log($('#'+id).parents('tr'))
 	institutes_courses1.row($('#'+id).parents('tr')).remove().draw();
 }
 
@@ -228,11 +227,9 @@ function save_courses1()
 		temp_dict['courses']=new_courses1;
 		temp_dict['institute']=selected_insti1;
 		post_arguments['data']=JSON.stringify(temp_dict);
-		console.log(post_arguments);
 		$.post(address,post_arguments,
 			function handle_submit_added(data,status)
 			{
-				console.log(data);
 				if(status=='success'){
 					if(data!=null)
 					{
@@ -266,12 +263,10 @@ function save_courses1()
 		temp_dict['institute']=selected_insti1;
 		temp_dict['courses']=deleted_courses1;
 		post_arguments['data']=JSON.stringify(temp_dict);
-		console.log(post_arguments);
 		$.post(address,
 			post_arguments,
 			function handle_submit_deleted(data,status)
 			{
-				console.log(data);
 				if(status=='success')
 				{
 					if(data!='')
@@ -349,7 +344,6 @@ function fill_courses2()
 	},
 	function courses_fill(data,status)
 	{
-		console.log(data)
 		courses_table2.clear();
 		datah=JSON.parse(data);
 		if(datah['type']=='success')
@@ -407,7 +401,6 @@ function populate_subjects2(data,status)
 	
 	if(status=='success')
 	{
-		console.log(data);
 		var datah= JSON.parse(data);
 		if(datah['type']=='success')
 		{
@@ -454,7 +447,6 @@ function remove_subject2(id)
 {
 	var no=id.substring(id.indexOf('_')+1,id.length);
 	var indextemp=find_element(new_subjects2,'subject_code',subjects2[no]['subject_code']);
-	console.log(indextemp);
 	if(indextemp!=-1)
 		new_subjects2.splice(indextemp,1);
 	else
@@ -517,11 +509,6 @@ function submit_edit2(id)
 	var no=id.substring(id.indexOf('_')+1,id.length);
 	var edit_index=find_element(edited_subjects2,'subject_code',subjects2[no]['subject_code']);
 	var new_index=find_element(new_subjects2,'subject_code',subjects2[no]['subject_code']);
-	console.log(new_index);
-	console.log(new_subjects2);
-	console.log(subjects2);
-	console.log(deleted_subjects2);
-	console.log(edited_subjects2);
 	if(new_index!=-1)
 	{
 		new_subjects2[new_index]['semester']=$('#edit_semester2_'+no).val();
@@ -618,7 +605,6 @@ function new_subject_button2()
 						<option value='1'>Yes</option>
 					</select>`,'',
 			`<button id='subjectsButtonNew_`+no+`' class='btn pull-right btn-info'onclick='new_subject_add(this.id)'>Done</button>`]).draw();		
-		console.log($('#new_optional2_'+no).val());
 		new_subject_opened2=true;
 		error_subjects2("Success");
 	}
@@ -656,7 +642,6 @@ function new_subject_add(id)
 
 		new_subjects2.push(temp_dict);
 		subjects2.push(temp_dict);
-		console.log(optional[temp_dict['optional']]);
 		subjects_table2.row($('#'+id).parents('tr')).remove();
 		subjects_table2.row.add([
 			temp_dict['subject_code'],
@@ -696,7 +681,6 @@ $.post(address,argument,
 	{
 		if(status='success')
 		{
-			console.log(data);
 			var datah=JSON.parse(data);
 			if(datah['type']='success')
 				new_subjects2=[];
@@ -723,7 +707,6 @@ $.post(address,argument,
 	{
 		if(status='success')
 		{
-			console.log(data);
 			var datah=JSON.parse(data);
 			if(datah['type']='success')
 			{
@@ -775,7 +758,6 @@ $.post(address,argument,
 function save_subjects2()
 {
 	
-	console.log(new_subjects2);
 	if(deleted_subjects2.length>0)
 	{
 		submit_delete_subjects2();	
@@ -861,6 +843,7 @@ function load_courses3()
 		{	
 			if(status=='success')
 			{
+				console.log(data);
 				var datah=JSON.parse(data);
 				if(datah['type']=='success')
 				{
@@ -879,7 +862,8 @@ function load_courses3()
 			}
 		});
 }
-function click_submit3()
+
+function select_submit3()
 {
 	selected_list_course3=$('#courses_list3').val();
 	load_batch3();
@@ -903,7 +887,8 @@ function display_batch3(data,status)
 {
 	if(status=='success')
 	{
-		var datah=JSON.decode(data);
+		console.log(data);
+		var datah=JSON.parse(data);
 		if(datah['type']=='success')
 		{
 			batches3=datah['reply'];
@@ -917,7 +902,6 @@ function display_batch3(data,status)
 // Marks functions
 function load_marks()
 {
-	$.post()
 }
 function fill_marks()
 {
