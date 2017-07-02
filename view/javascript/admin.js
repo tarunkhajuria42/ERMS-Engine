@@ -781,8 +781,8 @@ function error_subjects2(text)
 	$('#info_subjects2').text(text);	
 }
 //****************************************************** Marks Functions *****************************************
-var batches=[];
-var marks=[];
+var batches3=[];
+var marks3=[];
 var edited_marks=[];
 var institutes3=[];
 var courses3=[];
@@ -843,7 +843,6 @@ function load_courses3()
 		{	
 			if(status=='success')
 			{
-				console.log(data);
 				var datah=JSON.parse(data);
 				if(datah['type']=='success')
 				{
@@ -891,30 +890,154 @@ function display_batch3(data,status)
 		var datah=JSON.parse(data);
 		if(datah['type']=='success')
 		{
+			batch_table3.clear().draw();
 			batches3=datah['reply'];
 			for(var i=0; i<batches3.length; i++)
-			{
-
+			{	
+				batch_table3.row.add([batches3[i]['subject_code'],
+					batches3[i]['institute'],
+					batches3[i]['course'],
+					optional_link(batches3[i]['internal_practical'],i,0),
+					optional_link(batches3[i]['internal_theory'],i,1),
+					optional_link(batches3[i]['practical'],i,2),
+					optional_link(batches3[i]['theory'],i,3)
+					]).draw();	
 			}
 		}
 	}
 }
-// Marks functions
-function load_marks()
+function optional_link(available,index,type)
 {
+	if(available==0)
+	{
+		return 'N';
+	}
+	if(available==1)
+	{
+		return `<a id='batch_`+index+`' class='hand' onclick='load_marks3(this.id,`+type+`)'>Y</a>`;
+	}
+	if(available==-1)
+	{
+		return '-';
+	}
 }
-function fill_marks()
+// Marks functions
+function load_marks3(id,type)
 {
+	var no=id.substring(id.indexOf('_')+1,id.length);
+	var post_arguments={};
+	post_arguments['type']='marks';
+	post_arguments['request']='get_marks';
+	temp_dict={};
+	selected_subject3=batches3[no]['subject'];
+	selected_type3=type;
+	temp_dict['institute']=batches3[no]['institute'];
+	temp_dict['subject']=selected_subject3;
+	temp_dict['type']=type;
+	post_arguments['data']=JSON.stringify(temp_dict);
+	$.post(address,post_arguments,
+		fill_marks3);
+}
+function fill_marks3(data,status)
+{
+	if(status=='success')
+	{
+		console.log(data);
+		var datah=JSON.parse(data);
+		if(datah['type']=='success')
+		{
+			marks3=datah['reply']
+			for (var i=0; i<marks3.length;i++)
+			{
+				marks_table3.row.add([marks3[i]['rollno'],
+					marks3[i]['marks'],
+					`<button id='marksedit_`+i+`' class='btn btn-info' onclick='edit_marks3(this.id)'>Edit</button>`
+					])
+			}
+		}
+	}
 
 }
 function edit_marks(id)
 {
-
+	
+	if(edit_in_progress3==false)
+	{
+		var no=id.substring(id.indexOf('_')+1,id.length);
+		row_in_edit=id;
+		var post_arguments={};
+		post_arguments['type']='marks';
+		post_arguments['request']='edit_marks';
+		var temp_dict={};
+		temp_dict['subject']=selected_subject3;
+		temp_dict['type']=selected_type3;
+		temp_dict['marks']=$('#marksedit_'+no).val();
+		temp_dict['rollno']=marks3[no];
+		post_arguments['data']=JSON.stringify(temp_dict);	
+	}
+	else
+		error_marks3('Edit, One at a time Please');
 }
 function submit_edit_marks(id)
 {
-
+	$.post(address,post_arguments,
+		function reply_edit(data,status)
+		{
+			if(status='success')
+			{
+				datah=JSON.parse(data);
+				if(datah['type']=='success')
+				{
+					edit_in_progress3=flase;
+					var no=row_in_edit.substring(row_in_edit.indexOf('_')+1,row_in_edit.length);
+					marks3[no]['marks']=$('#marksedit_'+no).val();
+					marks_table3.row($(row_in_edit).parents('tr')).remove();
+					marks_table3.row().add([marks3[no]['rollno'],
+						marks3[no]['marks'],
+						`<button id='marksedit_`+no+`' class='btn btn-info' onclick='edit_marks3(this.id)'>Edit</button>`
+						]).draw();
+				}
+				else
+					error_batch3('System Error');
+			}
+			else
+				error_batch3('Network Error');
+		});
 }
+function error_batch3(text)
+{
+	$('#error_batch3').text(text);
+}
+function error_marks3(text)
+{
+	$('#error_batch3').text(text);
+}
+//****************************************************** Tab 4 (Sessions) ****************************************
+function tab_init4()
+{
+}
+function load_session4()
+{
+	$.post(address,
+	{
+		type:'session',
+		request:'get_session'
+	},
+	function set_session(data,status)
+	{
+		if(status=='success')
+		{
+			var datah=JSON.parse(data);
+			if(datah['type']='success')
+			{
+				var session_no=data
+				if()
+				$('#session_name').text()
+			}
+		}
+	})
+}
+
 //******************************************************Utility Functions ****************************************
 function find_element(object,key,value)
 {

@@ -376,7 +376,7 @@ return <<<HTML
 
                 </div>
 
-                <div><button class='btn btn-info pull-right' onclick='newcourse()'>Next Session</button></div>
+                <div><button class='btn btn-info pull-right' onclick='next_session4()'>Next Session</button></div>
                 </div>   
             </div>
         <!--tab ends-->

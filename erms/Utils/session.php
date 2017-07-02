@@ -68,8 +68,11 @@ function checkSession()
 		{
 			if(timeZone(\time())<$result[0]['valid'])
 			{
-				destroySession();
-				newSession($result[0]['email']);
+				if(timeZone(\time())>($result[0]['valid']-(60*10)+10))
+				{
+					destroySession();
+					newSession($result[0]['email']);	
+				}
 				return $result;
 			}
 			else

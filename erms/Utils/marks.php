@@ -5,7 +5,7 @@ Examination Management System 0.1
 Utility functions
 */
 namespace data\utils\marks;
-function addMarks($marks,$type,$rollno,$subject)
+function addMarks($records)
 {
 	$res=\data\utils\marks\check_session();
 	if($res==-1)
@@ -13,10 +13,20 @@ function addMarks($marks,$type,$rollno,$subject)
 		return -1;
 	}
 	$year=$res[0]['year'];
-	$arguments=[$marks,$type,$rollno,$subject,$year];
-	return(\data\utils\database\insert('INSERT into marks(marks,type,rollno,subject,year) VALUES(?,?,?,?,?)',$arguments,1));
+	for ($i=0; $i<count($records);$i++)
+	{
+		$arguments=[$record[$i]['marks'],$record[$i]['type'],$record[$i]['rollno'],$record[$i]['subject'],$year];
+		$res=\data\utils\database\insert('INSERT into marks(marks,type,rollno,subject,year) VALUES(?,?,?,?,?)',$arguments,1));
+		if($res!=-1)
+		{
+
+		}	
+		else
+			return -1;
+	}
+	return 1;
 }
-function editMarks($rollno,$type,$subject,$marks)
+function edit_marks($records)
 {
 	$res=\data\utils\marks\check_session();
 	if($res==-1)
@@ -24,11 +34,20 @@ function editMarks($rollno,$type,$subject,$marks)
 		return -1;
 	}
 	$year=$res[0]['year'];
-	$arguments=[$type,$subject,$year,$rollno,$marks];
-	return(\data\utils\database\update('UPDATE marks SET marks=? WHERE $type=? and $rollno=? and $subject=? and $year=?',$arguments,1));
-	
+	for ($i=0; $i<count($records);$i++)
+	{
+		$arguments=[$record[$i]['marks'],$record[$i]['type'],$record[$i]['rollno'],$record[$i]['subject'],$year];
+		$res=\data\utils\database\update('UPDATE marks SET marks=? WHERE $type=? and $rollno=? and $subject=? and $year=?',$arguments,1);
+		if($res!=-1)
+		{
+
+		}	
+		else
+			return -1;
+	}
+	return 1;
 }
-function getMarks($rollno,$subject,$type)
+function get_marks($subject,$institute,$type)
 {
 	$res=\data\utils\marks\check_session();
 	if($res==-1)
@@ -36,9 +55,9 @@ function getMarks($rollno,$subject,$type)
 		return -1;
 	}
 	$year=$res[0]['year'];
-	$arguments=[$rollno,$subject,$year,$type];
-	$res=\data\utils\database\find('SELECT marks from marks where rollno=? and subject=? and year=? and type=?',$arguments,1);
-	if(count($res)>0)
+	$arguments=[$subject,$year,$type,$institute];
+	$res=\data\utils\database\find('SELECT rollno, marks from marks where subject=? and year=? and type=? and rollno in(SELECT rollno from student where institute=?',$arguments,1);
+	if($res!=-1)
 	{
 		return $res;
 	}
@@ -62,106 +81,113 @@ function getMarks_institute($institute,$subject,$type){
 		return -1;
 }
 function find_subjects($course,$institute)
-{
-	if($course='all' && $institute=='all')
+{	
+	if($course=='all' && $institute=='all')
 	{
-		$subjects_insitute=\data\utils\data\find('SELECT subject.* , courses.institute  from subject INNER JOIN courses ON subject.institute=courses.institute',[],1);
+		$subjects_institute=\data\utils\database\find('Select subject.*, courses.institute FROM subject INNER JOIN courses ON subject.course=courses.course',[],1);
 	}
 	else if($course=='all')
 	{
-		$arguments=[$course];
-		$subjects_institute=\data\utils\data\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.institute=course.institute and courses.institute=?',$arguments,1);
+		$arguments=[$institute];
+		$subjects_institute=\data\utils\database\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.course=courses.course and courses.institute=?',$arguments,1);
 	}
 	else if($institute='all')
 	{
 		$arguments=[$course];
-		$subjects_institute=\data\utils\data\find('SELECT subject.*, course.institute from subject INNER JOIN courses ON subject.institute=course.institute and courses.course=?',$arguments,1);
+		$subjects_institute=\data\utils\database\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.course=courses.course and courses.course=?',$arguments,1);
+	}
+	else
+	{
+		$arguments=[$course,$institute];
+		$subjects_institute=\data\utils\database\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.course=courses.course and courses.course=? and courses.institute=?',$arguments,1);	
 	}
 	$lists=[];
-	for($i=0;$i<count($subjects_institute);$i++)
+	if($subjects_institute!=-1)
 	{
-		if($subjects_institute['mpractical']!==0)
+		for($i=0;$i<count($subjects_institute);$i++)
 		{
-			$mpractical=-1;
+		if($subjects_institute[$i]['mitheory']==0)
+		{
+			$temp_dict['internal_theory']=-1;	
 		}
-		else
+		else if(check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],1)!=-1)
 		{
-			$mpractical=2;
-		}
-		if($subjects_institute['mipractical']!==0)
-		{
-			$mipractical=-1;
-		}
-		else
-		{
-			$mipractical=1;
-		}
-		if($subjects_institute['mitheory']!==0)
-		{
-			$mitheory=-1;
-		}
-		else
-		{
-			$mitheory=0;
-		}	
-		if($subjects_institute['mtheory']!==0)
-		{
-			$mtheory=-1;
-		}
-		else
-		{
-			$mtheory=1;
-		}
-		$temp_dict['subject_code']=$subjects_institute['subject_code'];
-		$temp_dict['institute']=$subjects_institute['institute'];
-		if(check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],$mipractical)!=-1)
-		{
-			$temp_dict['internal_theory']=check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],$mipractical);	
+			$temp_dict['internal_theory']=check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],1);	
 		}
 		else 
 			return -1;
-		if(check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],$mitheory)!=-1)
+		if($subjects_institute[$i]['mtheory']==0)
 		{
-			$temp_dict['internal_practical']=check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],$mitheory);
+			$temp_dict['theory']=-1;	
+		}
+		else if(check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],3)!=-1)
+		{
+			$temp_dict['theory']=check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],3);	
 		}
 		else 
 			return -1;
-		if(check_entry($subjects_institute[$i]['subject'],$institute[$i]['institute'],$mpractical)!=-1)
+
+		if($subjects_institute[$i]['mipractical']==0)
 		{
-			$temp_dict['external_practical']=check_entry($subjects_institute[$i]['subject'],$institute[$i]['institute'],$mpractical);	
+			$temp_dict['internal_practical']=-1;	
+		}
+		else if(check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],0)!=-1)
+		{
+			$temp_dict['internal_practical']=check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],0);	
 		}
 		else 
 			return -1;
-		if(check_entry($subjects_institute[$i]['subject'],$subjects_institute['institute'],$mtheory)!=-1)
+
+		if($subjects_institute[$i]['mpractical']==0)
 		{
-			$temp_dict['external_theory']=check_entry($subjects_institute[$i]['subject'],$subjects_institute['institute'],$mtheory);	
+			$temp_dict['practical']=-1;	
 		}
-		else
-			return -1;		
+		else if(check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],2)!=-1)
+		{
+			$temp_dict['practical']=check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],2);	
+		}
+		else 
+			return -1;
+		$temp_dict['subject_code']=$subjects_institute[$i]['subject_code'];
+		$temp_dict['institute']=$subjects_institute[$i]['institute'];
+		$temp_dict['course']=$subjects_institute[$i]['course'];
 		array_push($lists,$temp_dict);	
+		}
+		return $lists;	
 	}
-	return $lists;
+	else
+	{
+		return -1;
+	}
+	
+	
 }
 function check_entry($subject,$institute,$paper)
 {
-	if($paper==-1)
-		return -1;
-	else
-	{
-		$arguments=[$ubject,$institute];	
-		$res=\data\utils\data\find('SELECT COUNT(*) from asubjects where subject=? and year=? and id in(select id from admin where institute=?',$arguments,1);
+		$session=check_session();
+		if($session!=-1)
+			$year=$session[0]['year'];
+		else
+			return -1;
+		$arguments=[$subject,$year,$institute];	
+		$res=\data\utils\database\find('SELECT COUNT(*) from asubjects where subject=? and id in (SELECT id from admit where year=? and rollno in(SELECT rollno from student where institute=?))',$arguments,1);
 		if($res!=-1)
 		{
-			$arguments2=[];
-			$res2=\data\utils\data\find('SELECT COUNT(*) from marks where subject=? and year=? and $paper=?',$arguments,1);
-			if($res1[0]['COUNT(*)']==$res[0]['COUNT(*)'])
-				return 1;
-			else
-				return 0;
+			$arguments2=[$subject,$year,$paper,$institute];
+			$res2=\data\utils\database\find('SELECT COUNT(*) from marks where subject=? and year=? and type=? and rollno in(SELECT rollno from student where institute=?)',$arguments2,1);
+			if($res2!=-1)
+			{
+				if($res2[0]['COUNT(*)']==$res[0]['COUNT(*)'])
+					return 1;
+				else
+					return 0;	
+			}
+			else 
+				return -1;
+			
 		}	
 		else
 			 return -1;	
-	}
 }
 function find_batch($course)
 {
@@ -177,7 +203,7 @@ function check_session()
 {
 	$arguments=[0];
 	$res=\data\utils\database\find('SELECT year,sessionid from session where completed=?',$arguments,1);
-	if(count($res)>0)
+	if($res!=-1)
 		return $res;
 	else
 		return -1;
