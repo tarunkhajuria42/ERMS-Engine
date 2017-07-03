@@ -138,7 +138,7 @@ return <<<HTML
                             </div>
                             <div><p id='info_marks1' class='text-center'></p></div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-warning" onclick='submit_marks1()'>Submit</button>
+                                <button id='submit_btn'type="button" class="btn btn-warning" onclick='submit_marks1()'>Submit</button>
                             </div>
                         </div>   
                     </div>

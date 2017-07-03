@@ -15,7 +15,7 @@ function add_marks($records)
 	$year=$res[0]['year'];
 	for ($i=0; $i<count($records);$i++)
 	{
-		$arguments=[$record[$i]['marks'],$record[$i]['type'],$record[$i]['rollno'],$record[$i]['subject'],$year];
+		$arguments=[$records[$i]['marks'],$records[$i]['type'],$records[$i]['rollno'],$records[$i]['subject'],$year];
 		$res=\data\utils\database\insert('INSERT into marks(marks,type,rollno,subject,year)VALUES(?,?,?,?,?)',$arguments,1);
 		if($res!=-1)
 		{

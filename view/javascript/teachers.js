@@ -15,6 +15,7 @@ var selected_subject1;
 var selected_type1;
 var batch_table1;
 var marks_table1;
+var marks_to_submit=[];
 function init_tab1()
 {
 	batch_table1=$('#batch_table1').DataTable();
@@ -75,6 +76,7 @@ function reset_tab1()
 {
 	batches1=[];
 	marks1=[];
+	reset_marks1();
 }
 function load_batch1()
 {
@@ -129,8 +131,14 @@ function optional_link(available,index,type)
 // Marks functions
 var marks_received1=[];
 var temp_submit=0;
+function reset_marks1()
+{
+	temp_submit=0;	
+}
 function load_marks1(id,type)
 {
+	error_marks1('');
+	$('#submit_btn').hide();
 	marks_table1.clear().draw();
 	marks1=[];
 	var no=id.substring(id.indexOf('_')+1,id.length);
@@ -171,6 +179,8 @@ function fill_marks1(data,status)
 
 function load_students1(id,type)
 {
+	error_marks1('');
+	$('#submit_btn').show();
 	marks_table1.clear().draw();
 	var no=id.substring(id.indexOf('_')+1,id.length);
 	var post_arguments={};
@@ -186,6 +196,7 @@ function load_students1(id,type)
 	$.post(address,post_arguments,
 		fill_students1);
 }
+
 function fill_students1(data,status)
 {
 	if(status=='success')
@@ -196,7 +207,7 @@ function fill_students1(data,status)
 		if(datah['type']=='success')
 		{
 			marks1=datah['reply'];
-			marks_received1=marks1;
+			marks_received1=JSON.parse(JSON.stringify(marks1));
 			for (var i=0; i<marks1.length;i++)
 			{
 				var string=marks_string1(marks1[i]['marks'],i);
@@ -232,6 +243,7 @@ function submit_marks1()
 			console.log(marks_received1);
 			if(marks_received1[i]['marks']==-1)
 			{
+				console.log('mama');
 				marks1[i]['marks']=$('#marksedit_'+i).val();
 				$('#marksedit_'+i).val('');
 			}
@@ -249,8 +261,8 @@ function submit_marks1()
 			{
 				if($('#marksedit_'+i).val()==marks1[i]['marks'])
 				{
-					temp_dict['rollno']=marks[i]['rollno'];
-					temp_dict['marks']=marks[i]['marks'];
+					temp_dict['rollno']=marks1[i]['rollno'];
+					temp_dict['marks']=marks1[i]['marks'];
 					temp_dict['subject']=selected_subject1;
 					temp_dict['type']=selected_type1;
 					marks_to_submit.push(temp_dict);
@@ -273,17 +285,20 @@ function submit_complete(data,status)
 		if(datah['type']=='success')
 		{
 			var no;
+			console.log(marks_to_submit);
 			for(var i=0; i<marks_to_submit.length;i++)
 			{
-				no=find_element(marks_received1,'rollno',marks_to_submit['rollno']);
+				no=find_element(marks_received1,'rollno',marks_to_submit[i]['rollno']);
 				marks_received1[no]['marks']=marks1[no]['marks'];
-				$marks_table1.row($('#marksedit_'+no).parents('tr')).remove();
+				marks_table1.row($('#marksedit_'+no).parents('tr')).remove();
 				marks_table1.row.add([marks1[i]['rollno'],
 					marks1[i]['name'],
-					string
+					marks1[i]['marks']
 					]);
 			}
 			marks_table1.draw();
+			error_marks1('Submitted Matched Values');
+			temp_submit=0;
 		}
 	}
 }
