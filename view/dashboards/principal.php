@@ -7,6 +7,7 @@ return <<<HTML
 <!-- Navigation -->
     <script src="javascript/principal.js"></script>
     <script src="javascript/tables.js"></script>
+    <link href="css/admin.css" rel="stylesheet">
     <div id='welcome'>
         <p class='welcome'>Welcome Tarun</p>
     </div>
@@ -66,62 +67,91 @@ return <<<HTML
         </div>
     </nav>	
     <div class='tab-content'>
-    <div class="tab-pane content-wrapper py-3 active" id='tab-01'>
-        <div class="container-fluid" id='container'>    
-            <!-- Example Tables Card -->
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fa fa-table"></i> Checked Marks
-                </div>
-                <div class="card-block">
-                    Course:<select id='course' class='mb-3'>
-                        <option value='all'>All</option>
-                        <option value='CS'>Computer Science</option>
-                    </select>
-                    <button onclick='subjects_select()' value='Show' class='mb-3'>Show</button>
-                    <div class="table-responsive">
-                        <table class="table table-bordered" width="100%" id="marks" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Subject Code</th>
-                                    <th>Course</th>
-                                    <th>Internal Practical</th>
-                                    <th>Internal Theory</th>
-                                    <th>External Practical</th>
-                                </tr>
-                            </thead>
-                            <tbody id='subjects_admin'>
-                                <tr>
-                                        <td>CS01</th>
-                                        <td>Computer Science</th>
-                                        <td>N</th>
-                                        <td>N</th>
-                                        <td>N</th>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Subject Code</th>
-                                    <th>Course</th>
-                                    <th>Internal Practical</th>
-                                    <th>Internal Theory</th>
-                                    <th>External Practical</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                
-                            </tbody>
-                        </table>
+     <div class="tab-pane content-wrapper py-3 active"  id='tab-01'>
+            <div class="container-fluid" id='container'>
+
+                <!-- Example Tables Card -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-table"></i> Checked Marks
                     </div>
-                       
-                </div> 
-            </div>
-            
-                <div class="card-footer small text-muted">
-                    CopyRight Board of Technical Education
+                    <div class="card-block">
+                    <div>
+                        Course:<select id='courses_list1' class='mb-3 mr-3'>
+                            <option value='all'>All</option>
+                        </select>
+                        <button onclick='select_submit1()'  class=' btn btn-info btn-sm'>Select</button></div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" id="batch_table1" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Subject Code</th>
+                                        <th>Institute</th>
+                                        <th>Course</th>
+                                        <th>Internal Practical</th>
+                                        <th>Internal Theory</th>
+                                        <th>External Practical</th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Subject Code</th>
+                                        <th>Institute</th>
+                                        <th>Course</th>
+                                        <th>Internal Practical</th>
+                                        <th>Internal Theory</th>
+                                        <th>External Practical</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                           
+                    </div> 
                 </div>
-            </div>
-            
+                </div>
+                <div class="modal fade" id="marks1" role="dialog" data-backdrop='static'>
+                    <div class="modal-dialog modal-lg">
+                         <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" onclick='load_batch1()' data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Marks</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" id="marks_table1" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Roll No</th>
+                                        <th>Name</th>
+                                        <th>Marks</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Roll No</th>
+                                        <th>Name</th>
+                                        <th>Marks</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                            </div>
+                            <div><p id='info_marks1' class='text-center'></p></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-warning" data-dismiss='modal' onclick='load_batch1()'>Close</button>
+                            </div>
+                        </div>   
+                    </div>
+                </div>
         </div>
     <!-- /.content-wrapper -->
     <div class="tab-pane content-wrapper py-3" id='tab-02'>

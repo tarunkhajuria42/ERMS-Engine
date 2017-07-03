@@ -60,7 +60,7 @@ else{
 	{
 		switch($_POST['type'])
 		{
-			case 'user': user();
+			case 'user': user($res);
 						break;
 			case 'marks':marks();
 						break;

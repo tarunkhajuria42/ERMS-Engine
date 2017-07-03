@@ -49,8 +49,8 @@ function revokerights($email,$courses)
 function checksubjects($email)
 {
 	$arguments=[$email];
-	$res=\utils\database\find('SELECT course from suballoc where email=?',$arguments,2);
-	if(count($res)>0)
+	$res=\data\utils\database\find('SELECT course from suballoc where email=?',$arguments,2);
+	if($res!=1)
 	{
 		return $res;
 	}
@@ -59,6 +59,22 @@ function checksubjects($email)
 		return -1;
 	}
 
+}
+function check_courses($email)
+{
+	$arguments=[$email];
+	$res=\data\utils\database\find('SELECT course from suballoc where email=?',$arguments,1);
+	if($res!=-1)
+	{
+		$courses=[];
+		for($i=0; $i<count($res); $i++)
+		{
+			array_push($courses,$res[$i]['course']);
+		}
+		return $courses;
+	}
+	else
+		return -1;
 }
 function checkEmail($email)
 {
@@ -77,6 +93,31 @@ function enter_premail($email,$access)
 {
 	$arguments=[$email,$access];
 	return (\data\utils\database\insert('INSERT into premail(email,access) values(?,?)',$arguments,2));
+}
+function get_institute($email,$access)
+{
+	if($access<3 && $access>0)
+	{	
+		$arguments=[$email];
+		$res=\data\utils\database\find('SELECT institute from staff where email=?',$arguments,1);
+		if($res!=-1)
+		{
+			return $res[0]['institute'];
+		}
+		else
+			return -1;
+	}
+	else if($access==5)
+	{
+		$res=\data\utils\database\find('SELECT institute from student where email=?',$arguments,1);
+		if($res!=-1)
+		{
+			return $res[0]['institute'];
+		}
+		else
+			return -1;	
+	}
+	
 }
 
 function check_token_verify($token)

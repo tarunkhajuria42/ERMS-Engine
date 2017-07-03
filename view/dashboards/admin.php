@@ -54,7 +54,7 @@ return <<<HTML
                         <a class="nav-link" href="#tab-01" aria-controls="tab-01" role="tab" onclick='init_tab1()' data-toggle="tab">Manage Institutes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#tab-02" aria-controls="tab-02" role="tab" onclick='init_tab2()' data-toggle="tab">Manage Courses</a>
+                        <a class="nav-link" href="#tab-02" aria-controls="tab-02" role="tab" onclick='fill_courses2()' data-toggle="tab">Manage Courses</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#tab-03" aria-controls="tab-03" onclick='init_tab3()' role="tab" data-toggle="tab">Manage Exams</a>
@@ -297,7 +297,7 @@ return <<<HTML
                     <div class="modal-dialog modal-lg">
                          <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" onclick='load_marks3()' data-dismiss="modal">&times;</button>
+                                <button type="button" class="close" onclick='load_batch3()' data-dismiss="modal">&times;</button>
                                     <h4 class="modal-title">Marks</h4>
                             </div>
                             <div class="modal-body">
@@ -308,7 +308,7 @@ return <<<HTML
                                         <th>Roll No</th>
                                         <th>Name</th>
                                         <th>Marks</th>
-                                        <th><th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody >
@@ -318,18 +318,15 @@ return <<<HTML
                                         <th>Roll No</th>
                                         <th>Name</th>
                                         <th>Marks</th>
-                                        <th><th>
+                                        <th></th>
                                     </tr>
                                 </tfoot>
-                                <tbody>
-                                </tbody>
                             </table>
-                        <div><button class='btn btn-info pull-right mt-2' onclick='add_course_button1()'>Add Course</button></div>
                         </div>
                             </div>
-                            <div><p id='info_courses' class='text-center'></p></div>
+                            <div><p id='info_marks3' class='text-center'></p></div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-warning"  onclick='save_courses1()'>Save changes</button>
+                                <button type="button" class="btn btn-warning" data-dismiss='modal' onclick='load_batch3()'>Close</button>
                             </div>
                         </div>   
                     </div>

@@ -783,11 +783,11 @@ function error_subjects2(text)
 //****************************************************** Marks Functions *****************************************
 var batches3=[];
 var marks3=[];
-var edited_marks=[];
 var institutes3=[];
 var courses3=[];
 var selected_list_insti3='all';
 var selected_list_course3='all';
+var edit_in_progress3=false;
 var selected_subject3;
 var batch_table3;
 var marks_table3;
@@ -870,10 +870,15 @@ function select_submit3()
 }
 function reset_tab3()
 {
+	edit_in_progress3=false;
+	batches3=[];
+	marks3=[];
+
 
 }
 function load_batch3()
 {
+	reset_tab3();
 	var  post_arguments={};
 	post_arguments['type']='marks';
 	post_arguments['request']='get_subjects';
@@ -915,7 +920,7 @@ function optional_link(available,index,type)
 	}
 	if(available==1)
 	{
-		return `<a id='batch_`+index+`' class='hand' onclick='load_marks3(this.id,`+type+`)'>Y</a>`;
+		return `<a id='batch_`+index+`' class='hand' data-toggle="modal" data-target="#marks3" onclick='load_marks3(this.id,`+type+`)'>Y</a>`;
 	}
 	if(available==-1)
 	{
@@ -925,6 +930,7 @@ function optional_link(available,index,type)
 // Marks functions
 function load_marks3(id,type)
 {
+	marks_table3.clear();
 	var no=id.substring(id.indexOf('_')+1,id.length);
 	var post_arguments={};
 	post_arguments['type']='marks';
@@ -951,49 +957,61 @@ function fill_marks3(data,status)
 			for (var i=0; i<marks3.length;i++)
 			{
 				marks_table3.row.add([marks3[i]['rollno'],
+					marks3[i]['name'],
 					marks3[i]['marks'],
 					`<button id='marksedit_`+i+`' class='btn btn-info' onclick='edit_marks3(this.id)'>Edit</button>`
 					])
 			}
+			marks_table3.draw();
 		}
 	}
 
 }
-function edit_marks(id)
+function edit_marks3(id)
 {
 	
 	if(edit_in_progress3==false)
 	{
 		var no=id.substring(id.indexOf('_')+1,id.length);
+		marks_table3.row($('#'+id).parents('tr')).remove();
+		marks_table3.row.add([marks3[no]['rollno'],
+						marks3[no]['name'],
+						`<input type='text' id='marksedit_`+no+`' value='`+marks3[no]['marks']+`'>`,
+			`<button id='marksedit_`+no+`' class='btn btn-info' onclick='submit_edit_marks3(this.id)'>Done</button>`
+			]).draw();
+		edit_in_progress3=true;
+	}
+	else
+		error_marks3('Edit, One at a time Please');
+}
+function submit_edit_marks3(id)
+{
+	var no=id.substring(id.indexOf('_')+1,id.length);
 		row_in_edit=id;
-		var post_arguments={};
+	var post_arguments={};
 		post_arguments['type']='marks';
 		post_arguments['request']='edit_marks';
 		var temp_dict={};
 		temp_dict['subject']=selected_subject3;
 		temp_dict['type']=selected_type3;
 		temp_dict['marks']=$('#marksedit_'+no).val();
-		temp_dict['rollno']=marks3[no];
+		temp_dict['rollno']=marks3[no]['rollno'];
 		post_arguments['data']=JSON.stringify([temp_dict]);	
-	}
-	else
-		error_marks3('Edit, One at a time Please');
-}
-function submit_edit_marks(id)
-{
-	$.post(address,post_arguments,
+		$.post(address,post_arguments,
 		function reply_edit(data,status)
 		{
 			if(status='success')
 			{
+				console.log(data);
 				datah=JSON.parse(data);
 				if(datah['type']=='success')
 				{
-					edit_in_progress3=flase;
+					edit_in_progress3=false;
 					var no=row_in_edit.substring(row_in_edit.indexOf('_')+1,row_in_edit.length);
 					marks3[no]['marks']=$('#marksedit_'+no).val();
-					marks_table3.row($(row_in_edit).parents('tr')).remove();
-					marks_table3.row().add([marks3[no]['rollno'],
+					marks_table3.row($('#'+row_in_edit).parents('tr')).remove();
+					marks_table3.row.add([marks3[no]['rollno'],
+						marks3[no]['name'],
 						marks3[no]['marks'],
 						`<button id='marksedit_`+no+`' class='btn btn-info' onclick='edit_marks3(this.id)'>Edit</button>`
 						]).draw();

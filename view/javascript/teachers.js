@@ -42,9 +42,8 @@ function get_institute1()
 function load_courses1()
 {
 	var post_arguments={};
-	post_arguments['type']='lists';
+	post_arguments['type']='access';
 	post_arguments['request']='get_courses';
-	post_arguments['value']=institute1;
 	$.post(address,post_arguments,
 		function list_courses1(data,status)
 		{	
@@ -121,7 +120,7 @@ function optional_link(available,index,type)
 {
 	if(available==0)
 	{
-		return 'N';
+		return `<a id='batch_`+index+`' class='hand' data-toggle="modal" data-target="#marks1" onclick='load_students1(this.id,`+type+`)'>N</a>`;
 	}
 	if(available==1)
 	{
@@ -135,7 +134,8 @@ function optional_link(available,index,type)
 // Marks functions
 function load_marks1(id,type)
 {
-	marks_table1.clear();
+	marks_table1.clear().draw();
+	marks1=[];
 	var no=id.substring(id.indexOf('_')+1,id.length);
 	var post_arguments={};
 	post_arguments['type']='marks';
@@ -164,12 +164,56 @@ function fill_marks1(data,status)
 				marks_table1.row.add([marks1[i]['rollno'],
 					marks1[i]['name'],
 					marks1[i]['marks'],
-					`<button id='marksedit_`+i+`' class='btn btn-info' onclick='edit_marks1(this.id)'>Edit</button>`
+					'-'
 					])
 			}
 			marks_table1.draw();
 		}
 	}
+
+}
+
+function load_students1(id,type)
+{
+	marks_table1.clear().draw();
+	var no=id.substring(id.indexOf('_')+1,id.length);
+	var post_arguments={};
+	post_arguments['type']='marks';
+	post_arguments['request']='get_students';
+	temp_dict={};
+	selected_subject1=batches1[no]['subject'];
+	selected_type1=type;
+	temp_dict['institute']=batches1[no]['institute'];
+	temp_dict['subject']=selected_subject1;
+	temp_dict['type']=type;
+	post_arguments['data']=JSON.stringify(temp_dict);
+	$.post(address,post_arguments,
+		fill_students1);
+}
+function fill_students1(data,status)
+{
+	if(status=='success')
+	{
+		console.log(data);
+		marks_table1.clear();
+		var datah=JSON.parse(data);
+		if(datah['type']=='success')
+		{
+			marks1=datah['reply']
+			for (var i=0; i<marks1.length;i++)
+			{
+				marks_table1.row.add([marks1[i]['rollno'],
+					marks1[i]['name'],
+					marks1[i]['marks'],
+					'-'
+					])
+			}
+			marks_table1.draw();
+		}
+	}
+}
+function submit_marks()
+{
 
 }
 function edit_marks1(id)
@@ -235,13 +279,4 @@ function error_batch1(text)
 function error_marks1(text)
 {
 	$('#info_batch1').text(text);
-}
-//********************************************* Tab 2 (Users) ************************************************
-function init_tab2()
-{
-	$("#ids_table").DataTable();
-}
-function init_tab3()
-{
-	$("#rights").DataTable();
 }

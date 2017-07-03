@@ -21,11 +21,14 @@ function marks(){
 			case 'get_marks':
 							$institute=$data['institute'];
 							$subject=$data['subject'];
+							$type=$data['type'];
 							$res=utils\marks\get_marks($subject,$institute,$type);
 							if($res!=-1)
 							{
 								echo(utils\reply('get_marks','success',$res));
 							}	
+							else
+								echo(utils\reply('get_marks','error','system'));
 							break;
 			case 'get_subjects':
 							$institute=$data['institute'];

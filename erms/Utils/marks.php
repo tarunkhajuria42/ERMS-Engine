@@ -36,8 +36,8 @@ function edit_marks($records)
 	$year=$res[0]['year'];
 	for ($i=0; $i<count($records);$i++)
 	{
-		$arguments=[$record[$i]['marks'],$record[$i]['type'],$record[$i]['rollno'],$record[$i]['subject'],$year];
-		$res=\data\utils\database\update('UPDATE marks SET marks=? WHERE $type=? and $rollno=? and $subject=? and $year=?',$arguments,1);
+		$arguments=[$records[$i]['marks'],$records[$i]['type'],$records[$i]['rollno'],$records[$i]['subject'],$year];
+		$res=\data\utils\database\update('UPDATE marks SET marks=? WHERE type=? and rollno=? and subject=? and year=?',$arguments,1);
 		if($res!=-1)
 		{
 
@@ -56,7 +56,7 @@ function get_marks($subject,$institute,$type)
 	}
 	$year=$res[0]['year'];
 	$arguments=[$subject,$year,$type,$institute];
-	$res=\data\utils\database\find('SELECT rollno, marks from marks where subject=? and year=? and type=? and rollno in(SELECT rollno from student where institute=?',$arguments,1);
+	$res=\data\utils\database\find('SELECT marks.rollno, marks.marks, student.name from marks INNER JOIN  student ON marks.subject=? and marks.year=? and marks.type=? and marks.rollno=student.rollno and student.institute=?',$arguments,1);
 	if($res!=-1)
 	{
 		return $res;
