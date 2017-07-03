@@ -12,6 +12,7 @@ var courses1=[];
 var selected_list_course1='all';
 var edit_in_progress3=false;
 var selected_subject1;
+var selected_type1;
 var batch_table1;
 var marks_table1;
 function init_tab1()
@@ -54,9 +55,6 @@ function load_courses1()
 				{
 					courses1=datah['reply'];
 					$('#courses_list1').empty();
-					$('#courses_list1').append($('<option>', {
-    				value: 'all',
-    				text: 'All'}));
 					for(var i=0; i<courses1.length;i++)
 					{
 						$('#courses_list1').append($('<option>', {
@@ -75,11 +73,8 @@ function select_submit1()
 }
 function reset_tab1()
 {
-	edit_in_progress1=false;
 	batches1=[];
 	marks1=[];
-
-
 }
 function load_batch1()
 {
@@ -132,6 +127,8 @@ function optional_link(available,index,type)
 	}
 }
 // Marks functions
+var marks_received1=[];
+var temp_submit=0;
 function load_marks1(id,type)
 {
 	marks_table1.clear().draw();
@@ -158,14 +155,13 @@ function fill_marks1(data,status)
 		var datah=JSON.parse(data);
 		if(datah['type']=='success')
 		{
-			marks1=datah['reply']
+			marks1=datah['reply'];
 			for (var i=0; i<marks1.length;i++)
 			{
 				marks_table1.row.add([marks1[i]['rollno'],
 					marks1[i]['name'],
 					marks1[i]['marks'],
-					'-'
-					])
+					]);
 			}
 			marks_table1.draw();
 		}
@@ -199,78 +195,97 @@ function fill_students1(data,status)
 		var datah=JSON.parse(data);
 		if(datah['type']=='success')
 		{
-			marks1=datah['reply']
+			marks1=datah['reply'];
+			marks_received1=marks1;
 			for (var i=0; i<marks1.length;i++)
 			{
+				var string=marks_string1(marks1[i]['marks'],i);
+				console.log(marks1[i]['marks']);
+				console.log(string);
 				marks_table1.row.add([marks1[i]['rollno'],
 					marks1[i]['name'],
-					marks1[i]['marks'],
-					'-'
-					])
+					string
+					]);
 			}
 			marks_table1.draw();
 		}
 	}
 }
-function submit_marks()
+function marks_string1(marks,i)
 {
+if(marks==-1)
+{
+	var string="<input type='text' id='marksedit_"+i+"'>";
+	return string;
+}
+else 
+	return marks;
+}
 
-}
-function edit_marks1(id)
+function submit_marks1()
 {
-	
-	if(edit_in_progress1==false)
+	if(temp_submit==0)
 	{
-		var no=id.substring(id.indexOf('_')+1,id.length);
-		marks_table1.row($('#'+id).parents('tr')).remove();
-		marks_table1.row.add([marks1[no]['rollno'],
-						marks1[no]['name'],
-						`<input type='text' id='marksedit_`+no+`' value='`+marks1[no]['marks']+`'>`,
-			`<button id='marksedit_`+no+`' class='btn btn-info' onclick='submit_edit_marks1(this.id)'>Done</button>`
-			]).draw();
-		edit_in_progress1=true;
-	}
-	else
-		error_marks1('Edit, One at a time Please');
-}
-function submit_edit_marks1(id)
-{
-	var no=id.substring(id.indexOf('_')+1,id.length);
-		row_in_edit=id;
-	var post_arguments={};
-		post_arguments['type']='marks';
-		post_arguments['request']='edit_marks';
-		var temp_dict={};
-		temp_dict['subject']=selected_subject1;
-		temp_dict['type']=selected_type1;
-		temp_dict['marks']=$('#marksedit_'+no).val();
-		temp_dict['rollno']=marks1[no]['rollno'];
-		post_arguments['data']=JSON.stringify([temp_dict]);	
-		$.post(address,post_arguments,
-		function reply_edit(data,status)
+		temp_submit=1;
+		for(var i=0; i<marks1.length; i++)
 		{
-			if(status='success')
+			console.log(marks_received1);
+			if(marks_received1[i]['marks']==-1)
 			{
-				console.log(data);
-				datah=JSON.parse(data);
-				if(datah['type']=='success')
-				{
-					edit_in_progress1=false;
-					var no=row_in_edit.substring(row_in_edit.indexOf('_')+1,row_in_edit.length);
-					marks1[no]['marks']=$('#marksedit_'+no).val();
-					marks_table1.row($('#'+row_in_edit).parents('tr')).remove();
-					marks_table1.row.add([marks1[no]['rollno'],
-						marks1[no]['name'],
-						marks1[no]['marks'],
-						`<button id='marksedit_`+no+`' class='btn btn-info' onclick='edit_marks1(this.id)'>Edit</button>`
-						]).draw();
-				}
-				else
-					error_batch1('System Error');
+				marks1[i]['marks']=$('#marksedit_'+i).val();
+				$('#marksedit_'+i).val('');
 			}
-			else
-				error_batch1('Network Error');
-		});
+		}
+		temp_submit=1;
+		error_marks1('Submit again for verification');
+	}
+	else if(temp_submit==1)
+	{
+		marks_to_submit=[];
+		var temp_dict={};
+		for(var i=0; i<marks1.length;i++)
+		{
+			if(marks_received1[i]['marks']==-1)
+			{
+				if($('#marksedit_'+i).val()==marks1[i]['marks'])
+				{
+					temp_dict['rollno']=marks[i]['rollno'];
+					temp_dict['marks']=marks[i]['marks'];
+					temp_dict['subject']=selected_subject1;
+					temp_dict['type']=selected_type1;
+					marks_to_submit.push(temp_dict);
+				}
+			}
+		}
+		var post_arguments={};
+		post_arguments['type']='marks';
+		post_arguments['request']='add_marks';
+		post_arguments['data']=JSON.stringify(marks_to_submit);
+		$.post(address,post_arguments,submit_complete);
+	}
+}
+function submit_complete(data,status)
+{
+	if(status=='success')
+	{
+		console.log(data);
+		datah=JSON.parse(data);
+		if(datah['type']=='success')
+		{
+			var no;
+			for(var i=0; i<marks_to_submit.length;i++)
+			{
+				no=find_element(marks_received1,'rollno',marks_to_submit['rollno']);
+				marks_received1[no]['marks']=marks1[no]['marks'];
+				$marks_table1.row($('#marksedit_'+no).parents('tr')).remove();
+				marks_table1.row.add([marks1[i]['rollno'],
+					marks1[i]['name'],
+					string
+					]);
+			}
+			marks_table1.draw();
+		}
+	}
 }
 function error_batch1(text)
 {
@@ -278,5 +293,17 @@ function error_batch1(text)
 }
 function error_marks1(text)
 {
-	$('#info_batch1').text(text);
+	$('#info_marks1').text(text);
+}
+//******************************************************Utility Functions ****************************************
+function find_element(object,key,value)
+{
+	for (var i=0;i<object.length;i++)
+	{
+		if(object[i][key]==value)
+		{
+			return i;
+		}
+	}
+	return -1;
 }

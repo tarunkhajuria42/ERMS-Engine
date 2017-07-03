@@ -122,7 +122,6 @@ return <<<HTML
                                         <th>Roll No</th>
                                         <th>Name</th>
                                         <th>Marks</th>
-                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody >
@@ -132,7 +131,6 @@ return <<<HTML
                                         <th>Roll No</th>
                                         <th>Name</th>
                                         <th>Marks</th>
-                                        <th></th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -140,7 +138,7 @@ return <<<HTML
                             </div>
                             <div><p id='info_marks1' class='text-center'></p></div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-warning" data-dismiss='modal' onclick='load_batch1()'>Close</button>
+                                <button type="button" class="btn btn-warning" onclick='submit_marks1()'>Submit</button>
                             </div>
                         </div>   
                     </div>

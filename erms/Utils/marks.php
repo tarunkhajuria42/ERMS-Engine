@@ -64,6 +64,64 @@ function get_marks($subject,$institute,$type)
 	else
 		return -1;
 }
+function get_students($subject,$institute,$type)
+{
+	$res=\data\utils\marks\check_session();
+	if($res==-1)
+	{
+		return -1;
+	}
+	$year=$res[0]['year'];
+	$arguments=[$institute,$subject,$year];
+	$res=\data\utils\database\find('SELECT rollno from admit where rollno in(SELECT rollno FROM student where institute=?) and id in (SELECT id from asubjects where subject=? and year=?)',$arguments,1);
+	$students=[];
+	if($res!=-1)
+	{
+		for($i=0;$i<count($res);$i++)
+		{
+			$temp_dict['rollno']=$res[$i]['rollno'];
+			$temp_dict['name']=get_student_name($res[$i]['rollno']);
+			$temp_dict['marks']=get_student_marks($temp_dict['rollno'],$subject,$year,$type);
+			if($temp_dict['name']==-1)
+			{
+				return -1;
+			}
+
+			if($temp_dict['marks']==-1)
+			{
+				return -1;
+			}
+			else if($temp_dict['marks']==-2)
+				$temp_dict['marks']=-1;
+			array_push($students,$temp_dict);
+		}
+		return $students;
+	}
+	else
+		return -1;
+}
+function get_student_marks($rollno,$subject,$year,$type)
+{
+	$arguments=[$rollno,$subject,$year,$type];
+	$res=\data\utils\database\find('SELECT marks from marks where rollno=? and subject=? and year=? and type=?',$arguments,1);
+	if($res!=-1 and count($res)!=0)
+		return $res[0]['marks'];
+	else if(count($res)==0)
+		return -2;
+	else 
+		return -1;
+}
+function get_student_name($rollno)
+{
+	$arguments=[$rollno];
+	$res=\data\utils\database\find('SELECT name from student where rollno=?',$arguments,1);
+	if($res!=-1)
+	{
+		return $res[0]['name'];
+	}
+	else
+		return -1;
+}
 function getMarks_institute($institute,$subject,$type){
 	$res=\data\utils\marks\check_session();
 	if($res==-1)
