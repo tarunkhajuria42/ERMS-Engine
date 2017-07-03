@@ -5,7 +5,7 @@ Examination Management System 0.1
 Utility functions
 */
 namespace data\utils\marks;
-function addMarks($records)
+function add_marks($records)
 {
 	$res=\data\utils\marks\check_session();
 	if($res==-1)
@@ -16,7 +16,7 @@ function addMarks($records)
 	for ($i=0; $i<count($records);$i++)
 	{
 		$arguments=[$record[$i]['marks'],$record[$i]['type'],$record[$i]['rollno'],$record[$i]['subject'],$year];
-		$res=\data\utils\database\insert('INSERT into marks(marks,type,rollno,subject,year) VALUES(?,?,?,?,?)',$arguments,1));
+		$res=\data\utils\database\insert('INSERT into marks(marks,type,rollno,subject,year)VALUES(?,?,?,?,?)',$arguments,1);
 		if($res!=-1)
 		{
 
@@ -148,6 +148,7 @@ function find_subjects($course,$institute)
 		}
 		else 
 			return -1;
+		$temp_dict['subject']=$subjects_institute[$i]['subject'];
 		$temp_dict['subject_code']=$subjects_institute[$i]['subject_code'];
 		$temp_dict['institute']=$subjects_institute[$i]['institute'];
 		$temp_dict['course']=$subjects_institute[$i]['course'];

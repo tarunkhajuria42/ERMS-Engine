@@ -12,6 +12,7 @@ require('user.php');
 require('marks.php');
 require('access.php');
 require('lists.php');
+require('session.php');
 require('Utils/session.php');
 require('Utils/marks.php');
 require('Utils/reply.php');
@@ -65,7 +66,7 @@ else{
 						break;
 			case 'access':access($res[0]['email']);
 						break;
-			case 'session':session();
+			case 'session':session($res[0]['email']);
 						break;
 			case 'lists':lists();
 						break;

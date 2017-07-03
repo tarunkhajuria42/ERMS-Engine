@@ -8,7 +8,7 @@ function init()
 	init_tab1();
 	init_tab2();
 	init_tab3();
-	$("#session").DataTable();
+	init_tab4();
 }
 
 // ***********************Manage Institutes*****************************
@@ -788,6 +788,7 @@ var institutes3=[];
 var courses3=[];
 var selected_list_insti3='all';
 var selected_list_course3='all';
+var selected_subject3;
 var batch_table3;
 var marks_table3;
 function init_tab3()
@@ -973,7 +974,7 @@ function edit_marks(id)
 		temp_dict['type']=selected_type3;
 		temp_dict['marks']=$('#marksedit_'+no).val();
 		temp_dict['rollno']=marks3[no];
-		post_arguments['data']=JSON.stringify(temp_dict);	
+		post_arguments['data']=JSON.stringify([temp_dict]);	
 	}
 	else
 		error_marks3('Edit, One at a time Please');
@@ -1013,9 +1014,11 @@ function error_marks3(text)
 	$('#error_batch3').text(text);
 }
 //****************************************************** Tab 4 (Sessions) ****************************************
-function tab_init4()
+function init_tab4()
 {
+	load_session4();
 }
+var session_name_list=['Registration','ExamForm','Internals','External','Result'];
 function load_session4()
 {
 	$.post(address,
@@ -1027,15 +1030,51 @@ function load_session4()
 	{
 		if(status=='success')
 		{
+			console.log(data);
 			var datah=JSON.parse(data);
 			if(datah['type']='success')
 			{
-				var session_no=data
-				if()
-				$('#session_name').text()
+				var info=datah['reply'];
+				var session_no=info[0]['sessionid'];
+				if(session_no>4)
+					$('#session_semester3').text('Even');
+				else
+					$('#session_semester3').text('Odd');	
+				var sessionid=session_no%5;
+				$('#session_name3').text(session_name_list[sessionid]);
+				$('#session_year3').text(info[0]['year']);
+				
 			}
 		}
-	})
+	});
+}
+function next_session4()
+{
+	$.post(address,
+	{
+		type:'session',
+		request:'next_session'
+	},
+	function next_session_set(data,status)
+	{
+		if(status=='success')
+		{
+			var datah=JSON.parse(data);
+			if(datah['type']='success')
+			{
+				load_session4();
+			}
+			else
+				error_session4('System Error');
+		}
+		else
+			error_session4('Network Error, Could not connect');
+
+	});
+}
+function error_session4(text)
+{
+	$('#error_tab4').text(text);
 }
 
 //******************************************************Utility Functions ****************************************

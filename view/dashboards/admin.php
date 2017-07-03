@@ -60,7 +60,7 @@ return <<<HTML
                         <a class="nav-link" href="#tab-03" aria-controls="tab-03" onclick='init_tab3()' role="tab" data-toggle="tab">Manage Exams</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#tab-04" aria-controls="tab-04"  role="tab" data-toggle="tab">Manage Session</a>
+                        <a class="nav-link" href="#tab-04" aria-controls="tab-04"  onclick='init_tab4()' role="tab" data-toggle="tab">Manage Session</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#tab-05" onclick='logout()' aria-controls="tab-02" role="tab" data-toggle="tab">Log Out</a>
@@ -356,9 +356,9 @@ return <<<HTML
                                 </thead>
                                 <tbody id='institutes_entry'>
                                 <tr>
-                                    <td>1</td>
-                                    <td>2017</td>
-                                    <td>Registration</td>
+                                    <td id='session_semester3'></td>
+                                    <td id='session_year3'></td>
+                                    <td id='session_name3'></td>
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -373,7 +373,7 @@ return <<<HTML
                             </table>
                         </div>
                     </div>
-
+                    <div><p id='error_tab4' class='text-center'</p></div>
                 </div>
 
                 <div><button class='btn btn-info pull-right' onclick='next_session4()'>Next Session</button></div>

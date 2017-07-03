@@ -1,7 +1,7 @@
 <?php
 namespace data;
 
-function session()
+function session($email)
 {
 if(isset($_POST['request']))
 	{
@@ -12,7 +12,8 @@ if(isset($_POST['request']))
 		switch($_POST['request'])
 		{
 			case 'next_session':
-							if(utils\marks\next_session()==1)
+
+							if(utils\marks\new_session($email)==1)
 							{
 								echo(utils\reply('session','success','newsession'));
 							}
@@ -32,17 +33,17 @@ if(isset($_POST['request']))
 							}
 							break;
 			case 'get_session':
-							$res=utils\marks\get_session();
-							if(count($res)>0)
+							$res=utils\marks\check_session();
+							if($res!=-1)
 							{
-								echo(utils\reply('session','success',json_encode($res)));	
+								echo(utils\reply('session','success',$res));	
 							}
 							else
 							{
 								echo(utils\reply('session','error','system'));
 							}
 							break;
-			case default:
+			default:
 						echo(utils\reply('session','error','badrequest'));
 
 		}	
