@@ -13,6 +13,7 @@ require('marks.php');
 require('access.php');
 require('lists.php');
 require('session.php');
+require('student.php');
 require('Utils/session.php');
 require('Utils/marks.php');
 require('Utils/reply.php');
@@ -70,6 +71,7 @@ else{
 						break;
 			case 'lists':lists();
 						break;
+			case 'student':student();
 			default:
 				echo(utils\reply('type','error','badrequest'));	
 		}	

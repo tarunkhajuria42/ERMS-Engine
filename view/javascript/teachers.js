@@ -240,11 +240,12 @@ function submit_marks1()
 		temp_submit=1;
 		for(var i=0; i<marks1.length; i++)
 		{
-			console.log(marks_received1);
 			if(marks_received1[i]['marks']==-1)
 			{
-				console.log('mama');
-				marks1[i]['marks']=$('#marksedit_'+i).val();
+				if($('#marksedit_'+i).val()!='')
+				{
+					marks1[i]['marks']=$('#marksedit_'+i).val();	
+				}
 				$('#marksedit_'+i).val('');
 			}
 		}
@@ -254,11 +255,14 @@ function submit_marks1()
 	else if(temp_submit==1)
 	{
 		marks_to_submit=[];
-		var temp_dict={};
+		
 		for(var i=0; i<marks1.length;i++)
 		{
+			var temp_dict={};
 			if(marks_received1[i]['marks']==-1)
 			{
+				console.log($('#marksedit_'+i).val());
+				console.log(marks1[i]['marks']);
 				if($('#marksedit_'+i).val()==marks1[i]['marks'])
 				{
 					temp_dict['rollno']=marks1[i]['rollno'];
@@ -285,15 +289,16 @@ function submit_complete(data,status)
 		if(datah['type']=='success')
 		{
 			var no;
-			console.log(marks_to_submit);
 			for(var i=0; i<marks_to_submit.length;i++)
 			{
+				
 				no=find_element(marks_received1,'rollno',marks_to_submit[i]['rollno']);
+				console.log(no);
 				marks_received1[no]['marks']=marks1[no]['marks'];
 				marks_table1.row($('#marksedit_'+no).parents('tr')).remove();
-				marks_table1.row.add([marks1[i]['rollno'],
-					marks1[i]['name'],
-					marks1[i]['marks']
+				marks_table1.row.add([marks1[no]['rollno'],
+					marks1[no]['name'],
+					marks1[no]['marks']
 					]);
 			}
 			marks_table1.draw();

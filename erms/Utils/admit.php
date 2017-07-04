@@ -143,4 +143,5 @@ function allocate_center($rollno)
 	else
 		return -1;
 }
+
 ?>

@@ -74,12 +74,13 @@ return <<<HTML
                     <i class="fa fa-table"></i> Results
                 </div>
                     <div class="table-responsive">
-                        <table class="table table-bordered" width="100%" id="dataTable1" cellspacing="0">
+                        <table class="table table-bordered" width="100%" id="student_table1" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>Semester</th>
-                                    <th></th>
-                                    <th></th>
+                                    <th>Registration Form</th>
+                                    <th>Admit Card</th>
+                                    <th>Marks Sheet</th>
                                 </tr>
                             </thead>
                             <tbody id='subjects_admin'>
@@ -87,7 +88,9 @@ return <<<HTML
                             <tfoot>
                                 <tr>
                                     <th>Semester</th>
-                                    <th></th>
+                                    <th>Registration Form</th>
+                                    <th>Admit Card</th>
+                                    <th>Marks Sheet</th>
                                 </tr>
                             </tfoot>
                             <tbody>
@@ -99,12 +102,10 @@ return <<<HTML
                 </div> 
             </div>
            
-        <div class="card-footer small text-muted">
-            CopyRight Board of Technical Education
-        </div>
+        
     </div>
     <!--Tab -->
-    <div class="tab-pane content-wrapper py-3 active" id='tab-02'>
+    <div class="tab-pane content-wrapper py-3" id='tab-02'>
         <div class="container-fluid" id='container'>
 
 

@@ -84,7 +84,6 @@ function get_subjects($course)
 function add_subjects($course,$subjects)
 {
 
-	echo(count($subjects));
 	for($i=0;$i<count($subjects);$i++)
 	{
 		$arguments=[
@@ -101,9 +100,7 @@ function add_subjects($course,$subjects)
 				$subjects[$i]['ptheory'],
 				$subjects[$i]['mtheory'],
 				$subjects[$i]['optional'],
-
 				];
-				var_dump($arguments);
 	if(\data\utils\database\insert('INSERT into subject(subject_code,
 		subject,
 		semester,
