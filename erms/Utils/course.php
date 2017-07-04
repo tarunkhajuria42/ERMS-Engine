@@ -176,4 +176,13 @@ function edit_subjects($course,$subjects)
 	}
 	return 1;
 }
+function max_semester($course)
+{
+	$arguments=[$course];
+	$res=\data\utils\database\find('SELECT MAX(semester) from subject where course=?',$arguments,1);
+	if($res!=-1)
+	{
+		return $res[0]['MAX(semester)'];
+	}
+}
 ?>

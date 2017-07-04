@@ -51,7 +51,10 @@ return <<<HTML
                     	<a class="nav-link" href="#tab-01" aria-controls="tab-01" role="tab" data-toggle="tab">Marks</a>
                 	</li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#tab-02" aria-controls="tab-02" role="tab" data-toggle="tab">Admit Card</a>
+                        <a class="nav-link" href="#tab-02" aria-controls="tab-02" role="tab" data-toggle="tab">Exam Registration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab-03" aria-controls="tab-03" role="tab" data-toggle="tab">Admit Card</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#tab-02" onclick='logout()' aria-controls="tab-04" role="tab" data-toggle="tab">Logout</a>
@@ -78,8 +81,6 @@ return <<<HTML
                             <thead>
                                 <tr>
                                     <th>Semester</th>
-                                    <th>Registration Form</th>
-                                    <th>Admit Card</th>
                                     <th>Marks Sheet</th>
                                 </tr>
                             </thead>
@@ -87,9 +88,7 @@ return <<<HTML
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Semester</th>
-                                    <th>Registration Form</th>
-                                    <th>Admit Card</th>
+                                    <th>Semester</th>                                
                                     <th>Marks Sheet</th>
                                 </tr>
                             </tfoot>
@@ -114,9 +113,18 @@ return <<<HTML
         <div class="card-footer small text-muted">
             CopyRight Board of Technical Education
         </div>
+        </div>
     </div>
     <!--Tab -->
+    <div class="tab-pane content-wrapper py-3" id='tab-03'>
+        <div class="container-fluid" id='container'>
+        <h5>Inactive till session updated by admin</h5>
+        <div class="card-footer small text-muted">
+            CopyRight Board of Technical Education
+        </div>
+        </div>
     </div>
+    <!--Tab -->
     <!-- /.content-wrapper -->
     </div>
     <a class="scroll-to-top rounded" href="#page-top">

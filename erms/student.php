@@ -10,7 +10,7 @@ Utils: User Access
 */	
 namespace data;
 
-function student()
+function student($user)
 {
 	if(isset($_POST['request']))
 	{
@@ -20,11 +20,13 @@ function student()
 		}
 		switch($_POST['request'])
 		{
+			case 'screen_status':utils\student\get_screen($user);
+									break;
 			case 'get_papers':
+								break;
 			case 'get_semester':
-			case
-			
-			default:	echo(utils\reply('user','error','badrequest'));	
+								break;	
+			default:	echo(utils\reply('student','error','badrequest'));	
 
 		}	
 	}

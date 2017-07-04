@@ -71,7 +71,7 @@ else{
 						break;
 			case 'lists':lists();
 						break;
-			case 'student':student();
+			case 'student':student($res[0]['email']);
 			default:
 				echo(utils\reply('type','error','badrequest'));	
 		}	

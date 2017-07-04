@@ -15,7 +15,7 @@ function regular_papers($rollno)
 		$addsem=2;
 	else
 		$addsem=1;
-	$semester=$year-$batch+$addsem;
+	$semester=($year-$batch)*2+$addsem;
 	$course=\data\utils\student\get_course($rollno);
 	$arguments=[$semester,$course,0];
 
@@ -39,7 +39,7 @@ function back_papers($rollno)
 		$addsem=2;
 	else
 		$addsem=1;
-	$semester=$year-$batch+$addsem;
+	$semester=($year-$batch)*2+$addsem;
 	$course=\data\utils\student\get_course($rollno);
 	$list=[];
 	for($temp=$semester;$temp>0;$temp=$temp-2)
@@ -81,7 +81,7 @@ function choice_papers($rollno)
 		$addsem=2;
 	else
 		$addsem=1;
-	$semester=$year-$batch+$addsem;
+	$semester=($year-$batch)*2+$addsem;
 	$course=\data\utils\student\get_course($rollno);
 	$arguments=[$semester,$course,1];
 
@@ -107,7 +107,7 @@ function add_record($photo,$signature,$rollno,$regular,$choice,$back)
 		$addsem=2;
 	else
 		$addsem=1;
-	$semester=$year-$batch+$addsem;
+	$semester=($year-$batch)*2+$addsem;
 	//Insert into admit
 	$arguments=[$id,$centre,$photo,$signature,$year,$semester,$rollno];
 	//Insert into asubjects
