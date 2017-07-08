@@ -3,14 +3,55 @@
 namespace data;
 require('utils/session.php');
 require('utils/database.php');
-$res=utils\user\checkSession();
+require('utils/admit.php');
+require('utils/student.php');
+require('utils/reply.php');
+require('utils/marks.php');
+$session=utils\user\checkSession();
 $files=upload_files();
 if($files!=-1)
 {
+	$res=\data\utils\student\get_student($session[0]['email'],-1);
+	if($res!=-1)
+		$student=$res[0];	
+	else
+		return -1;
+	$regularpapers=utils\admit\regular_papers($student['rollno']);
+	$regular=[];
+	for($i=0;$i<count($regularpapers);$i++)
+	{
+		array_push($regular,$regularpapers[$i]['subject']);
+	}
+	if(isset($_POST['elective']))
+		$electives=$_POST['elective'];
+	else
+		$electives=[];
+	if(isset($_POST['back']))
+		$back=$_POST['back'];
+	else
+		$back=[];
 
+	$final=utils\admit\add_record($files[0],$files[1],$student['rollno'],$regular,$electives,$back);
+	if($final!=-1)
+		echo(utils\reply('examform','success','exam_form'));
+	else
+		echo(utils\reply('examform','error','system_error'));
 }
+else if($files==-1)
+	echo(utils\reply('upload','error','badphoto'));
+else if($files==-2)
+	echo(utils\reply('upload','error','badsign'));
+
 function upload_files()
 {
+	if(!isset($_FILES["picToUpload"]))
+		return -1;
+	if(!isset($_FILES['sigToUpload']))
+		return-2;
+	if(!file_exists($_FILES["picToUpload"]["tmp_name"]))
+		return -1;
+	if(!file_exists($_FILES["sigToUpload"]["tmp_name"]))
+		return -2;
 	$target_dir_pic = "applicant_pics/";
 	$target_dir_sig = "applicant_sigs/";
 	$pic_name='p'.\bin2hex(\random_bytes(16));

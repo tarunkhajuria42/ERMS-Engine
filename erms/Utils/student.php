@@ -93,7 +93,14 @@ function get_screen($email)
 				else if($res[0]['sessionid']==2 || $res[0]['sessionid']==7)
 					$temp_dict['marks_sheet']=2;
 				else if($res[0]['sessionid']==1 || $res[0]['sessionid']==6)
-					$temp_dict['marks_sheet']=3;
+				{
+
+					$id=\data\utils\database\find('SELECT COUNT(*) from admit where rollno=? and year=? and semester=?',[$rollno,$year,$current_semester],1);
+					if($id[0]['COUNT(*)']>0)
+						$temp_dict['marks_sheet']=4;
+					else
+						$temp_dict['marks_sheet']=3;
+				}
 				else
 					$temp_dict['marks_sheet']=0;	
 			}

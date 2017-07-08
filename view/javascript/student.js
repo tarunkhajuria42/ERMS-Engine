@@ -13,6 +13,7 @@ function init_tab1()
 	$('#main_form').ajaxForm({url:'http://localhost/ERMS-Engine/erms/examform.php',type:'post',
 		success:function(data)
 				{
+					console.log(data);
 					datah=JSON.parse(data);
 					if(datah['type']=='success')
 					{
@@ -65,6 +66,8 @@ function prepare_marksheet_string(logic,index)
 		string="<button id='admitcard_"+index+"' class='btn pull-right btn-info' onclick='generate_admit_card(this.id)'>Admit Card</button>"
 	else if(logic==3)
 		string="<button id='examform_"+index+"' class='btn pull-right btn-info' data-toggle='modal' data-target='#exam_form' onclick='generate_exam_form(this.id)'>Exam Form</button>"
+	else if(logic==4)
+		string='Exam Form Submitted';
 	else
 		string='-';
 	return string;
@@ -123,15 +126,15 @@ function generate_exam_form(id)
 					$('#back').empty();
 					for(var i=0; i<regular.length;i++)
 					{
-						$("<p>"+regular[i]['subject_code']+".  "+regular[i]['subject']+"</p>").appendTo('#regular');
+						$("<p>"+regular[i]['subject_code']+"-  "+regular[i]['subject']+"</p>").appendTo('#regular');
 					}
 					for(var i=0; i<electives.length;i++)
 					{
-						$("<input type='checkbox' name='elective' value='"+electives[i]['subject']+"' >"+electives[i]['subject_code']+"-  "+electives[i]['subject']+"<br>").appendTo('#elective');
+						$("<input type='checkbox' name='elective[]' value='"+electives[i]['subject']+"' >  "+electives[i]['subject_code']+"-  "+electives[i]['subject']+"<br>").appendTo('#elective');
 					}
 					for(var i=0; i<back.length;i++)
 					{
-						$("<input type='checkbox' name='back' value='"+back[i]['subject']+"' >"+back[i]['subject_code']+"-  "+back[i]['subject']+"<br>").appendTo('#back');
+						$("<input type='checkbox' name='back[]' value='"+back[i]['subject']+"' >  "+back[i]['subject_code']+"-  "+back[i]['subject']+"<br>").appendTo('#back');
 					}
 				}
 			}

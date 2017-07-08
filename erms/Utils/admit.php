@@ -52,7 +52,6 @@ function exam_form($email)
 	else
 		return -1;
 	return $temp_dict;
-	var_dump($back);
 
 }
 function regular_papers($rollno)
@@ -114,7 +113,9 @@ function back_papers($rollno)
 			}
 			if($total<$total_pass)
 			{
-				array_push($list,[$sub[$i]['subject'],$sub[$i]['subject_code']]);
+				$temp_dict['subject']=$sub[$i]['subject'];
+				$temp_dict['subject_code']=$sub[$i]['subject_code'];
+				array_push($list,$temp_dict);
 			}
 				
 		}
@@ -147,7 +148,9 @@ function choice_papers($rollno)
 function add_record($photo,$signature,$rollno,$regular,$choice,$back)
 {
 	$centre=allocate_center($rollno);
-	$id=\data\utils\database\find('SELECT MAX(id) from admit');
+	if($centre==-1)
+		return -1;
+	$id=\data\utils\database\find('SELECT MAX(id) from admit',[],1);
 	$id=$id[0]['MAX(id)']+1;
 	$res=\data\utils\marks\check_session();
 	if($res==-1)
@@ -163,19 +166,26 @@ function add_record($photo,$signature,$rollno,$regular,$choice,$back)
 	$semester=($year-$batch)*2+$addsem;
 	//Insert into admit
 	$arguments=[$id,$centre,$photo,$signature,$year,$semester,$rollno];
+	$submit=\data\utils\database\insert('INSERT into admit(id,center,photo,signature,year,semester,rollno) values(?,?,?,?,?,?,?)',$arguments,1);
+	if($submit==-1)
+		return -1;
 	//Insert into asubjects
 	for($i=0; $i<count($regular); $i++)
 	{
-		add_subject($regular[$i],$id,0);
+		if(add_subject($regular[$i],$id,0)==-1)
+			return -1;
 	}
 	for($i=0; $i<count($choice); $i++)
 	{
-		add_subject($choice[$i],$id,0);
+		if(add_subject($choice[$i],$id,1)==-1)
+			return -1;
 	}
-	for($i=0; $i<count($choice); $i++)
+	for($i=0; $i<count($back); $i++)
 	{
-		add_subject($back[$i],$id,0);
+		if(add_subject($back[$i],$id,2)==-1)
+			return -1;
 	}
+	return 1;
 }
 
 function add_subject($subject,$id,$type)
@@ -187,10 +197,10 @@ function allocate_center($rollno)
 {
 	$institute=\data\utils\student\get_institute($rollno);
 	$arguments=[$institute];
-	$res=\data\utils\database('SELECT DISTINCT institute from institute where institute <> ?',$arguments,1);
-	if(count($res)>0)
+	$res=\data\utils\database\find('SELECT DISTINCT institute from courses where institute <> ?',$arguments,1);
+	if($res!=-1)
 	{
-		$ind=\rand(0,count($res));
+		$ind=\rand(0,count($res)-1);
 		return $res[$ind]['institute'];
 	}
 	else
