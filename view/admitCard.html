@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	
+	<!-- Bootstrap Core CSS -->
+    <link href="bootstrap.min.css" rel="stylesheet">
+	
+	
+	
+</head>
+
+<body style="background-color:orange;">
+	<button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#myModal">Admit Card</button>
+	
+	<!-- MODAL -->
+	<div id="admitCard" class="modal fade" role="dialog">
+		<div class="modal-dialog modal-lg">
+			
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" align="center">Generate Admit Card</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<form action="admitCard.php" method="post" enctype="multipart/form-data">
+							<div class="col-md-8">
+								<div class="form-group">
+									<label>Regular Subjects</label>
+									<div class="row">
+										<div class="form-group col-md-3">
+											<select class="form-control" id="subject1">
+												<option value="" selected disabled>Subject 1</option>
+												<option value="biology">Biology</option>
+												<option value="chemistry">Chemistry</option>
+												<option value="computer">Computer Science</option>
+												<option value="english">English</option>
+												<option value="hindi">Hindi</option>
+												<option value="mathematics">Mathematics</option>
+												<option value="physics">Physics</option>
+											</select>
+										</div>
+										<div class="form-group col-md-3">
+											<select class="form-control" id="subject2">
+												<option value="" selected disabled>Subject 2</option>
+												<option value="biology">Biology</option>
+												<option value="chemistry">Chemistry</option>
+												<option value="computer">Computer Science</option>
+												<option value="english">English</option>
+												<option value="hindi">Hindi</option>
+												<option value="mathematics">Mathematics</option>
+												<option value="physics">Physics</option>
+											</select>
+										</div>
+										<div class="form-group col-md-3">
+											<select class="form-control" id="subject3">
+												<option value="" selected disabled>Subject 3</option>
+												<option value="biology">Biology</option>
+												<option value="chemistry">Chemistry</option>
+												<option value="computer">Computer Science</option>
+												<option value="english">English</option>
+												<option value="hindi">Hindi</option>
+												<option value="mathematics">Mathematics</option>
+												<option value="physics">Physics</option>
+											</select>
+										</div>
+										<div class="form-group col-md-3">
+											<select class="form-control" id="subject4">
+												<option value="" selected disabled>Subject 4</option>
+												<option value="biology">Biology</option>
+												<option value="chemistry">Chemistry</option>
+												<option value="computer">Computer Science</option>
+												<option value="english">English</option>
+												<option value="hindi">Hindi</option>
+												<option value="mathematics">Mathematics</option>
+												<option value="physics">Physics</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Select Electives</label>
+									<div class="row">
+										<div class="col-md-4">
+											<div class="checkbox">
+												<label><input type="checkbox" value="elective1">Elective 1</label>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="checkbox">
+												<label><input type="checkbox" value="elective2">Elective 2</label>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="checkbox">
+												<label><input type="checkbox" value="elective3">Elective 3</label>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-4">
+											<div class="checkbox">
+												<label><input type="checkbox" value="elective4">Elective 4</label>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="checkbox">
+												<label><input type="checkbox" value="elective5">Elective 5</label>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="checkbox">
+												<label><input type="checkbox" value="elective6">Elective 6</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="pwd">Password:</label>
+									<input type="password" class="form-control" id="pwd">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div>
+									<label>Applicant's Photograph</label>
+									<input type="file" name="picToUpload" id="picToUpload">
+								</div>
+								<br>
+								<div>
+									<label>Applicant's Signature</label>
+									<input type="file" name="sigToUpload" id="sigToUpload">
+								</div>
+							</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-success">Submit</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</form>
+			</div>
+			
+		</div>
+	</div>
+	
+	<!-- jQuery -->
+    <script src="jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="bootstrap.min.js"></script>
+</body>
+</html>

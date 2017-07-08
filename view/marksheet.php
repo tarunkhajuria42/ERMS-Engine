@@ -1,6 +1,7 @@
 <?php
 require('fpdf.php');
 
+
 class PDF extends FPDF
 {
 // Page header
@@ -74,21 +75,28 @@ function Table($header, $data)
 
 }
 
+if(isset($_POST['request']))
+    {
+        if(isset($_POST['data']))
+        {
+            $data=json_decode($_POST['data'],true);
+        }
+    
 // Instanciation of inherited class
 $pdf = new PDF('L');
 $header = array('CODE','SUBJECT','MIDMAX','ENDMAX','TOTAL1','PRACMAX','TMAX','TOTAL2','MID','END','TOTAL3','PRAC','TEAM','TOTAL3');
-$data = $pdf->LoadData('marks.txt');
-$name = 'Gurpreet kaur';
-$roll = '239658';
-$institute = 'Kasturba Polytechnic, Pitampura';
-$Semester = '6';
+$data = $data['marks'];
+$name = $data['name'];
+$roll = $data['rollno'];
+$institute = $data['institute'];
+$Semester = $data['semester']
 $status = 'Regular';
-$branch = 'Computer Science';
-$gtot = '836';
-$pass = 'PASS';
+$branch = $data['course'];
+$gtot = $data['total'];
+$pass = $data['pass'];
 $mj_tot = 'EIGHT THREE SIX - OUT OF 1000';
-$divis = 'FIRST WITH HONS.';
-$percent = '79.53';
+$divis = $data['division'];
+$percent = $data['percent'];
 
 $pdf->AliasNbPages();
 $pdf->AddPage();
@@ -159,4 +167,5 @@ $pdf->Cell(130,7,'SIGNATURE AND SEAL OF INSTITUTION','B',0,'L');
 $pdf->Cell(70,7,'CONTROLLER OF EXAMS','BR',1,'L');
 $pdf->Cell(20,7,'*This is a computer generated marksheet',0,1,'L');
 $pdf->Output();
+}
 ?>

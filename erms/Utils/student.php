@@ -9,53 +9,53 @@ function add_student($student)
 
 function get_student($email,$rollno)
 {
-	if($email!==-1)
+	if($email!=-1)
 	{
 		$arguments=[$email];
 		$res=\data\utils\database\find('SELECT * from student where email=?',$arguments,1);
-		if(count(res)>0)
+		if(count($res)>0 && $res!=-1)
 			return $res;
 		else
 			return -1;
 	}
-	if($rollno!==-1)
+	if($rollno!=-1)
 	{
 		$arguments=[$rollno];
 		$res=\data\utils\database\find('SELECT * from student where rollno=?',$arguments,1);
-		if(count(res)>0)
+		if(count($res)>0 && $res!=-1)
 			return $res;
 		else
 			return -1;
 	}
 	else
-		return -2;
+		return -1;
 }
 function get_course($rollno)
 {
 	$arguments=[$rollno];
 	$res=\data\utils\database\find('SELECT course from student where rollno=?',$arguments,1);
 	if(count($res)>0)
-		echo $res[0]['course'];
+		return $res[0]['course'];
 	else 
-		echo -1;
+		return -1;
 }
 function get_institute($rollno)
 {
 	$arguments=[$rollno];
 	$res=\data\utils\database\find('SELECT institute from student where rollno=?',$arguments,1);
 	if(count($res)>0)
-		echo $res[0]['institute'];
+		return $res[0]['institute'];
 	else 
-		echo -1;
+		return -1;
 }
 function get_batch($rollno)
 {
 	$arguments=[$rollno];
 	$res=\data\utils\database\find('SELECT batch from student where rollno=?',$arguments,1);
 	if(count($res)>0)
-		echo $res[0]['batch'];
+		return $res[0]['batch'];
 	else 
-		echo -1;
+		return -1;
 }
 function get_screen($email)
 {
@@ -85,12 +85,15 @@ function get_screen($email)
 		$screen=[];
 		for ($semester=1; $semester<=$current_semester;$semester++)
 		{
-			$temp_dict={};
 			$temp_dict['semester']=$semester;
 			if($semester==$current_semester)
 			{
 				if($res[0]['sessionid']==4 || $res[0]['sessionid']==9)
 					$temp_dict['marks_sheet']=1;
+				else if($res[0]['sessionid']==2 || $res[0]['sessionid']==7)
+					$temp_dict['marks_sheet']=2;
+				else if($res[0]['sessionid']==1 || $res[0]['sessionid']==6)
+					$temp_dict['marks_sheet']=3;
 				else
 					$temp_dict['marks_sheet']=0;	
 			}

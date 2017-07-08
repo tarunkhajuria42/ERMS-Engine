@@ -57,7 +57,7 @@ return <<<HTML
                         <a class="nav-link" href="#tab-02" aria-controls="tab-04" role="tab" data-toggle="tab">Manage Courses</a>
                     </li>   	
                     <li class="nav-item">
-                        <a class="nav-link" href="#tab-02" aria-controls="tab-05" role="tab" data-toggle="tab">Logout</a>
+                        <a class="nav-link" href="#tab-02" aria-controls="tab-05" role="tab" onclick='logout()' data-toggle="tab">Logout</a>
                     </li>   
             </ul>
         </div>

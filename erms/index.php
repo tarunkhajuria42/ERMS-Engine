@@ -61,7 +61,7 @@ else{
 	{
 		switch($_POST['type'])
 		{
-			case 'user': user($res);
+			case 'user': user();
 						break;
 			case 'marks':marks();
 						break;
@@ -72,6 +72,7 @@ else{
 			case 'lists':lists();
 						break;
 			case 'student':student($res[0]['email']);
+						break;
 			default:
 				echo(utils\reply('type','error','badrequest'));	
 		}	

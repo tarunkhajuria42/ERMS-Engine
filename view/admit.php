@@ -65,18 +65,27 @@ function Table($header, $data)
 
 }
 
+if(isset($_POST['request']))
+    {
+        if(isset($_POST['data']))
+        {
+            $data=json_decode($_POST['data'],true);
+        }
+    
 // Instanciation of inherited class
 $pdf = new PDF();
 $header = array('CODE','SUBJECT','DATE OF EXAM','SLOT');
-$data = $pdf->LoadData('admit.txt');
+$data = $data['subjects_array'];
+$signature=$data['signature'];
+$photo=$data['photo'];
+$name = $data['name'];
+$roll = $data['rollno'];
+$institute = $data['institute'];
+$Semester = $data['semester'];
+$status = 'Regular';
+$branch = $data['semester'];
+$examcenter = $data['examcenter'];
 
-$name = 'Gurpreet kaur';
-$roll = '239658';
-$institute = 'Kasturba Polytechnic, Pitampura';
-$Semester = '6';
-$status = 'regular';
-$branch = 'Computer Science';
-$examcenter = 'Aditya Institute of Technology';
 
 
 $pdf->AliasNbPages();
@@ -99,12 +108,12 @@ $pdf->Cell(40,6,'Branch','LR',0,'C');
 $pdf->Cell(80,6,$branch,'LR',1,'L');
 $pdf->Cell(40,6,'Exam Center','LBR',0,'C');
 $pdf->Cell(80,6,$examcenter,'LBR',1,'L');
-$pdf->Image('photo.jpg',140,60,40,60);
+$pdf->Image($photo,140,60,40,60);
 $pdf->Cell(40,10,'',0,1);
 $pdf->Cell(40,10,'',0,1);
 $pdf->Cell(40,5,'',0,1);
 $pdf->Cell(120,10,'Candidate Signtaure :',0,1,'R');
-$pdf->Image('sign.jpg',140,120,40,20);
+$pdf->Image($signature,140,120,40,20);
 $pdf->Table($header, $data);
 $pdf->SetFont('Arial','',8);
 $pdf->Cell(40,5,'',0,1);
@@ -113,4 +122,5 @@ $pdf->Cell(40,10,'',0,1);
 $pdf->SetFont('Arial','',12);
 $pdf->Cell(170,30,'SIGNATURE OF ISSUING AUTHORITY WITH SEAL :',0);
 $pdf->Output();
+}
 ?>

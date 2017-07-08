@@ -8,7 +8,10 @@ Author: Tarun Khajuria (tarunkhajuria42@gmail.com)
 ----------------------------------------------------
 Utils: User Access
 */	
+
 namespace data;
+require('utils/student.php');
+require('utils/admit.php');
 
 function student($user)
 {
@@ -20,9 +23,17 @@ function student($user)
 		}
 		switch($_POST['request'])
 		{
-			case 'screen_status':utils\student\get_screen($user);
-									break;
-			case 'get_papers':
+			case 'screen_status':$res=utils\student\get_screen($user);
+								if($res!=-1)
+									echo(utils\reply('student','success',$res));
+								else
+									echo(utils\reply('student','error','system'));
+								break;
+			case 'exam_form':	$res=utils\admit\exam_form($user);
+								if($res!=-1)
+									echo(utils\reply('student','success',$res));
+								else
+									echo(utils\reply('student','error','system'));
 								break;
 			case 'get_semester':
 								break;	

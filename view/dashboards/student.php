@@ -4,8 +4,12 @@ function student()
 {
 return <<<HTML
 <!-- Navigation -->
+    
+    <script src="javascript/student.js"></script>
+    
+    
     <div id='welcome'>
-        <p class='welcome'>Welcome Tarun</p>
+        <p id ='name' class='welcome'>Welcome Tarun</p>
     </div>
     <nav id="mainNav" class="navbar static-top navbar-toggleable-md navbar-inverse">
         <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,13 +55,7 @@ return <<<HTML
                     	<a class="nav-link" href="#tab-01" aria-controls="tab-01" role="tab" data-toggle="tab">Marks</a>
                 	</li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#tab-02" aria-controls="tab-02" role="tab" data-toggle="tab">Exam Registration</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#tab-03" aria-controls="tab-03" role="tab" data-toggle="tab">Admit Card</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#tab-02" onclick='logout()' aria-controls="tab-04" role="tab" data-toggle="tab">Logout</a>
+                        <a class="nav-link" href="#tab-02" onclick='logout()' aria-controls="tab-02" role="tab" data-toggle="tab">Logout</a>
                     </li>   	
             </ul>
         </div>
@@ -66,11 +64,6 @@ return <<<HTML
     <div class="tab-pane content-wrapper py-3 active" id='tab-01'>
         <div class="container-fluid" id='container'>
 
-            <!-- Breadcrumbs -->
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item active">My Dashboard</li>
-            </ol>      
             <!-- Example Tables Card -->
             <div class="card mb-3">
                 <div class="card-header">
@@ -81,56 +74,77 @@ return <<<HTML
                             <thead>
                                 <tr>
                                     <th>Semester</th>
-                                    <th>Marks Sheet</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody id='subjects_admin'>
+                            <tbody>
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <th>Semester</th>                                
-                                    <th>Marks Sheet</th>
+                                    <th>Action</th>
                                 </tr>
                             </tfoot>
-                            <tbody>
-                                
-                            </tbody>
                         </table>
                     </div>
                        
                 </div> 
             </div>
            
-        
-    </div>
-    <!--Tab -->
-    <div class="tab-pane content-wrapper py-3" id='tab-02'>
-        <div class="container-fluid" id='container'>
-
-
-        <h5>Inactive till session updated by admin</h5>
+     <div id="exam_form" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
             
-        <div class="card-footer small text-muted">
-            CopyRight Board of Technical Education
-        </div>
-        </div>
-    </div>
-    <!--Tab -->
-    <div class="tab-pane content-wrapper py-3" id='tab-03'>
-        <div class="container-fluid" id='container'>
-        <h5>Inactive till session updated by admin</h5>
-        <div class="card-footer small text-muted">
-            CopyRight Board of Technical Education
-        </div>
-        </div>
-    </div>
-    <!--Tab -->
-    <!-- /.content-wrapper -->
-    </div>
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fa fa-chevron-up"></i>
-    </a>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" align="center">Generate Admit Card</h4>
+                </div>
+                <form id='main_form' action="http://localhost/ERMS-Engine/erms/index.php" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="row">
+                            
+                                <div class="col-md-8">
+                                    <h5>Regular Subjects</h5>
+                                    <div class="form-group" id='regular'>
+                                        
+                                        
+                                    </div>
+                                    <h5>Electives</h5>
+                                    <div class="form-group" id='elective'>
+                                        
 
+                                    </div>
+                                    <h5>Back Papers</h5>
+                                    <div class="form-group" id='back'>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div>
+                                        <label>Applicant's Photograph</label>
+                                        <input type="file" name="picToUpload" id="picToUpload">
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <label>Applicant's Signature</label>
+                                        <input type="file" name="sigToUpload" id="sigToUpload">
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <p id='message'></p>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+             </form>
+            </div>
+            
+        </div>
+    </div>   
+    </div>
+    </div>
 HTML;
 }	
 ?>
