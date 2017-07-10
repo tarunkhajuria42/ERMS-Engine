@@ -75,25 +75,25 @@ function Table($header, $data)
 
 }
 
-if(isset($_POST['request']))
-    {
-        if(isset($_POST['data']))
-        {
-            $data=json_decode($_POST['data'],true);
-        }
+if(isset($_POST))
+{}
+else
+    echo('Error');
+
+    
     
 // Instanciation of inherited class
 $pdf = new PDF('L');
 $header = array('CODE','SUBJECT','MIDMAX','ENDMAX','TOTAL1','PRACMAX','TMAX','TOTAL2','MID','END','TOTAL3','PRAC','TEAM','TOTAL3');
-$data = $data['marks'];
-$name = $data['name'];
-$roll = $data['rollno'];
-$institute = $data['institute'];
-$Semester = $data['semester']
+$data = $_POST['marks'];
+$name = $_POST['name'];
+$roll = $_POST['rollno'];
+$institute = $_POST['institute'];
+$Semester = $_POST['semester']
 $status = 'Regular';
-$branch = $data['course'];
-$gtot = $data['total'];
-$pass = $data['pass'];
+$branch = $_POST['course'];
+$gtot = $_POST['total'];
+$pass = $_POST['pass'];
 $mj_tot = 'EIGHT THREE SIX - OUT OF 1000';
 $divis = $data['division'];
 $percent = $data['percent'];

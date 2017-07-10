@@ -3,27 +3,48 @@
 namespace data\utils\admit;
 function admit_details($email)
 {
+	$res=\data\utils\marks\check_session();
 	$student=\data\utils\student\get_student($email,-1);
-	$regular=regular_papers($student['rollno']);
-	$back=back_papers($student['rollno']);
-	$choice=choice_papers($student['rollno']);
-	if($regular!=-1)
-		$temp_dict['regular_papers']=$regular;
+	if($res==-1)
+	{
+		return -1;
+	}
+	$year=$res[0]['year'];
+	$batch=\data\utils\student\get_batch($student[0]['rollno']);
+	if($res[0]['sessionid']>4)
+		$addsem=2;
+	else
+		$addsem=1;
+	$semester=(($year-$batch)*2)+$addsem;
+	
+	$arguments=[$student[0]['rollno'],$year,$semester];
+	$subjects=\data\utils\database\find('SELECT subject_code,subject from subject where subject in(SELECT subject from asubjects where id in(SELECT id from admit where rollno=? and year=? and semester=?))',$arguments,1);
+	if($subjects!=-1)
+	{
+		$temp_array=[];
+		for ($i=0; $i<count($subjects);$i++)
+		{
+			array_push($temp_array,[$subjects[$i]['subject_code'],$subjects[$i]['subject']])	;
+		}
+		$temp_dict['list']=$temp_array;
+	}
 	else
 		return -1;
-	if($back!=-1)
-		$temp_dict['back_papers']=$back;
-	else
+	$temp_dict['rollno']=$student[0]['rollno'];
+	$temp_dict['name']=$student[0]['name'];
+	$temp_dict['course']=$student[0]['course'];
+	$temp_dict['institute']=$student[0]['institute'];
+	$temp_dict['semester']=$semester;
+	$arguments=[$student[0]['rollno'],$year,$semester];
+	$admit=\data\utils\database\find('SELECT * from admit where rollno=? and year=? and semester=?',$arguments,1);
+	if($admit==-1)
 		return -1;
-	if($choice!=-1)
-		$temp_dict['choice_papers']=$choice;
-	else
-		return -1;
-	$temp_dict['rollno']=$student['rollno'];
-	$temp_dict['name']=$student['name'];
-	$temp_dict['course']=$student['course'];
-	$temp_dict['institute']=$student['institute'];
-	$temp_dict['centre']=allocate_center($student['rollno']);
+	$temp_dict['exam_centre']=$admit[0]['center'];
+	$temp_dict['photo']=$admit[0]['photo'];
+	$temp_dict['signature']=$admit[0]['signature'];
+
+	return $temp_dict;
+
 
 }
 function exam_form($email)

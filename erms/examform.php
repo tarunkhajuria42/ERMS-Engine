@@ -63,6 +63,8 @@ function upload_files()
 	$imageFileType_sig = pathinfo($_FILES["sigToUpload"]["name"],PATHINFO_EXTENSION);
 	$target_file_pic=$target_file_pic.'.'.$imageFileType_pic;
 	$target_file_sig=$target_file_sig.'.'.$imageFileType_sig;
+	$img_name=$pic_name.'.'.$imageFileType_pic;
+	$si_name=$sign_name.'.'.$imageFileType_sig;
 	// Check if image file is a actual image or fake image
 	if(isset($_POST["submit"])) {
 		$check_pic = getimagesize($_FILES["picToUpload"]["tmp_name"]);
@@ -97,7 +99,7 @@ function upload_files()
 	} else {
 		if ( move_uploaded_file($_FILES["picToUpload"]["tmp_name"], $target_file_pic)
 			and move_uploaded_file($_FILES["sigToUpload"]["tmp_name"], $target_file_sig) ) {
-			return [$target_file_pic,$target_file_sig];
+			return [$img_name,$si_name];
 		} else {
 			return -1;
 		}

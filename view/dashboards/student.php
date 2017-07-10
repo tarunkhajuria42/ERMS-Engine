@@ -97,7 +97,7 @@ return <<<HTML
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" onclick='get_contents()' data-dismiss="modal">&times;</button>
                     <h4 class="modal-title" align="center">Generate Admit Card</h4>
                 </div>
                 <form id='main_form' action="http://localhost/ERMS-Engine/erms/index.php" method="post" enctype="multipart/form-data">
@@ -136,7 +136,7 @@ return <<<HTML
                     <div class="modal-footer">
                         <p id='message'></p>
                         <button type="submit" class="btn btn-success">Submit</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick='get_contents()' >Close</button>
                     </div>
              </form>
             </div>

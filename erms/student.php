@@ -35,8 +35,14 @@ function student($user)
 								else
 									echo(utils\reply('student','error','system'));
 								break;
-			case 'get_semester':
+			case 'admit_card':	$res=utils\admit\admit_details($user);
+								if($res!=-1)
+									echo(utils\reply('admit_card','success',$res));
+								else
+									echo(utils\reply('admit_card','error','system'));
 								break;	
+			case 'marksheet':
+								break;
 			default:	echo(utils\reply('student','error','badrequest'));	
 
 		}	

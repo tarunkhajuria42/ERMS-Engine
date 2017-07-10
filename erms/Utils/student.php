@@ -75,7 +75,7 @@ function get_screen($email)
 			$addsem=2;
 		else
 			$addsem=1;
-		$current_semester=($year-$batch)*2+$addsem;
+		$current_semester=(($year-$batch)*2)+$addsem;
 		$course=$student[0]['course'];
 		$max_sem=\data\utils\course\max_semester($course);
 		if($current_semester>$max_sem)
@@ -114,5 +114,10 @@ function get_screen($email)
 	}
 	else
 		return -1;
+}
+
+function getmarksheet($user)
+{
+	
 }
 ?>

@@ -55,8 +55,8 @@ function Table($header, $data)
     {
         $this->Cell($w[0],10,$row[0],'LR');
         $this->Cell($w[1],10,$row[1],'LR');
-        $this->Cell($w[2],10,$row[2],'LR',0,'R');
-        $this->Cell($w[3],10,$row[3],'LR',0,'R');
+        //$this->Cell($w[2],10,$row[2],'LR',0,'R');
+        //$this->Cell($w[3],10,$row[3],'LR',0,'R');
         $this->Ln();
     }
     // Closing line
@@ -65,26 +65,27 @@ function Table($header, $data)
 
 }
 
-if(isset($_POST['request']))
-    {
-        if(isset($_POST['data']))
-        {
-            $data=json_decode($_POST['data'],true);
-        }
+if(isset($_POST))
+{
+}
+else 
+    echo('Error');
     
 // Instanciation of inherited class
+$address_photo='http://localhost/ERMS-Engine/erms/applicant_pics/';
+$address_signature='http://localhost/ERMS-Engine/erms/applicant_sigs/';
 $pdf = new PDF();
-$header = array('CODE','SUBJECT','DATE OF EXAM','SLOT');
-$data = $data['subjects_array'];
-$signature=$data['signature'];
-$photo=$data['photo'];
-$name = $data['name'];
-$roll = $data['rollno'];
-$institute = $data['institute'];
-$Semester = $data['semester'];
+$header = array('CODE','SUBJECT');
+$data = json_decode($_POST['list'],true);
+$signature=$address_signature.$_POST['signature'];
+$photo=$address_photo.$_POST['photo'];
+$name = $_POST['name'];
+$roll = $_POST['rollno'];
+$institute = $_POST['institute'];
+$Semester = $_POST['semester'];
 $status = 'Regular';
-$branch = $data['semester'];
-$examcenter = $data['examcenter'];
+$branch = $_POST['course'];
+$examcenter = $_POST['exam_centre'];
 
 
 
@@ -122,5 +123,5 @@ $pdf->Cell(40,10,'',0,1);
 $pdf->SetFont('Arial','',12);
 $pdf->Cell(170,30,'SIGNATURE OF ISSUING AUTHORITY WITH SEAL :',0);
 $pdf->Output();
-}
+
 ?>

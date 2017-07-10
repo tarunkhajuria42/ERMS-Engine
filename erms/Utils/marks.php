@@ -258,6 +258,8 @@ function find_batch($course)
 		return -1;
 
 }
+//Session functions
+
 function check_session()
 {
 	$arguments=[0];

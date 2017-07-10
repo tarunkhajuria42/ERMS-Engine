@@ -78,7 +78,7 @@ function generate_marksheet(id)
 	var no=id.substring(id.indexOf('_')+1,id.length);
 	var post_arguments={};
 	post_arguments['type']='marks';
-	post_arguments['request']='generate_marksheet';
+	post_arguments['request']='marksheet';
 	post_arguments['value']=no+1;
 	$.post(address,post_arguments,
 		function marksheet(data,status)
@@ -88,7 +88,8 @@ function generate_marksheet(id)
 				datah=JSON.parse(data);
 				if(datah['type']=='success')
 				{
-					
+					var reply=datah['reply'];
+					post_final('http://localhost/ERMS-Engine/view/marksheet.php','post',reply);
 				}
 			}
 		})
@@ -97,7 +98,24 @@ function generate_marksheet(id)
 
 function generate_admit_card(id)
 {
+	console.log('avc');
 	var no=id.substring(id.indexOf('_')+1,id.length);
+	var post_arguments={};
+	post_arguments['type']='student';
+	post_arguments['request']='admit_card';
+	$.post(address,post_arguments,
+	function admit_ccard(data,status)
+	{
+		if(status=='success')
+		{
+			var datah=JSON.parse(data);
+			if(datah['type']=='success')
+			{
+				var reply=datah['reply'];
+				post_final('http://localhost/ERMS-Engine/view/admit.php','post',reply);
+			}
+		}
+	});
 
 }
 function generate_exam_form(id)
@@ -144,19 +162,21 @@ function generate_exam_form(id)
 function post_final(action, method, input) {
     'use strict';
     var form;
-    form = $('<form />', {
+    form = $('<form/>', {
         action: action,
         method: method,
+        target:'_blank',
         style: 'display: none;'
     });
-    if (typeof input !== 'undefined' && input !== null) {
-        $.each(input, function (name, value) {
-            $('<input />', {
+    for(var key in input)
+    {
+    	if(key=='list')
+    		input[key]=JSON.stringify(input[key]);
+    	$('<input />', {
                 type: 'hidden',
-                name: name,
-                value: value
+                name: key,
+                value: input[key]
             }).appendTo(form);
-        });
     }
     form.appendTo('body').submit();
 }
