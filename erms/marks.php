@@ -63,6 +63,8 @@ function marks(){
 							else
 								echo(utils\reply('get_marks','error','system'));
 							break;
+			case 'enter_marksheet':
+							$course=$data['course']
 			default:
 					echo(utils\reply('marks','error','badrequest'));	
 

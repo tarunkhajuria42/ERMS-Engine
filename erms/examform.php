@@ -78,12 +78,10 @@ function upload_files()
 	}
 	// Check if file already exists
 	if (file_exists($target_file_pic) or file_exists($target_file_sig)) {
-		echo "Sorry, file already exists.";
 		return -1;
 	}
 	// Check file size
 	if ( ($_FILES["picToUpload"]["size"] > 200000) or ($_FILES["sigToUpload"]["size"] > 200000) ) {
-		echo "Sorry, your file is too large.";
 		return -1;
 	}
 	// Allow certain file formats

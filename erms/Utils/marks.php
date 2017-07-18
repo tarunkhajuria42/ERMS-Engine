@@ -149,13 +149,14 @@ function find_subjects($course,$institute)
 		$arguments=[$institute];
 		$subjects_institute=\data\utils\database\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.course=courses.course and courses.institute=?',$arguments,1);
 	}
-	else if($institute='all')
+	else if($institute=='all')
 	{
 		$arguments=[$course];
 		$subjects_institute=\data\utils\database\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.course=courses.course and courses.course=?',$arguments,1);
 	}
 	else
 	{
+
 		$arguments=[$course,$institute];
 		$subjects_institute=\data\utils\database\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.course=courses.course and courses.course=? and courses.institute=?',$arguments,1);	
 	}

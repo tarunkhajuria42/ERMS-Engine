@@ -93,7 +93,7 @@ return <<<HTML
                                     <tr>
                                         <th>Institutes</th>
                                         <th>Courses</th>
-                                    </tr>
+                                    </tr>   
                                 </tfoot>
                                 <tbody>
                                     
