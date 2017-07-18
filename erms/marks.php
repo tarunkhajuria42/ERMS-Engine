@@ -61,16 +61,16 @@ function marks(){
 							else
 								echo(utils\reply('get_marks','error','system'));
 							break;
-			case 'get_marksheet':
+			case 'get_datesheet':
 							$course=$data['course'];
-							$res=utils\marks\get_marksheet($course);
+							$res=utils\marks\get_datesheet($course);
 							if($res!=-1)
 								echo(utils\reply('marksheet','success',$res));
 							else
 								echo(utils\reply('marksheet','error','system'));
 							break;
-			case 'marksheet_data':
-							$list=$data['cour']
+			case 'enter_datesheet':
+							break;
 
 			default:
 					echo(utils\reply('marks','error','badrequest'));	

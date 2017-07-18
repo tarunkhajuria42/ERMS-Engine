@@ -1094,7 +1094,91 @@ function error_session4(text)
 {
 	$('#error_tab4').text(text);
 }
+//****************************************************** Date Sheet Functions ************************************
+courses5=[];
+subjects5=[];	
+function init_tab5()
+{
+	datesheet_table5=$('#datesheet_table5').DataTable();
+	load_courses5();
+}
+function load_courses5()
+{
+	var post_arguments={};
+	post_arguments['type']='lists';
+	post_arguments['request']='get_courses';
+	post_arguments['value']='all';
+	$.post(address,post_arguments,
+		function list_courses5(data,status)
+		{	
+			if(status=='success')
+			{
+				var datah=JSON.parse(data);
+				if(datah['type']=='success')
+				{
+					courses5=datah['reply'];
+					$('#course_list5').empty();
+					for(var i=0; i<courses3.length;i++)
+					{
+						$('#course_list5').append($('<option>', {
+    						value: courses5[i],
+    						text: courses5[i]}));
+					}
+				}
+			}
+		});
+}
 
+function submit_course5()
+{
+	var post_arguments={};
+	post_arguments['type']='marks';
+	post_arguments['request']='get_datesheet';
+	post_arguments['value']=$('#courses_list5').val();
+	$.post(address,post_arguments,
+		function list_datesheet(data,status)
+		{
+			if(status='success')
+			{
+				var datah=JSON.parse(data);
+				if(datah['type']=='success')
+				{
+					subjects5=datah['reply'];
+					datesheet_table5.clear();
+					for(var i=0; i<subjects5.length;i++)
+					{
+						datesheet_table5.row.add([
+							subjects5[i]['subject'],
+							date_string(subjects5[i]['date'])]);
+						datesheet_table5.draw();
+					}
+				}
+			}
+		});
+}
+function date_string(date)
+{
+	if(date!='-')
+		str=`<input id='date_'`+i+`' type='date' value='`+date+`'>`;
+	else
+		str=`<input id='date_'`+i+`' type='date' >`;
+}
+
+function save_datesheet()
+{
+	temp_array=[];
+	for(var i=0; i<subjects5.length;i++)
+	{
+		temp={}
+		temp['subject']=subjects5['subject'];
+
+		temp['date']=$('#date_')
+	}
+}
+function error_datesheet5(text)
+{
+	$('#info_datesheet5').text(text);
+}
 //******************************************************Utility Functions ****************************************
 function find_element(object,key,value)
 {

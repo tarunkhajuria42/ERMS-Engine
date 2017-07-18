@@ -259,7 +259,64 @@ function find_batch($course)
 		return -1;
 
 }
-//Session functions
+//********************************************** Datesheet functions *********************************************
+function get_datesheet($course)
+{
+	$res=\data\utils\marks\check_session();
+		if($res==-1)
+		{
+			return -1;
+		}
+		$year=$res[0]['year'];
+		if($res[0]['sessionid']>4)
+			$semester=0;
+		else
+			$semester=1;
+	$arguments=[$course];
+	$subjects=\data\utils\database\find('SELECT subject from subject where course=?',$arguments,1);
+	if($subjects==-1)
+		return -1;
+	$sub_res=[];
+	for($i=0; $i <count($subjects); $i++)
+	{
+		$date=\data\utils\database\find('SELECT date from datesheet where subject=? and year=? and semester=?');
+		if(count($date)==0)
+		{
+			$temp['date']=-1;
+		}
+		else
+			$temp['date']=$date['date'];
+		$temp['subject']=$subjects['subject'];
+		array_push($sub_res,$temp);
+	}
+	return $sub_res;
+}
+
+function add_datesheet($list)
+{
+	$res=\data\utils\marks\check_session();
+		if($res==-1)
+		{
+			return -1;
+		}
+		$year=$res[0]['year'];
+		if($res[0]['sessionid']>4)
+			$semester=0;
+		else
+			$semester=1;
+	for ($i=0; $i<count($list);$i++)
+	{
+		$arguments=[$list[$i]['date'],$year,$semester,$list[$i]['subject']];
+		if($list[$i]['type']==1)
+			$res=\data\utils\database\update('UPDATE datesheet SET date=? where year=? and semester=? and subject=?',$arguments,1);
+		else
+			$res=\data\utils\database\insert('INSERT into datesheet(date,year,semester,subject) values(?,?,?,?)',$arguments,1);
+		if($res==-1)
+			return -1;
+	}
+	return 1;
+}
+//**********************************************Session functions*************************************************
 
 function check_session()
 {

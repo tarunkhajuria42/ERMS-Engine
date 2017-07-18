@@ -388,9 +388,9 @@ return <<<HTML
                         Course:<select id='course_list5' class='mb-3 mr-3'>
                             <option value='all'>All</option>
                         </select>
-                        <button onclick='select_submit5()'  class=' btn btn-info btn-sm'>Select</button></div>
+                        <button onclick='submit_course5()'  class=' btn btn-info btn-sm'>Select</button></div>
                         <div class="table-responsive">
-                            <table class="table table-bordered" width="100%" id="datesheet_table3" cellspacing="0">
+                            <table class="table table-bordered" width="100%" id="datesheet_table5" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>Subject</th>
