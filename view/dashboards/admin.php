@@ -63,7 +63,10 @@ return <<<HTML
                         <a class="nav-link" href="#tab-04" aria-controls="tab-04"  onclick='init_tab4()' role="tab" data-toggle="tab">Manage Session</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#tab-05" onclick='logout()' aria-controls="tab-02" role="tab" data-toggle="tab">Log Out</a>
+                        <a class="nav-link" href="#tab-05" aria-controls="tab-05"  onclick='init_tab5()' role="tab" data-toggle="tab">Datesheet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab-06" onclick='logout()' aria-controls="tab-06" role="tab" data-toggle="tab">Log Out</a>
                     </li>
             </ul>
         </div>
@@ -284,9 +287,6 @@ return <<<HTML
                                         <th>External Theory</th>
                                     </tr>
                                 </tfoot>
-                                <tbody>
-                                    
-                                </tbody>
                             </table>
                         </div>
                            
@@ -364,9 +364,6 @@ return <<<HTML
                                         <th>Session</th>
                                     </tr>
                                 </tfoot>
-                                <tbody>
-                                    
-                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -377,11 +374,44 @@ return <<<HTML
                 </div>   
             </div>
         <!--tab ends-->
+        <!--********************************************** Marks (Tab5)*****************************************-->
         <div class="tab-pane content-wrapper py-3 " id='tab-05'>
-            <div id='two'>
-                <p id='new'>Not Active</p>
-            </div>
+            <div class="container-fluid" id='container'>
 
+                <!-- Example Tables Card -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-table"></i> Datesheet
+                    </div>
+                    <div class="card-block">
+                    <div>
+                        Course:<select id='course_list5' class='mb-3 mr-3'>
+                            <option value='all'>All</option>
+                        </select>
+                        <button onclick='select_submit5()'  class=' btn btn-info btn-sm'>Select</button></div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" id="datesheet_table3" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Subject</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Subject</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                           
+                    </div> 
+                </div>
+            </div>
+                
         </div>
         <!--tab ends-->
         

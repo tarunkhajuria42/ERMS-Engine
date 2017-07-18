@@ -57,14 +57,21 @@ function marks(){
 							$type=$data['type'];
 							$res=utils\marks\get_students($subject,$institute,$type);
 							if($res!=-1)
-							{
-								echo(utils\reply('get_marks','success',$res));
-							}	
+								echo(utils\reply('get_marks','success',$res));	
 							else
 								echo(utils\reply('get_marks','error','system'));
 							break;
-			case 'enter_marksheet':
-							$course=$data['course']
+			case 'get_marksheet':
+							$course=$data['course'];
+							$res=utils\marks\get_marksheet($course);
+							if($res!=-1)
+								echo(utils\reply('marksheet','success',$res));
+							else
+								echo(utils\reply('marksheet','error','system'));
+							break;
+			case 'marksheet_data':
+							$list=$data['cour']
+
 			default:
 					echo(utils\reply('marks','error','badrequest'));	
 
