@@ -91,7 +91,12 @@ function lists()
 								else
 									echo(utils\reply('get_subjects','error','system'));
 								break;
-
+			case 'get_semesters':$sem=utils\course\get_semesters($_POST['value']);
+								if($sem!=-1)
+									echo(utils\reply('get_semesters','success',$sem));
+								else
+									echo(utils\reply('get_semesters','error','system'));
+								break;
 			default: echo(utils\reply('list','error','badrequest'));
 			
 

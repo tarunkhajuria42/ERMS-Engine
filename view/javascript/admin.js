@@ -1111,6 +1111,7 @@ function load_courses5()
 	$.post(address,post_arguments,
 		function list_courses5(data,status)
 		{	
+			error_datesheet5('');
 			if(status=='success')
 			{
 				var datah=JSON.parse(data);
@@ -1118,7 +1119,7 @@ function load_courses5()
 				{
 					courses5=datah['reply'];
 					$('#course_list5').empty();
-					for(var i=0; i<courses3.length;i++)
+					for(var i=0; i<courses5.length;i++)
 					{
 						$('#course_list5').append($('<option>', {
     						value: courses5[i],
@@ -1134,7 +1135,7 @@ function submit_course5()
 	var post_arguments={};
 	post_arguments['type']='marks';
 	post_arguments['request']='get_datesheet';
-	post_arguments['value']=$('#courses_list5').val();
+	post_arguments['value']=$('#course_list5').val();
 	$.post(address,post_arguments,
 		function list_datesheet(data,status)
 		{
@@ -1149,31 +1150,58 @@ function submit_course5()
 					{
 						datesheet_table5.row.add([
 							subjects5[i]['subject'],
-							date_string(subjects5[i]['date'])]);
+							date_string(subjects5[i]['date'],i)]);
 						datesheet_table5.draw();
 					}
 				}
 			}
 		});
 }
-function date_string(date)
+function date_string(date,i)
 {
 	if(date!='-')
-		str=`<input id='date_'`+i+`' type='date' value='`+date+`'>`;
+		str=`<input id='date_`+i+`' type='date' value='`+date+`'>`;
 	else
-		str=`<input id='date_'`+i+`' type='date' >`;
+		str=`<input id='date_`+i+`' type='date' >`;
+	return str;
 }
 
-function save_datesheet()
+function save_datesheet5()
 {
 	temp_array=[];
 	for(var i=0; i<subjects5.length;i++)
 	{
-		temp={}
-		temp['subject']=subjects5['subject'];
-
-		temp['date']=$('#date_')
+		if($('#date_'+i).val()!='')
+		{
+			temp_dict={};
+			temp_dict['subject']=subjects5[i]['subject'];
+			temp_dict['date']=$('#date_'+i).val();
+			if(subjects5[i]['subjects5']==-1)
+				temp_dict['type']=1;
+			else
+				temp_dict['type']=0;
+			temp_array.push(temp_dict);
+		}
 	}
+	var post_arguments={};
+	post_arguments['type']='marks';
+	post_arguments['request']='add_datesheet';
+	post_arguments['data']=JSON.stringify(temp_array);
+	$.post(address,post_arguments,
+	function save_result(data,status)
+	{
+		if(status=='success')
+		{
+			console.log(data);
+			var datah=JSON.parse(data);
+			if(datah['type']=='success')
+				error_datesheet5('Success!!');
+			else
+				error_datesheet5('System Error');
+		}
+		else
+			error_datesheet5('Network Error');
+	});
 }
 function error_datesheet5(text)
 {

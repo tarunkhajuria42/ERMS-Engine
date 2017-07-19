@@ -62,7 +62,7 @@ function marks(){
 								echo(utils\reply('get_marks','error','system'));
 							break;
 			case 'get_datesheet':
-							$course=$data['course'];
+							$course=$_POST['value'];
 							$res=utils\marks\get_datesheet($course);
 							if($res!=-1)
 								echo(utils\reply('marksheet','success',$res));
@@ -70,8 +70,12 @@ function marks(){
 								echo(utils\reply('marksheet','error','system'));
 							break;
 			case 'enter_datesheet':
+							$res=utils\marks\add_datasheet($data);
+							if($res!=-1)
+								echo(utils\reply('marksheet','success',$res));
+							else
+								echo(utils\reply('marksheet','error','system'));
 							break;
-
 			default:
 					echo(utils\reply('marks','error','badrequest'));	
 

@@ -32,7 +32,6 @@ require('misc.php');
 
 		    <!-- Plugin CSS -->
 		    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-		    <link href="vendor/jquery-ui/jquery-ui.css" rel="stylesheet">
 
 		    <!-- Custom styles for this template -->
 		    <link href="css/sb-admin.css" rel="stylesheet">
@@ -48,7 +47,6 @@ require('misc.php');
             
             <script src="vendor/datatables/jquery.dataTables.js"></script>
             <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-            <script src="vendor/jquery-ui/jquery-ui.js"></script>
             <script src="js/sb-admin.min.js"></script>
     		<script src="vendor/chart.js/Chart.min.js"></script>
             <!-- Custom scripts for this template -->

@@ -272,21 +272,20 @@ function get_datesheet($course)
 			$semester=0;
 		else
 			$semester=1;
-	$arguments=[$course];
-	$subjects=\data\utils\database\find('SELECT subject from subject where course=?',$arguments,1);
+	$arguments=[$course,$semester];
+	$subjects=\data\utils\database\find('SELECT subject from subject where course=? and semester%2=?',$arguments,1);
 	if($subjects==-1)
 		return -1;
 	$sub_res=[];
 	for($i=0; $i <count($subjects); $i++)
 	{
-		$date=\data\utils\database\find('SELECT date from datesheet where subject=? and year=? and semester=?');
+		$arguments=[$subjects[$i]['subject'],$year,$semester];
+		$date=\data\utils\database\find('SELECT date from datesheet where subject=? and year=? and semester=?',$arguments,1);
 		if(count($date)==0)
-		{
 			$temp['date']=-1;
-		}
 		else
 			$temp['date']=$date['date'];
-		$temp['subject']=$subjects['subject'];
+		$temp['subject']=$subjects[$i]['subject'];
 		array_push($sub_res,$temp);
 	}
 	return $sub_res;

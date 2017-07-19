@@ -75,6 +75,26 @@ function all_courses()
 		return -1;
 	}
 }
+function get_semesters($course,$institute)
+{
+	if($course!=-1)
+	{
+		if($course=='all')
+			$sem=\data\utils\database\find('SELECT DISTINCT semester from subject',[],1);
+		else 
+		{	
+			$arguments=[$course];
+			$sem=\data\utils\database\find('SELECT DISTINCT semester from subject where course=?',$arguments,1);	
+		}
+		return $sem;
+	}
+	else if($institute!=-1)
+	{
+		$arguments=[$institute];
+		$sem=\data\utils\database\find('SELECT DISTINCT semester from subject where course in (SELECT course from courses where institute=?',$arguments,1);
+		return $sem;
+	}
+}
 function get_subjects($course)
 {
 	$arguments=[$course];
