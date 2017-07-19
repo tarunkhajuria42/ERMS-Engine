@@ -69,8 +69,8 @@ function marks(){
 							else
 								echo(utils\reply('marksheet','error','system'));
 							break;
-			case 'enter_datesheet':
-							$res=utils\marks\add_datasheet($data);
+			case 'add_datesheet':
+							$res=utils\marks\add_datesheet($data);
 							if($res!=-1)
 								echo(utils\reply('marksheet','success',$res));
 							else

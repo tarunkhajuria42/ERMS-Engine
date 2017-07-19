@@ -1159,7 +1159,7 @@ function submit_course5()
 }
 function date_string(date,i)
 {
-	if(date!='-')
+	if(date!=-1)
 		str=`<input id='date_`+i+`' type='date' value='`+date+`'>`;
 	else
 		str=`<input id='date_`+i+`' type='date' >`;

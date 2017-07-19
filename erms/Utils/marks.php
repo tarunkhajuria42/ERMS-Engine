@@ -284,7 +284,7 @@ function get_datesheet($course)
 		if(count($date)==0)
 			$temp['date']=-1;
 		else
-			$temp['date']=$date['date'];
+			$temp['date']=$date[0]['date'];
 		$temp['subject']=$subjects[$i]['subject'];
 		array_push($sub_res,$temp);
 	}
