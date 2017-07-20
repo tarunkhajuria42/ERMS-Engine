@@ -77,23 +77,24 @@ function all_courses()
 }
 function get_semesters($course,$institute)
 {
-	if($course!=-1)
+	if($course=='all')
 	{
-		if($course=='all')
-			$sem=\data\utils\database\find('SELECT DISTINCT semester from subject',[],1);
-		else 
-		{	
-			$arguments=[$course];
-			$sem=\data\utils\database\find('SELECT DISTINCT semester from subject where course=?',$arguments,1);	
+		if($institute=='all')
+		{
+			$sem=\data\utils\database\find('SELECT DISTINCT semester from subject',[],1);	
 		}
-		return $sem;
+		else
+		{
+			$arguments=[$institute];
+			$sem=\data\utils\database\find('SELECT DISTINCT semester from subject where course in (SELECT course from courses where institute=?',$arguments,1);
+		}
 	}
-	else if($institute!=-1)
-	{
-		$arguments=[$institute];
-		$sem=\data\utils\database\find('SELECT DISTINCT semester from subject where course in (SELECT course from courses where institute=?',$arguments,1);
-		return $sem;
+	else 
+	{	
+		$arguments=[$course];
+		$sem=\data\utils\database\find('SELECT DISTINCT semester from subject where course=?',$arguments,1);	
 	}
+	return $sem;
 }
 function get_subjects($course)
 {

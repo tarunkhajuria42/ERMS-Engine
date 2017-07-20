@@ -91,7 +91,9 @@ function lists()
 								else
 									echo(utils\reply('get_subjects','error','system'));
 								break;
-			case 'get_semesters':$sem=utils\course\get_semesters($_POST['value']);
+			case 'get_semesters':$institute=$data['institute'];
+								$course=$data['course'];
+								$sem=utils\course\get_semester();
 								if($sem!=-1)
 									echo(utils\reply('get_semesters','success',$sem));
 								else

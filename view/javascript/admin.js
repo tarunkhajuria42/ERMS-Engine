@@ -803,7 +803,14 @@ function init_tab3()
 		{
 			selected_list_insti3=$('#institutes_list3').val();
 			load_courses3();
-		})
+		});
+	$('#courses_list3').change(
+		function change_courses3()
+		{
+			selected_list_course3=$('#courses_list3').val();
+			load_semester3();
+		});
+
 }
 function load_institutes3()
 {
@@ -861,6 +868,36 @@ function load_courses3()
 				}
 			}
 		});
+}
+function load_semester3()
+{
+	var post_arguments={};
+	post_arguments['type']='lists';
+	post_arguments['request']='get_semester';
+	temp={};
+	temp['institute']=selected_list_insti3;
+	temp['course']=selected_list_course3;
+	post_arguments['data']=JSON.stringify(temp);
+	$.post(address,post_arguments,
+		function list_semesters3(data,status)
+		{
+			if(status=='success')
+			{
+				console.log(data);
+				var datah=JSON.parse(data);
+				if(datah['type']=='success')
+				{
+					semesters3=datah['reply'];
+					$('#semester_list3').empty();
+					for(var i=0; i<semester3.length;i++)
+					{
+						$('#semester_list3').append($('<option>', {
+    						value: semester3[i],
+    						text: semester3[i]}));
+					}
+				}
+			}
+		})
 }
 
 function select_submit3()
