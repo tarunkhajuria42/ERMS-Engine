@@ -33,11 +33,12 @@ function marks(){
 			case 'get_subjects':
 							$institute=$data['institute'];
 							$course=$data['course'];
-							if(utils\marks\find_subjects($course,$institute)!=-1)
-							{
-								$batches=utils\marks\find_subjects($course,$institute);
+							$semester=$data['semester'];
+							$batches=utils\marks\find_subjects($course,$institute,$semester);
+							if($batches!=-1)
 								echo(utils\reply('subjects','success',$batches));	
-							}
+							else
+								echo(utils\reply('subjects','error','system'));
 							break;
 			case 'add_marks':$res=utils\marks\add_marks($data);
 								if($res!=-1)
@@ -62,8 +63,9 @@ function marks(){
 								echo(utils\reply('get_marks','error','system'));
 							break;
 			case 'get_datesheet':
-							$course=$_POST['value'];
-							$res=utils\marks\get_datesheet($course);
+							$course=$data['course'];
+							$semester=$data['semester'];
+							$res=utils\marks\get_datesheet($course,$semester);
 							if($res!=-1)
 								echo(utils\reply('marksheet','success',$res));
 							else

@@ -785,8 +785,10 @@ var batches3=[];
 var marks3=[];
 var institutes3=[];
 var courses3=[];
+var semesters3=[];
 var selected_list_insti3='all';
 var selected_list_course3='all';
+var selected_list_semester3;
 var edit_in_progress3=false;
 var selected_subject3;
 var batch_table3;
@@ -798,6 +800,8 @@ function init_tab3()
 	load_institutes3();
 	selected_list_insti3=$('#institutes_list3').val();
 	load_courses3();
+	selected_list_course3=$('#courses_list3').val();
+	load_semester3();
 	$('#institutes_list3').change(
 		function change_institute3()
 		{
@@ -873,7 +877,7 @@ function load_semester3()
 {
 	var post_arguments={};
 	post_arguments['type']='lists';
-	post_arguments['request']='get_semester';
+	post_arguments['request']='get_semesters';
 	temp={};
 	temp['institute']=selected_list_insti3;
 	temp['course']=selected_list_course3;
@@ -889,20 +893,20 @@ function load_semester3()
 				{
 					semesters3=datah['reply'];
 					$('#semester_list3').empty();
-					for(var i=0; i<semester3.length;i++)
+					for(var i=0; i<semesters3.length;i++)
 					{
 						$('#semester_list3').append($('<option>', {
-    						value: semester3[i],
-    						text: semester3[i]}));
+    						value: semesters3[i]['semester'],
+    						text: semesters3[i]['semester']}));
 					}
 				}
 			}
-		})
+		});
 }
 
 function select_submit3()
 {
-	selected_list_course3=$('#courses_list3').val();
+	selected_list_semester3=$('#semester_list3').val();
 	load_batch3();
 }
 function reset_tab3()
@@ -922,14 +926,16 @@ function load_batch3()
 	var temp_dict={};
 	temp_dict['course']=selected_list_course3;
 	temp_dict['institute']=selected_list_insti3;
+	temp_dict['semester']=selected_list_semester3;
 	post_arguments['data']=JSON.stringify(temp_dict);
 	$.post(address,post_arguments,display_batch3)
 }
 function display_batch3(data,status)
 {
+	console.log(data);
 	if(status=='success')
 	{
-		console.log(data);
+		
 		var datah=JSON.parse(data);
 		if(datah['type']=='success')
 		{
@@ -1133,11 +1139,21 @@ function error_session4(text)
 }
 //****************************************************** Date Sheet Functions ************************************
 courses5=[];
-subjects5=[];	
+subjects5=[];
+semesters5=[];	
+selected_list_course5='all';
+selected_list_semester5;
 function init_tab5()
 {
 	datesheet_table5=$('#datesheet_table5').DataTable();
 	load_courses5();
+	
+	$('#courses_list5').change(
+		function change_courses5()
+		{
+			selected_list_course5=$('#courses_list5').val();
+			load_semester5();
+		});
 }
 function load_courses5()
 {
@@ -1155,12 +1171,44 @@ function load_courses5()
 				if(datah['type']=='success')
 				{
 					courses5=datah['reply'];
-					$('#course_list5').empty();
+					$('#courses_list5').empty();
 					for(var i=0; i<courses5.length;i++)
 					{
-						$('#course_list5').append($('<option>', {
+						$('#courses_list5').append($('<option>', {
     						value: courses5[i],
     						text: courses5[i]}));
+					}
+				}
+				selected_list_course5=$('#courses_list5').val();
+				load_semester5();
+			}
+		});
+}
+function load_semester5()
+{
+	var post_arguments={};
+	post_arguments['type']='lists';
+	post_arguments['request']='get_semesters';
+	temp={};
+	temp['institute']='all';
+	temp['course']=selected_list_course5;
+	post_arguments['data']=JSON.stringify(temp);
+	$.post(address,post_arguments,
+		function list_semesters5(data,status)
+		{
+			if(status=='success')
+			{
+				console.log(data);
+				var datah=JSON.parse(data);
+				if(datah['type']=='success')
+				{
+					semesters5=datah['reply'];
+					$('#semester_list5').empty();
+					for(var i=0; i<semesters5.length;i++)
+					{
+						$('#semester_list5').append($('<option>', {
+    						value: semesters5[i]['semester'],
+    						text: semesters5[i]['semester']}));
 					}
 				}
 			}
@@ -1172,7 +1220,10 @@ function submit_course5()
 	var post_arguments={};
 	post_arguments['type']='marks';
 	post_arguments['request']='get_datesheet';
-	post_arguments['value']=$('#course_list5').val();
+	temp={};
+	temp['course']=$('#courses_list5').val();
+	temp['semester']=$('#semester_list5').val();
+	post_arguments['data']=JSON.stringify(temp);
 	$.post(address,post_arguments,
 		function list_datesheet(data,status)
 		{
@@ -1213,7 +1264,7 @@ function save_datesheet5()
 			temp_dict={};
 			temp_dict['subject']=subjects5[i]['subject'];
 			temp_dict['date']=$('#date_'+i).val();
-			if(subjects5[i]['subjects5']==-1)
+			if(subjects5[i]['date']==-1)
 				temp_dict['type']=1;
 			else
 				temp_dict['type']=0;

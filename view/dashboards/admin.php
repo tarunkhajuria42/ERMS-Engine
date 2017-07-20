@@ -261,7 +261,6 @@ return <<<HTML
                             <option value='all'>All</option>
                         </select>
                         Semester:<select id='semester_list3' class='mb-3 mr-3'>
-                            <option value='all'>All</option>
                         </select>
                         <button onclick='select_submit3()'  class=' btn btn-info btn-sm'>Select</button></div>
                         <div class="table-responsive">
@@ -388,8 +387,10 @@ return <<<HTML
                     </div>
                     <div class="card-block">
                     <div>
-                        Course:<select id='course_list5' class='mb-3 mr-3'>
+                        Course:<select id='courses_list5' class='mb-3 mr-3'>
                             <option value='all'>All</option>
+                        </select>
+                        Semester:<select id='semester_list5' class='mb-3 mr-3'>
                         </select>
                         <button onclick='submit_course5()'  class=' btn btn-info btn-sm'>Select</button></div>
                         <div class="table-responsive">

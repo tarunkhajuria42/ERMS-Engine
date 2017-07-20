@@ -93,7 +93,7 @@ function lists()
 								break;
 			case 'get_semesters':$institute=$data['institute'];
 								$course=$data['course'];
-								$sem=utils\course\get_semester();
+								$sem=utils\course\get_semesters($institute,$course);
 								if($sem!=-1)
 									echo(utils\reply('get_semesters','success',$sem));
 								else

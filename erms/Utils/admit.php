@@ -57,7 +57,7 @@ function exam_form($email)
 	$temp_dict['rollno']=$student['rollno'];
 	$regular=regular_papers($student['rollno']);
 	$back=back_papers($student['rollno']);
-	$choice=choice_papers($student['rollno']);
+	$choice=elective_papers($student['rollno']);
 	if($regular!=-1)
 		$temp_dict['regular']=$regular;
 	else
@@ -122,16 +122,13 @@ function back_papers($rollno)
 		for($i=0; $i<count($sub);$i++)
 		{
 			$total=0;
-			$total_pass=$sub[$i]['pipractical']+$sub[$i]['pitheory']+$sub[$i]['ppractical']+$sub[$i]['ptheory'];
-			for($type=0; $type<4; $type++)
-			{
-				$arguments=[$sub[$i]['subject'],$rollno,$type];
+			$total_pass=$sub[$i]['ptheory'];
+			$arguments=[$sub[$i]['subject'],$rollno,3];
 			$marks=\data\utils\database\find('SELECT MAX(marks) from marks where subject=? and rollno=? and type=?',$arguments,1);
-				if(count($marks)>0)
-				{
-					$total=$total+$marks[0]['MAX(marks)'];
-				}
-			}
+				if($marks!=-1)
+					$total=$marks[0]['MAX(marks)'];
+				else
+					return -1;
 			if($total<$total_pass)
 			{
 				$temp_dict['subject']=$sub[$i]['subject'];
@@ -143,7 +140,8 @@ function back_papers($rollno)
 	}
 	return $list;
 }
-function choice_papers($rollno)
+
+function elective_papers($rollno)
 {
 	$res=\data\utils\marks\check_session();
 	if($res==-1)
@@ -158,13 +156,11 @@ function choice_papers($rollno)
 		$addsem=1;
 	$semester=($year-$batch)*2+$addsem;
 	$course=\data\utils\student\get_course($rollno);
-	$arguments=[$semester,$course,1];
+	$institute=\data\utils\student\get_institute($rollno);
+	$arguments=[$semester,$course,1,$institute];
 
-	$res=\data\utils\database\find('SELECT subject,subject_code from subject where semester=? and course=? and optional=?',$arguments,1);
-	if($res!=-1)
-		return $res;
-	else
-		return -1;
+	$res=\data\utils\database\find('SELECT subject,subject_code from subject where semester=? and course=? and optional=? and subject in(SELECT subject from choice where institute=?)',$arguments,1);
+	return $res;
 }
 function add_record($photo,$signature,$rollno,$regular,$choice,$back)
 {

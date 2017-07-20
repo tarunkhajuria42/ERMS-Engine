@@ -22,10 +22,12 @@ if($files!=-1)
 	{
 		array_push($regular,$regularpapers[$i]['subject']);
 	}
-	if(isset($_POST['elective']))
-		$electives=$_POST['elective'];
-	else
-		$electives=[];
+	$electivepapers=utils\admit\elective_papers($student['rollno']);
+	$electives=[];
+	for($i=0;$i<count($electivepapers);$i++)
+	{
+		array_push($electives,$electivepapers[$i]['subject']);
+	}
 	if(isset($_POST['back']))
 		$back=$_POST['back'];
 	else

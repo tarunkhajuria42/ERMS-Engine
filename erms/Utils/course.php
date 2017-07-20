@@ -75,7 +75,7 @@ function all_courses()
 		return -1;
 	}
 }
-function get_semesters($course,$institute)
+function get_semesters($institute,$course)
 {
 	if($course=='all')
 	{

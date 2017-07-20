@@ -26,7 +26,7 @@ function init_tab1()
 					else 
 						$('#message').text("System Error");
 				}
-});
+	});
 }
 function get_contents()
 {
@@ -92,13 +92,12 @@ function generate_marksheet(id)
 					post_final('http://localhost/ERMS-Engine/view/marksheet.php','post',reply);
 				}
 			}
-		})
+		});
 }
 
 
 function generate_admit_card(id)
 {
-	console.log('avc');
 	var no=id.substring(id.indexOf('_')+1,id.length);
 	var post_arguments={};
 	post_arguments['type']='student';
@@ -118,6 +117,7 @@ function generate_admit_card(id)
 	});
 
 }
+
 function generate_exam_form(id)
 {
 	$('#message').text("");
@@ -148,7 +148,7 @@ function generate_exam_form(id)
 					}
 					for(var i=0; i<electives.length;i++)
 					{
-						$("<input type='checkbox' name='elective[]' value='"+electives[i]['subject']+"' >  "+electives[i]['subject_code']+"-  "+electives[i]['subject']+"<br>").appendTo('#elective');
+						$("<p>"+electives[i]['subject_code']+"-  "+electives[i]['subject']+"</p>").appendTo('#elective');
 					}
 					for(var i=0; i<back.length;i++)
 					{

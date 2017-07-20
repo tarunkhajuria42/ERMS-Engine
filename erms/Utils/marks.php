@@ -138,27 +138,27 @@ function getMarks_institute($institute,$subject,$type){
 	else
 		return -1;
 }
-function find_subjects($course,$institute)
+function find_subjects($course,$institute,$semester)
 {	
 	if($course=='all' && $institute=='all')
 	{
-		$subjects_institute=\data\utils\database\find('Select subject.*, courses.institute FROM subject INNER JOIN courses ON subject.course=courses.course',[],1);
+		$subjects_institute=\data\utils\database\find('Select subject.*, courses.institute FROM subject INNER JOIN courses ON subject.course=courses.course and subject.semester=?',[$semester],1);
 	}
 	else if($course=='all')
 	{
-		$arguments=[$institute];
-		$subjects_institute=\data\utils\database\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.course=courses.course and courses.institute=?',$arguments,1);
+		$arguments=[$institute,$semester];
+		$subjects_institute=\data\utils\database\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.course=courses.course and courses.institute=? and subject.semester=?',$arguments,1);
 	}
 	else if($institute=='all')
 	{
-		$arguments=[$course];
-		$subjects_institute=\data\utils\database\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.course=courses.course and courses.course=?',$arguments,1);
+		$arguments=[$course,$semester];
+		$subjects_institute=\data\utils\database\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.course=courses.course and courses.course=? and subject.semester=?',$arguments,1);
 	}
 	else
 	{
 
-		$arguments=[$course,$institute];
-		$subjects_institute=\data\utils\database\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.course=courses.course and courses.course=? and courses.institute=?',$arguments,1);	
+		$arguments=[$course,$institute,$semester];
+		$subjects_institute=\data\utils\database\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.course=courses.course and courses.course=? and courses.institute=? and subject.semester=?',$arguments,1);	
 	}
 	$lists=[];
 	if($subjects_institute!=-1)
@@ -260,7 +260,7 @@ function find_batch($course)
 
 }
 //********************************************** Datesheet functions *********************************************
-function get_datesheet($course)
+function get_datesheet($course,$semester)
 {
 	$res=\data\utils\marks\check_session();
 		if($res==-1)
@@ -268,12 +268,8 @@ function get_datesheet($course)
 			return -1;
 		}
 		$year=$res[0]['year'];
-		if($res[0]['sessionid']>4)
-			$semester=0;
-		else
-			$semester=1;
 	$arguments=[$course,$semester];
-	$subjects=\data\utils\database\find('SELECT subject from subject where course=? and semester%2=?',$arguments,1);
+	$subjects=\data\utils\database\find('SELECT subject from subject where course=? and semester=?',$arguments,1);
 	if($subjects==-1)
 		return -1;
 	$sub_res=[];
@@ -299,14 +295,12 @@ function add_datesheet($list)
 			return -1;
 		}
 		$year=$res[0]['year'];
-		if($res[0]['sessionid']>4)
-			$semester=0;
-		else
-			$semester=1;
 	for ($i=0; $i<count($list);$i++)
 	{
-		$arguments=[$list[$i]['date'],$year,$semester,$list[$i]['subject']];
-		if($list[$i]['type']==1)
+		$subject=$list[$i]['subject'];
+		$semester=\data\utils\database\find('SELECT semester from subject where subject=?',[$subject],1);
+		$arguments=[$list[$i]['date'],$year,$semester[0]['semester'],$subject];
+		if($list[$i]['type']==0)
 			$res=\data\utils\database\update('UPDATE datesheet SET date=? where year=? and semester=? and subject=?',$arguments,1);
 		else
 			$res=\data\utils\database\insert('INSERT into datesheet(date,year,semester,subject) values(?,?,?,?)',$arguments,1);
@@ -359,6 +353,7 @@ function new_session($email)
 }
 function prev_session($email)
 {
+	
 
 }	
 function timeZone($time)
