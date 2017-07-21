@@ -9,7 +9,9 @@ var batches1=[];
 var marks1=[];
 var institute1;
 var courses1=[];
+var semesters1=[];
 var selected_list_course1='all';
+var selected_list_semester1;
 var edit_in_progress3=false;
 var selected_subject1;
 var batch_table1;
@@ -19,6 +21,12 @@ function init_tab1()
 	batch_table1=$('#batch_table1').DataTable();
 	marks_table1=$('#marks_table1').DataTable();
 	get_institute1();
+	$('#courses_list1').change(
+		function change_courses1()
+		{
+			selected_list_course1=$('#courses_list1').val();
+			load_semester1();
+		});
 }
 function get_institute1()
 {	
@@ -64,14 +72,47 @@ function load_courses1()
     						value: courses1[i],
     						text: courses1[i]}));
 					}
+				selected_list_course1=$('#courses_list1').val();
+				load_semester1();
 				}
 			}
 		});
 }
-
+function load_semester1()
+{
+	var post_arguments={};
+	post_arguments['type']='lists';
+	post_arguments['request']='get_semesters';
+	temp={};
+	temp['institute']=institute1;
+	temp['course']=selected_list_course1;
+	post_arguments['data']=JSON.stringify(temp);
+	$.post(address,post_arguments,
+		function list_semesters1(data,status)
+		{
+			if(status=='success')
+			{
+				console.log(data);
+				var datah=JSON.parse(data);
+				if(datah['type']=='success')
+				{
+					semesters1=datah['reply'];
+					$('#semester_list1').empty();
+					for(var i=0; i<semesters1.length;i++)
+					{
+						$('#semester_list1').append($('<option>', {
+    						value: semesters1[i]['semester'],
+    						text: semesters1[i]['semester']}));
+					}
+				}
+			}
+		});
+}
 function select_submit1()
 {
+	console.log('abc');	
 	selected_list_course1=$('#courses_list1').val();
+	selected_list_semester1=$('#semester_list1').val();
 	load_batch1();
 }
 function reset_tab1()
@@ -79,8 +120,6 @@ function reset_tab1()
 	edit_in_progress1=false;
 	batches1=[];
 	marks1=[];
-
-
 }
 function load_batch1()
 {
@@ -91,6 +130,8 @@ function load_batch1()
 	var temp_dict={};
 	temp_dict['course']=selected_list_course1;
 	temp_dict['institute']=institute1;
+	console.log(institute1);
+	temp_dict['semester']=selected_list_semester1;
 	post_arguments['data']=JSON.stringify(temp_dict);
 	$.post(address,post_arguments,display_batch1)
 }
@@ -98,6 +139,7 @@ function display_batch1(data,status)
 {
 	if(status=='success')
 	{
+		console.log(data);
 		var datah=JSON.parse(data);
 		if(datah['type']=='success')
 		{

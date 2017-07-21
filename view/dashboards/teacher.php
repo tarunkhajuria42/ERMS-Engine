@@ -72,6 +72,8 @@ return <<<HTML
                     <div>
                         Course:<select id='courses_list1' class='mb-3 mr-3'>
                         </select>
+                        Semester:<select id='semester_list1' class='mb-3 mr-3'>
+                        </select>
                         <button onclick='select_submit1()'  class=' btn btn-info btn-sm'>Select</button></div>
                         <div class="table-responsive">
                             <table class="table table-bordered" width="100%" id="batch_table1" cellspacing="0">
