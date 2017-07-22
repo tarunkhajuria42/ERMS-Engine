@@ -123,9 +123,10 @@ function add_course_button1()
 {
 	if(!new_course_opened1)
 	{
-		institutes_courses1.row.add([`<input id='courses_new_input' type='text'>`,
+		institutes_courses1.row.add([`<select id='courses_new_input' >`,
 			`<button id='courses_button_new' class='btn pull-right btn-info'onclick='new_course_add()'>Add </button>`]).draw();		
 		new_course_opened1=true;
+		load_courses1();
 		error_courses1("");
 	}
 	else
@@ -133,7 +134,31 @@ function add_course_button1()
 		error_courses1("One course a time please!!");
 	}	
 }
-
+function load_courses1()
+{
+	var post_arguments={};
+	post_arguments['type']='lists';
+	post_arguments['request']='all_courses';
+	$.post(address,post_arguments,
+		function list_courses1(data,status)
+		{	
+			if(status=='success')
+			{
+				var datah=JSON.parse(data);
+				if(datah['type']=='success')
+				{
+					var all_courses1=datah['reply'];
+					$('#courses_new_input').empty();
+					for(var i=0; i<all_courses1.length;i++)
+					{
+						$('#courses_new_input').append($('<option>', {
+    						value: all_courses1[i],
+    						text: all_courses1[i]}));
+					}
+				}
+			}
+		});
+}
 function new_course_add()
 {
 	var temp_new_course=$('#courses_new_input').val()
@@ -1142,7 +1167,7 @@ courses5=[];
 subjects5=[];
 semesters5=[];	
 selected_list_course5='all';
-selected_list_semester5;
+var selected_list_semester5;
 function init_tab5()
 {
 	datesheet_table5=$('#datesheet_table5').DataTable();

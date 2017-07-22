@@ -59,9 +59,12 @@ return <<<HTML
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#tab-03" aria-controls="tab-03" role="tab" data-toggle="tab">Rights Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab-04" aria-controls="tab-04" role="tab" data-toggle="tab">Choice Management</a>
                     </li>   	
                     <li class="nav-item">
-                        <a class="nav-link" onclick='logout()' href="#tab-04" aria-controls="tab-04" role="tab" data-toggle="tab">Logout</a>
+                        <a class="nav-link" onclick='logout()' href="#tab-05" aria-controls="tab-05" role="tab" data-toggle="tab">Logout</a>
                     </li>   
             </ul>
         </div>
@@ -234,7 +237,43 @@ return <<<HTML
                 </div>
             
         </div>
+        <div class="tab-pane content-wrapper py-3" id='tab-04'>
+                <div class="container-fluid" id='container'>
 
+                        <!-- Example Tables Card -->
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <i class="fa fa-table"></i> Choice Papers
+                            </div>
+                            <div class="card-block">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" width="100%" id="ids_table" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Courses</th>
+                                                <th>Subjects</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Courses</th>
+                                                <th>Subjects</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div>
+                        </div>
+                    
+                </div>
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fa fa-chevron-up"></i>
     </a>
