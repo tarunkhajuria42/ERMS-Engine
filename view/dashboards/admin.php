@@ -66,7 +66,10 @@ return <<<HTML
                         <a class="nav-link" href="#tab-05" aria-controls="tab-05"  onclick='init_tab5()' role="tab" data-toggle="tab">Datesheet</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#tab-06" onclick='logout()' aria-controls="tab-06" role="tab" data-toggle="tab">Log Out</a>
+                        <a class="nav-link" href="#tab-06" aria-controls="tab-06"  onclick='init_tab6()' role="tab" data-toggle="tab">Manage Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab-07" onclick='logout()' aria-controls="tab-07" role="tab" data-toggle="tab">Log Out</a>
                     </li>
             </ul>
         </div>
@@ -419,7 +422,79 @@ return <<<HTML
             </div>
                 
         </div>
-        <!--tab ends-->
+        <!--**************************************************Manage Users**************************************-->
+         <div class="tab-pane content-wrapper py-3 active" id='tab-06'>
+            <div class="container-fluid" id='container'>
+
+                <!-- Example Tables Card -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-table"></i> Institute Managers
+                    </div>
+                    <div class="card-block">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" id="institutes_table6" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Intitutes</th>
+                                        <th>Users</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Institutes</th>
+                                        <th>Users</th>
+                                    </tr>   
+                                </tfoot>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div><p id='info_institute6' class='text-center'</p></div>
+                </div>
+                </div>
+                
+                <div class="modal fade" id="users6" role="dialog" data-backdrop='static'>
+                    <div class="modal-dialog modal-lg">
+                         <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" onclick='load_institutes6()' data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Users</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" id="users_table6" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Users</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Users</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        <div><button class='btn btn-info pull-right mt-2' onclick='new_user6()'>New User</button></div>
+                        </div>
+                            </div>
+                            <div><p id='info_users6' class='text-center'></p></div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>   
+                    </div>
+                </div>
+            </div>
         
         </div>
     </div>

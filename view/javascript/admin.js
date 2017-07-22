@@ -1320,6 +1320,103 @@ function error_datesheet5(text)
 {
 	$('#info_datesheet5').text(text);
 }
+//******************************************************  Manage Users    ***************************************
+var institutes_table6;
+var users_table6;
+var institutes6=[];
+var users=[];
+var selected_insti6;
+var new_institute_opened6=flase;
+init_tab6();
+
+function init_tab6()
+{
+institutes_table6=$('#institutes_table6').DataTable();
+users_table6=$('#users_table6').DataTable();
+load_institutes6();
+} 
+function load_institutes6()
+{
+	institutes6=[];
+	institutes_table6.clear();
+	new_institute_opened6=false;
+
+	$.post(address,
+	{
+		type:'lists',
+		request:'all_institutes'
+	},
+	function institutes_fill6(data,status)
+	{
+		datah=JSON.parse(data);
+		
+		if(datah['type']=='success')
+		{
+			institutes6=datah['reply'];
+			for (var i=0; i<institutes6.length;i++)
+			{
+				institutes_table6.row.add([institutes6[i],
+					`<button id='insti_`+i+`' onclick='add_edit_user6(this.id)' data-toggle="modal" data-target="#users6" class='btn btn-info pull-right'>Add/Edit</button>`]);
+			}
+			institutes_table6.draw();
+		}
+	});
+}
+function add_edit_user(id)
+{
+	var no=id.substring(id.indexOf('_')+1,id.length);
+	selected_insti6=institutes6[no];
+	var post_arguments={};
+	post_arguments['type']='rights';
+	post_arguments['request']='find_principals';
+	post_arguments['institute']=selected_insti6;
+	$.post(address,post_arguments,
+		function populate_users(data,status)
+		{
+			if(status=='success')
+			{
+				var datah=JSON.parse(data);
+				if(datah['type']=='success')
+				{
+					users6=datah['reply'];
+					for(var i=0; i<users6.length;i++)
+					{
+						users_table6.row.add([
+							users6['name'],
+							users6['email'],
+							`<button onclick='remove_user6(this.id)' id='removeuser_`+i+`'>Remove</button>`]);
+					}
+					users_table6.draw();
+				}
+			}
+		});
+}
+function new_user6()
+{
+	var no=users6.length;
+	if(!is_new_user)
+	{
+		users_table6.row.add([
+			`<input id='username_`+no+`' type='text'>`,
+			`<input id='email_`+no+`' type='text'>`,
+			`<button add_user6(this.id) id='adduser_`+no`'>Add</button>`]);
+		users_table6.draw();
+		is_new_user=true;
+	}
+	else
+	{
+		message_user6("Add one user at a time!!");
+	}
+}
+function submit_new(id)
+{
+	var no=id.substring(id.indexOf('_')+1,id.length);
+	
+}
+function message_user6(text)
+{
+	$('#info_user6').text(text);
+}
 //******************************************************Utility Functions ****************************************
 function find_element(object,key,value)
 {
