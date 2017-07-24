@@ -83,7 +83,7 @@ function change_password($email,$password){
 
 }
 
-function email_verify($email)
+function email_token($email)
 {
 	$token=\bin2hex(\random_bytes(16));
 	$arguments=[$token,$email];
@@ -98,6 +98,20 @@ function email_verify($email)
 	{
 		return -1;
 	}
+	//Send email;
+}
+function email_verify($token)
+{
+	$user=\data\utils\database\find('SELECT * from premail where token=?',[$token],2);
+	if($user==-1)
+		return -1;
+	if(count($user)>0)
+	{
+		//Activate user record
+		//Remove premail entry
+	}
+	else
+		return -2;
 }
 function passwordEmail($email)
 {

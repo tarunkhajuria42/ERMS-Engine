@@ -45,6 +45,9 @@ function access($email)
 							}
 							else
 								echo(utils\reply('get_courses','error','no_access'));
+			case 'add_rights':
+							$institue=$data['institue'];
+							$course=$data['institute']
 
 		}
 	}

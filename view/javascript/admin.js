@@ -1362,7 +1362,7 @@ function load_institutes6()
 		}
 	});
 }
-function add_edit_user(id)
+function add_edit_user6(id)
 {
 	var no=id.substring(id.indexOf('_')+1,id.length);
 	selected_insti6=institutes6[no];
@@ -1411,7 +1411,6 @@ function new_user6()
 function submit_new(id)
 {
 	var no=id.substring(id.indexOf('_')+1,id.length);
-	
 }
 function message_user6(text)
 {

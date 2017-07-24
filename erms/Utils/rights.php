@@ -81,13 +81,9 @@ function checkEmail($email)
 	$arguments=[$email];
 	$res=\data\utils\database\find('SELECT * from premail where email=?',$arguments,2);
 	if(count($res)>0)
-	{
 		return $res['access'];
-	}
 	else
-	{
 		return -1;
-	}
 }
 function enter_premail($email,$access)
 {
@@ -101,9 +97,7 @@ function get_institute($email,$access)
 		$arguments=[$email];
 		$res=\data\utils\database\find('SELECT institute from staff where email=?',$arguments,1);
 		if($res!=-1)
-		{
 			return $res[0]['institute'];
-		}
 		else
 			return -1;
 	}
@@ -111,9 +105,7 @@ function get_institute($email,$access)
 	{
 		$res=\data\utils\database\find('SELECT institute from student where email=?',$arguments,1);
 		if($res!=-1)
-		{
 			return $res[0]['institute'];
-		}
 		else
 			return -1;	
 	}
