@@ -64,7 +64,7 @@ function check_courses($email)
 {
 	$arguments=[$email];
 	$res=\data\utils\database\find('SELECT course from suballoc where email=?',$arguments,1);
-	if($res!=-1)
+	if($res!=-1)	
 	{
 		$courses=[];
 		for($i=0; $i<count($res); $i++)
@@ -111,38 +111,83 @@ function get_institute($email,$access)
 	}
 	
 }
-function add_users($list,$institute,$course)
+function check_existing($email)
+{
+	$premail=\data\utils\database\find('SELECT email from premail where email=?',[$email],1);
+	$user=\data\utils\database\find('SELECT email from user where email=?',[$email],1);
+	if($premail==-1 && $user==-1)
+		return -1
+	if(count($premail)>0 || count($user)>0)
+		return 1;
+	else
+		return 0;
+}
+function add_users($email,$institute,$course)
 {
 	if($institute=='center')
 	{
+		if($course=='all')
+		{
+			if(check_existing($email)==0)
+			{
+				$status=\data\utils\database\insert('INSERT into premail(email,access) values(?,?)',[$email,3],1);
+				if($status==-1)
+					return -1;
+				$status=\data\utils\database\insert('INSERT into staff(email,institute) values(?,"center")',[$email,3],1);
+				if($status==-1)
+					return -1;
 
+			}
+			return 1;
+		}
+		else
+		{
+			if(check_existing($email)==0)
+			{
+				$status=\data\utils\database\insert('INSERT into premail(email,access) values(?,?)',[$email,4],1);
+				if($status==-1)
+					return -1;
+				$status=\data\utils\database\insert('INSERT into staff(email,institute) values(?,"center")',[$email],1);
+				if($status==-1)
+					return -1;
+			}
+			$status=\data\utils\database\insert('INSERT into suballoc(email,course) values(?,?)',[$email,$course],1);
+			if($status==-1)
+				return -1;
+			return 1;
+		}
 	}
 	else
 	{
 		if($course=='all')
 		{
-			for ($i=0; $i<count($list); $i++)
-			{	
-				//if not already added as user
-				$arguments=[$list[$i]['email'],1];
-				//add to premail
-				$reply=\data\utils\database('INSERT into premail(email,access) values(?,?)',$arguments,2);
-				if($reply==-1)
+			if(check_existing($email)==0)
+			{
+				$status=\data\utils\database\insert('INSERT into premail(email,access) values(?,?)',[$email,1],1);
+				if($status==-1)
 					return -1;
-				$arguments[$list[$i]['email'],$institute];
-				$reply=\data\utils\database('INSERT into staff(email,institute) values(?,?)',$arguments,1);
-				if($reply==-1)
+				$status=\data\utils\database\insert('INSERT into staff(email,institute) values(?,"center")',[$email],1);
+				if($status==-1)
 					return -1;
+			}
+			return 1;
 			}	
 		}
 		else
 		{
-			for ($i=0; $i<count($list); $i++)
-			{	
-				$arguments=[$list[$i]['email'],2];
-				$reply=\data\utils\database('INSERT into premail(email,access) values(?,?)',$arguments,2);
-
-			}	
+			if(check_existing($email)==0)
+			{
+				$status=\data\utils\database\insert('INSERT into premail(email,access) values(?,?)',[$email,2],1);
+				if($status==-1)
+					return -1;
+				$status=\data\utils\database\insert('INSERT into staff(email,institute) values(?,?)',[$email,$institute],1);
+				if($status==-1)
+					return -1;
+			}
+			$status=\data\utils\database\insert('INSERT into suballoc(email,course) values(?,?)',[$email,$course],1);
+			if($status==-1)
+				return -1;
+			return 1;	
 		}	
 	}
 	
@@ -171,8 +216,8 @@ function check_users($institute,$course)
 		}
 		else
 		{
-			$users=\data\utils\database\find('SELECT email from premail where access=3 and email in (SELECT email from staff where institute='center')',[$course],1);
-			$users2=\data\utils\database\find('SELECT email from user where access=3 and email in(SELECT email from staff where institute='center')',[$course],1);
+			$users=\data\utils\database\find("SELECT email from premail where access=4 and email in (SELECT email from suballoc where course=? and email in (SELECT email from staff where institute='center'))",[$course],1);
+			$users2=\data\utils\database\find("SELECT email from user where access=4 and email in (SELECT email from suballoc where course=? and email in (SELECT email from staff where institute='center'))",[$course],1);
 			if($users==-1 || $users2==-1)
 				return -1;
 			$all_users=[];
