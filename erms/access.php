@@ -7,18 +7,18 @@ function access($email)
 {
 	if(isset($_POST['request']))
 	{
+		if(isset($_POST['data']))
+		{
+			$data=json_decode($_POST['data'],true);
+		}
 		switch($_POST['request'])
 		{
 			case 'type':
 							$access=utils\rights\check_access($email);
 							if($access!=-1)
-							{
 								echo(utils\reply('access','success',$access));
-							}
 							else
-							{
 								echo(utils\reply('access','error','noaccess'));
-							}
 							break;
 			case 'get_institute':
 							$access=utils\rights\check_access($email);
@@ -45,9 +45,27 @@ function access($email)
 							}
 							else
 								echo(utils\reply('get_courses','error','no_access'));
-			case 'add_rights':
-							$institue=$data['institue'];
-							$course=$data['institute']
+							break;
+			case 'add_users':
+
+							$reply=utils\rights\add_users($data);
+							if($reply!=-1)
+								echo(utils\reply('add_users','success','users_added'));
+							else
+								echo(utils\reply('add_users','error','system'));
+							break;
+			case 'get_users':
+							$institute=$data['institute'];
+							$course=$data['course'];
+							$reply=utils\rights\get_users($institute,$course);
+							if($reply!=-1)
+								echo(utils\reply('get_users','success',$reply));
+							else
+								echo(utils\reply('get_users','error','system'));
+							break;
+			default:
+					echo(utils\reply('access','error','unknown'));
+
 
 		}
 	}

@@ -73,6 +73,8 @@ else{
 						break;
 			case 'student':student($res[0]['email']);
 						break;
+			case 'access':student($res[0]['email']);
+						break;
 			default:
 				echo(utils\reply('type','error','badrequest'));	
 		}	

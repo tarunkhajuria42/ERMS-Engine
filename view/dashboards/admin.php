@@ -423,7 +423,7 @@ return <<<HTML
                 
         </div>
         <!--**************************************************Manage Users**************************************-->
-         <div class="tab-pane content-wrapper py-3 active" id='tab-06'>
+         <div class="tab-pane content-wrapper py-3" id='tab-06'>
             <div class="container-fluid" id='container'>
 
                 <!-- Example Tables Card -->
@@ -448,9 +448,6 @@ return <<<HTML
                                         <th>Users</th>
                                     </tr>   
                                 </tfoot>
-                                <tbody>
-                                    
-                                </tbody>
                             </table>
                         </div>
                     </div>

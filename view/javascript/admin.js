@@ -1326,7 +1326,7 @@ var users_table6;
 var institutes6=[];
 var users=[];
 var selected_insti6;
-var new_institute_opened6=flase;
+var new_institute_opened6=false;
 init_tab6();
 
 function init_tab6()
@@ -1367,14 +1367,15 @@ function add_edit_user6(id)
 	var no=id.substring(id.indexOf('_')+1,id.length);
 	selected_insti6=institutes6[no];
 	var post_arguments={};
-	post_arguments['type']='rights';
-	post_arguments['request']='find_principals';
+	post_arguments['type']='access';
+	post_arguments['request']='get_access';
 	post_arguments['institute']=selected_insti6;
 	$.post(address,post_arguments,
 		function populate_users(data,status)
 		{
 			if(status=='success')
 			{
+				console.log(data);
 				var datah=JSON.parse(data);
 				if(datah['type']=='success')
 				{

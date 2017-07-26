@@ -107,6 +107,7 @@ function email_verify($token)
 		return -1;
 	if(count($user)>0)
 	{
+		
 		//Activate user record
 		//Remove premail entry
 	}
