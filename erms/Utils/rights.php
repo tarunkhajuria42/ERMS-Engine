@@ -111,7 +111,45 @@ function get_institute($email,$access)
 	}
 	
 }
+function add_users($list,$institute,$course)
+{
+	if($institute=='center')
+	{
 
+	}
+	else
+	{
+		if($course=='all')
+		{
+			for ($i=0; $i<count($list); $i++)
+			{	
+				$arguments=[$list[$i]['email'],1];
+				//add to premail
+				$reply=\data\utils\database('INSERT into premail(email,access) values(?,?)',$arguments,2);
+				if($reply==-1)
+					return -1;
+				$arguments[$list[$i]['email'],$institute];
+				$reply=\data\utils\database('INSERT into staff(email,institute) values(?,?)',$arguments,1);
+				if($reply==-1)
+					return -1;
+			}	
+		}
+		else
+		{
+			for ($i=0; $i<count($list); $i++)
+			{	
+				$arguments=[$list[$i]['email'],2];
+
+			}	
+		}	
+	}
+	
+	
+}
+function check_users($institute,$course)
+{
+
+}
 function check_token_verify($token)
 {
 	$arguments=[$email];
