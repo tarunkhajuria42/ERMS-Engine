@@ -41,13 +41,7 @@ function initConnectionCurrent()
 
 function insert($query,$parameters,$table)
 {
-	if($table==1)
-	{
-		$conn=initConnection();	
-	}else{
-		$conn=initConnectionCurrent();
-	}
-	
+	$conn=initConnection();	
 	try{
 		$statement=$conn->prepare($query);
 		$variables=count($parameters);
@@ -65,13 +59,7 @@ function insert($query,$parameters,$table)
 }
 function update($query,$parameters,$table)
 {
-	if($table==1)
-	{
-		$conn=initConnection();	
-	}else{
-		$conn=initConnectionCurrent();
-	}
-	
+	$conn=initConnection();	
 	try{
 		$statement=$conn->prepare($query);
 		$variables=count($parameters);
@@ -89,14 +77,7 @@ function update($query,$parameters,$table)
 }
 function find($query,$parameters,$table)
 {
-	if($table==1)
-	{
-		$conn=initConnection();	
-	}
-	else
-	{
-		$conn=initConnectionCurrent();		
-	}
+	$conn=initConnection();	
 	try{
 		$statement=$conn->prepare($query);
 		$variables=count($parameters);
@@ -121,10 +102,7 @@ function find($query,$parameters,$table)
 }
 function delete($query,$parameters,$table)
 {
-	if($table==1)
-		$conn=initConnection();
-	else
-		$conn=initConnectionCurrent();
+	$conn=initConnection();
 	try{
 		$statement=$conn->prepare($query);
 		$variables=count($parameters);

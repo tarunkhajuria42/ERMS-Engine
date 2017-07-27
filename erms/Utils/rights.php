@@ -116,7 +116,7 @@ function check_existing($email)
 	$premail=\data\utils\database\find('SELECT email from premail where email=?',[$email],1);
 	$user=\data\utils\database\find('SELECT email from user where email=?',[$email],1);
 	if($premail==-1 && $user==-1)
-		return -1
+		return -1;
 	if(count($premail)>0 || count($user)>0)
 		return 1;
 	else
@@ -170,8 +170,7 @@ function add_users($email,$institute,$course)
 				if($status==-1)
 					return -1;
 			}
-			return 1;
-			}	
+			return 1;	
 		}
 		else
 		{
@@ -199,8 +198,8 @@ function check_users($institute,$course)
 	{
 		if($course=='all')
 		{
-			$users=\data\utils\database\find('SELECT email from premail where access=3 and email in (SELECT email from staff where institute='center')',[],1);
-			$users2=\data\utils\database\find('SELECT email from user where access=3 and email in(SELECT email from staff where institute='center')',[],1);
+			$users=\data\utils\database\find('SELECT email from premail where access=3 and email in (SELECT email from staff where institute="center")',[],1);
+			$users2=\data\utils\database\find('SELECT email from user where access=3 and email in(SELECT email from staff where institute="center")',[],1);
 			if($users==-1 || $users2==-1)
 				return -1;
 			$all_users=[];
