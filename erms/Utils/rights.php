@@ -117,8 +117,10 @@ function check_existing($email)
 	$user=\data\utils\database\find('SELECT email from user where email=?',[$email],1);
 	if($premail==-1 && $user==-1)
 		return -1;
-	if(count($premail)>0 || count($user)>0)
+	if(count($premail)>0)
 		return 1;
+	elseif(count($user)>0)
+		return 2;
 	else
 		return 0;
 }
@@ -166,7 +168,7 @@ function add_users($email,$institute,$course)
 				$status=\data\utils\database\insert('INSERT into premail(email,access) values(?,?)',[$email,1],1);
 				if($status==-1)
 					return -1;
-				$status=\data\utils\database\insert('INSERT into staff(email,institute) values(?,"center")',[$email],1);
+				$status=\data\utils\database\insert('INSERT into staff(email,institute) values(?,?)',[$email,$institute],1);
 				if($status==-1)
 					return -1;
 			}
@@ -192,7 +194,7 @@ function add_users($email,$institute,$course)
 	
 	
 }
-function check_users($institute,$course)
+function get_users($institute,$course)
 {
 	if($institute=='center')
 	{
@@ -273,6 +275,58 @@ function check_users($institute,$course)
 		
 	}
 	
+}
+function remove_users($email,$course)
+{
+	if($course=='all')
+	{	
+		$existing=check_existing($email);
+		if($existing==1)
+		{
+			$status=\data\utils\database\delete('DELETE from premail where email=?',[$email],1);
+			if($status==-1)
+				return -1;
+		}
+		elseif($existing==2)
+		{
+			$status=\data\utils\database\delete('DELETE from user where email=?',[$email],1);
+			if($status==-1)
+				return -1;
+		}
+		$status=\data\utils\database\delete('DELETE from staff where email=?',[$email],1);
+			if($status==-1)
+				return -1;
+		return 1;
+	}
+	else
+	{
+		$status=\data\utils\database\delete('DELETE from suballoc where email=? and course=?',[$email,$course],1);
+		if($status==-1)
+			return -1;
+		$course=\data\utils\database\find('SELECT course from suballoc where email=?',[$email],1);
+		if($course==-1)
+			return -1;
+		if(count($course)==0)
+		{
+			$existing=check_existing($email);
+			if($existing==1)
+			{
+				$status=\data\utils\database\delete('DELETE from premail where email=?',[$email],1);
+				if($status==-1)
+					return -1;
+			}
+			elseif($existing==2)
+			{
+				$status=\data\utils\database\delete('DELETE from user where email=?',[$email],1);
+				if($status==-1)
+					return -1;
+			}
+			$status=\data\utils\database\delete('DELETE from staff where email=?',[$email],1);
+				if($status==-1)
+					return -1;
+		}	
+		return 1;
+	}
 }
 function check_token_verify($token)
 {

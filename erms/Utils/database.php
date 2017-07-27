@@ -36,8 +36,6 @@ function initConnectionCurrent()
 		echo "Exception Caught", $e->getMessage(),"\n";
 	}
 }
-/* Table 1=Erms
-	Table 2='ErmsCurrent'*/
 
 function insert($query,$parameters,$table)
 {

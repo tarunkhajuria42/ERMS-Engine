@@ -46,9 +46,11 @@ function access($email)
 							else
 								echo(utils\reply('get_courses','error','no_access'));
 							break;
-			case 'add_users':
-
-							$reply=utils\rights\add_users($data);
+			case 'add_user':
+							$email=$data['email'];
+							$institute=$data['institute'];
+							$course=$data['course'];
+							$reply=utils\rights\add_users($email,$institute,$course);
 							if($reply!=-1)
 								echo(utils\reply('add_users','success','users_added'));
 							else
@@ -62,6 +64,15 @@ function access($email)
 								echo(utils\reply('get_users','success',$reply));
 							else
 								echo(utils\reply('get_users','error','system'));
+							break;
+			case 'remove_users':
+							$email=$data['email'];
+							$course=$data['course'];
+							$reply=utils\rights\remove_users($email,$course);
+							if($reply!=-1)
+								echo(utils\reply('add_users','success','user_removed'));
+							else
+								echo(utils\reply('add_users','error','system'));
 							break;
 			default:
 					echo(utils\reply('access','error','unknown'));

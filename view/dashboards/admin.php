@@ -436,7 +436,7 @@ return <<<HTML
                             <table class="table table-bordered" width="100%" id="institutes_table6" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Intitutes</th>
+                                        <th>Institutes</th>
                                         <th>Users</th>
                                     </tr>
                                 </thead>
@@ -459,7 +459,7 @@ return <<<HTML
                     <div class="modal-dialog modal-lg">
                          <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" onclick='load_institutes6()' data-dismiss="modal">&times;</button>
+                                <button type="button" class="close" onclick='reset6()' data-dismiss="modal">&times;</button>
                                     <h4 class="modal-title">Users</h4>
                             </div>
                             <div class="modal-body">
