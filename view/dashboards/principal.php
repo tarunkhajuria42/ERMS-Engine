@@ -6,7 +6,6 @@ function principal()
 return <<<HTML
 <!-- Navigation -->
     <script src="javascript/principal.js"></script>
-    <script src="javascript/tables.js"></script>
     <link href="css/admin.css" rel="stylesheet">
     <div id='welcome'>
         <p class='welcome'>Welcome Tarun</p>
@@ -55,10 +54,10 @@ return <<<HTML
                     	<a class="nav-link" href="#tab-01" aria-controls="tab-01" role="tab" data-toggle="tab">Marks</a>
                 	</li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#tab-02" aria-controls="tab-02" role="tab" data-toggle="tab">Generate Id</a>
+                        <a class="nav-link" href="#tab-02" onclick='get_institute2()' aria-controls="tab-02" role="tab" data-toggle="tab">Manage Users</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#tab-03" aria-controls="tab-03" role="tab" data-toggle="tab">Rights Management</a>
+                        <a class="nav-link" href="#tab-03" aria-controls="tab-03" role="tab" data-toggle="tab">Students</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#tab-04" aria-controls="tab-04" role="tab" data-toggle="tab">Choice Management</a>
@@ -159,50 +158,84 @@ return <<<HTML
                     </div>
                 </div>
         </div>
-    <!-- /.content-wrapper -->
-    <div class="tab-pane content-wrapper py-3" id='tab-02'>
-        <div class="container-fluid" id='container'>
+    <!-- *************************************************Tab 2 Manage Users ********************************--> 
+   <div class="tab-pane content-wrapper py-3" id='tab-02'>
+            <div class="container-fluid" id='container'>
 
                 <!-- Example Tables Card -->
                 <div class="card mb-3">
                     <div class="card-header">
-                        <i class="fa fa-table"></i> Ids
+                        <i class="fa fa-table"></i>Course Managers
                     </div>
                     <div class="card-block">
                         <div class="table-responsive">
-                            <table class="table table-bordered" width="100%" id="ids_table" cellspacing="0">
+                            <table class="table table-bordered" width="100%" id="courses_table2" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Email</th>
+                                        <th>Courses</th>
+                                        <th>Users</th>
                                     </tr>
                                 </thead>
-                                <tbody id='institutes_entry'>
+                                <tbody>
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Institutes</th>
                                         <th>Courses</th>
+                                        <th>Users</th>
+                                    </tr>   
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div><p id='info_course6' class='text-center'</p></div>
+                </div>
+                </div>
+                
+                <div class="modal fade" id="users2" role="dialog" data-backdrop='static'>
+                    <div class="modal-dialog modal-lg">
+                         <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" onclick='reset2()' data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Users</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" id="users_table2" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Users</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Users</th>
+                                        <th></th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                 </tbody>
                             </table>
+                        <div><button class='btn btn-info pull-right mt-2' onclick='new_user2()'>New User</button></div>
                         </div>
+                            </div>
+                            <div><p id='info_users2' class='text-center'></p></div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>   
                     </div>
-
                 </div>
-                <div><button class='btn btn-info pull-right' onclick='newinstitute()'>New Id</button></div>
-                </div>
-            
-        </div>
+            </div>
+<!--**************************************************** Manage Students Tab3 **********************************-->
         <div class="tab-pane content-wrapper py-3" id='tab-03'>
         <div class="container-fluid" id='container'>
 
                 <!-- Example Tables Card -->
                 <div class="card mb-3">
                     <div class="card-header">
-                        <i class="fa fa-table"></i> Allotment
+                        <i class="fa fa-table"></i> Manage Students
                     </div>
                     <div class="card-block">
                         <div class="table-responsive">
@@ -237,6 +270,7 @@ return <<<HTML
                 </div>
             
         </div>
+<!--********************************************* Manage Choice Tab4 *******************************************-->
         <div class="tab-pane content-wrapper py-3" id='tab-04'>
                 <div class="container-fluid" id='container'>
 
@@ -256,24 +290,21 @@ return <<<HTML
                                         </thead>
                                         <tbody>
                                         </tbody>
-                                        </tbody>
                                         <tfoot>
                                             <tr>
                                                 <th>Courses</th>
                                                 <th>Subjects</th>
                                             </tr>
                                         </tfoot>
-                                        <tbody>
-                                        </tbody>
                                     </table>
                                 </div>
                             </div>
 
                         </div>
-                        <div>
-                        </div>
-                    
+                    </div>
                 </div>
+                    
+        </date(format)iv>
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fa fa-chevron-up"></i>
     </a>

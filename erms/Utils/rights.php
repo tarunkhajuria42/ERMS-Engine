@@ -258,7 +258,7 @@ function get_users($institute,$course)
 		{
 			$arguments=[$course,$institute];
 			$users=\data\utils\database\find('SELECT email from premail where access=2 and email in(SELECT email from suballoc where course=? and email in(SELECT email from staff where institute=?))',$arguments,1);
-			$users2=\data\utils\database\find('SELECT email from user where access=2 and email in(SELECT email from suballoc where course=? and email in(SELECT email from staff where institute=?)',$arguments,1);
+			$users2=\data\utils\database\find('SELECT email from user where access=2 and email in(SELECT email from suballoc where course=? and email in(SELECT email from staff where institute=?))',$arguments,1);
 			if($users==-1 || $users2==-1)
 				return -1;
 			$all_users=[];
