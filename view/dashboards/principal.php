@@ -51,7 +51,7 @@ return <<<HTML
         <div class="collapse navbar-collapse" id="navbarmain">  
             <ul class="sidebar-nav navbar-nav nav-tabs" id='navlist'>
          			<li class="nav-item active">
-                    	<a class="nav-link" href="#tab-01" aria-controls="tab-01" role="tab" data-toggle="tab">Marks</a>
+                    	<a class="nav-link" href="#tab-01" onclick='get_institute1()' aria-controls="tab-01" role="tab" data-toggle="tab">Marks</a>
                 	</li>
                     <li class="nav-item">
                         <a class="nav-link" href="#tab-02" onclick='get_institute2()' aria-controls="tab-02" role="tab" data-toggle="tab">Manage Users</a>
@@ -281,7 +281,7 @@ return <<<HTML
                             </div>
                             <div class="card-block">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" width="100%" id="ids_table" cellspacing="0">
+                                    <table class="table table-bordered" width="100%" id="choice_table4" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>Courses</th>
@@ -301,10 +301,8 @@ return <<<HTML
                             </div>
 
                         </div>
-                    </div>
                 </div>
-                    
-        </date(format)iv>
+        </div>
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fa fa-chevron-up"></i>
     </a>

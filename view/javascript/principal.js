@@ -3,6 +3,7 @@ function init()
 {
 	init_tab1();
 	init_tab2();
+	init_tab4();
 }
 //******************************************** Tab1 Marks ******************************************
 var batches1=[];
@@ -466,4 +467,185 @@ function message_user2(text)
 function init_tab3()
 {
 	$("#rights").DataTable();
+}
+//********************************************* Tab 4 *********************************************************
+var courses_table4;
+var choice_table4;
+var courses4=[];
+var cluster4=[];
+var selected_course4;
+var is_new_opened4=false;
+var institute4;
+
+function init_tab4()
+{
+courses_table4=$('#courses_table4').DataTable();
+subjects_table4=$('#subjects_table4').DataTable();
+get_institute4();
+} 
+function reset4()
+{
+	is_new_opened4=false;
+	subjects4=[];
+}
+function get_institute4()
+{	
+	$.post(address,
+	{
+		type:'access',
+		request:'get_institute'
+	},
+	function institutes_fill4(data,status)
+	{
+		datah=JSON.parse(data);
+		if(datah['type']=='success')
+		{
+			institute4=datah['reply'];
+			load_courses4();
+		}
+	});
+}
+function load_courses4()
+{
+	courses4=[];
+	courses_table4.clear();
+	new_course_opened4=false;
+	var post_arguments={};
+	post_arguments['type']='lists';
+	post_arguments['request']='get_courses';
+	post_arguments['value']=institute4;
+	$.post(address,post_arguments,
+	function courses_fill4(data,status)
+	{	
+		datah=JSON.parse(data);
+		if(datah['type']=='success')
+		{
+			courses4=datah['reply'];
+			for (var i=0; i<courses4.length;i++)
+			{
+				courses_table4.row.add([courses4[i],
+					`<button id='insti_`+i+`' onclick='add_edit_user4(this.id)' data-toggle="modal" data-target="#users4" class='btn btn-info pull-right'>Add/Edit</button>`]);
+			}
+			courses_table4.draw();
+		}
+	});
+}
+function add_edit_user4(id)
+{
+	var no=id.substring(id.indexOf('_')+1,id.length);
+	selected_course4=courses4[no];
+	var post_arguments={};
+	post_arguments['type']='access';
+	post_arguments['request']='get_users';
+	temp={};
+	temp['institute']=institute4;
+	temp['course']=selected_course4;
+	post_arguments['data']=JSON.stringify(temp);
+	$.post(address,post_arguments,
+		function populate_users(data,status)
+		{
+			if(status=='success')
+			{
+				console.log(data);
+				var datah=JSON.parse(data);
+				if(datah['type']=='success')
+				{
+					subjects_table4.clear();
+					subjects4=datah['reply'];
+					for(var i=0; i<subjects4.length;i++)
+					{
+						subjects_table4.row.add([
+							subjects4[i],
+							`<button onclick='remove_subject4(this.id)' class='btn btn-warning pull-right'id='removesubject_`+i+`'>Remove</button>`]);
+					}
+					subjects_table4.draw();
+				}
+			}
+		});
+}
+function new_subject2()
+{
+	var no=users2.length;
+	if(!is_new_opened2)
+	{
+		users_table2.row.add([
+			`<input id='email_`+no+`' type='text'>`,
+			`<button onclick='submit_new2(this.id)'' class='btn btn-info pull-right' id='adduser_`+no+`'>Add</button>`]);
+		users_table2.draw();
+		is_new_opened2=true;
+	}
+	else
+	{
+		message_user2("Add one user at a time!!");
+	}
+}
+function submit_new2(id)
+{
+	var no=id.substring(id.indexOf('_')+1,id.length);
+	var value=$('#email_'+no).val();
+	var data={};
+	data['institute']=institute2;
+	data['course']=selected_course2;
+	data['email']=value;
+	var post_arguments={};
+	post_arguments['type']='access';
+	post_arguments['request']='add_user';
+	post_arguments['data']=JSON.stringify(data);
+	$.post(address,post_arguments,
+		function reply_add2(data,status)
+		{
+			if(status=='success')
+			{
+				console.log(data);
+				var datah=JSON.parse(data);
+				if(datah['type']=='success')
+				{
+					var no=users2.length;
+					users2.push($('#email_'+no).val());
+					users_table2.row($('#email_'+no).parents('tr')).remove();
+					users_table2.row.add([users2[no],
+					`<button onclick='remove_user2(this.id)' class='btn btn-warning pull-right' id='removeuser_`+no+`'>Remove</button>`]);
+					users_table2.draw();
+					is_new_opened2=false;
+				}
+				else
+				{
+
+				}
+			}
+		})
+
+}
+
+function remove_user2(id)
+{
+	var no=id.substring(id.indexOf('_')+1,id.length);
+	var value=users2[no];
+	current_remove=no;
+	var data={};
+	data['course']=selected_course2;
+	data['email']=value;
+	var post_arguments={};
+	post_arguments['type']='access';
+	post_arguments['request']='remove_users';
+	post_arguments['data']=JSON.stringify(data);
+	$.post(address,post_arguments,
+		function reply_remove2(data,status)
+		{
+			if(status=='success')
+			{
+				console.log(data);
+				var datah=JSON.parse(data);
+				if(datah['type']=='success')
+				{
+					users2.splice(current_remove,1);
+					users_table2.row($('#removeuser_'+current_remove).parents('tr')).remove();
+					users_table2.draw();
+				}
+			}
+		})
+}
+function message_user2(text)
+{
+	$('#info_user2').text(text);
 }
