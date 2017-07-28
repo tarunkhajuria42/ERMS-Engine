@@ -41,7 +41,32 @@ function student($user)
 								else
 									echo(utils\reply('admit_card','error','system'));
 								break;	
-			case 'marksheet':
+			case 'marksheet':	$res=utils\admit\get_marksheet();
+								if($res!=-1)
+									echo(utils\reply('admit_card','success',$res));
+								else
+									echo(utils\reply('admit_card','error','system'));
+								break;	
+			case 'add_student':if($res!=-1)
+									echo(utils\reply('admit_card','success',$res));
+								else
+									echo(utils\reply('admit_card','error','system'));
+								break;	
+			case 'get_student':if($res!=-1)
+									echo(utils\reply('get_student','success',$res));
+								else
+									echo(utils\reply('get_student','error','system'));
+								break;
+			case 'edit_student':if($res!=-1)
+									echo(utils\reply('get_student','success',$res));
+								else
+									echo(utils\reply('get_student','error','system'));
+								break;
+			case 'delete_student':
+								if($res!=-1)
+									echo(utils\reply('get_student','success',$res));
+								else
+									echo(utils\reply('get_student','error','system'));
 								break;
 			default:	echo(utils\reply('student','error','badrequest'));	
 

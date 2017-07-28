@@ -99,11 +99,34 @@ function lists()
 								else
 									echo(utils\reply('get_semesters','error','system'));
 								break;
+			case 'get_choice':  $institute=$data['institute'];
+								$course=$data['course'];
+								$reply=utils\course\get_choice($institute,$course);
+								if($reply!=-1)
+									echo(utils\reply('get_choice','success',$reply));
+								else
+									echo(utils\reply('get_choice','error','system'));
+								break;
+			case 'add_choice':	$institute=$data['institute'];
+								$course=$data['course'];
+								$subjects=$data['subjects'];
+								$reply=utils\course\add_choice($institute,$course,$subjects);
+								if($reply!=-1)
+									echo(utils\reply('add_choice','success','choice_added'));
+								else
+									echo(utils\reply('add_choice','error','system'));
+								break;
+			case 'delete_choice':
+								$institute=$data['institute'];
+								$course=$data['course'];
+								$subjects=$data['subjects'];
+								$reply=utils\course\delete_choice($institute,$choice,$subjects);
+								if($reply!=-1)
+									echo(utils\reply('delete_choice','success','deleted'));
+								else
+									echo(utils\reply('delete_choice','error','system'));
+								break;
 			default: echo(utils\reply('list','error','badrequest'));
-			
-
-								
-
 		}	
 	}
 	else
