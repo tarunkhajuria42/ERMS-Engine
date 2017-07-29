@@ -53,7 +53,7 @@ function user()
 							$access=\utils\rights\check_email($data['email']);
 							if($access!=-1)
 							{
-								if(utils\user\email_verify(data['email'])==1)
+								if(utils\user\email_verify($data['email'])==1)
 									echo(utils\reply('user','success','emailsent'));
 								else
 									echo(utils\reply('user','error','emailnotsent'));

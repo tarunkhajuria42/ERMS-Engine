@@ -66,7 +66,7 @@ function load_courses1()
 					$('#courses_list1').empty();
 					$('#courses_list1').append($('<option>', {
     				value: 'all',
-    				text: 'All'}));
+    				text: 'all'}));
 					for(var i=0; i<courses1.length;i++)
 					{
 						$('#courses_list1').append($('<option>', {
@@ -170,7 +170,7 @@ function optional_link(available,index,type)
 	{
 		return `<a id='batch_`+index+`' class='hand' data-toggle="modal" data-target="#marks1" onclick='load_marks1(this.id,`+type+`)'>Y</a>`;
 	}
-	if(available==-1)
+	if(available==-1 || available==2)
 	{
 		return '-';
 	}
@@ -555,22 +555,27 @@ function add_edit_user4(id)
 					for(var i=0; i<subjects4.length;i++)
 					{
 						subjects_table4.row.add([
-							subjects4[i],
-							`<button onclick='remove_subject4(this.id)' class='btn btn-warning pull-right'id='removesubject_`+i+`'>Remove</button>`]);
+							subjects4[i]['subject'],
+							subjects4[i]['semester'],
+							string_checker(subjects4[i]['subject'],subjects4[i]['choice'],i)]);
 					}
 					subjects_table4.draw();
 				}
 			}
 		});
 }
-function string_checker(value,id)
+function string_checker(subject,value,id)
 {
-
+	var str;
+	if(value==1)
+		 str=`<input id='checkbox`+id+`' name='choice' value='`+subject+`' checked> `;		
+	else
+		str=`<input id='checkbox`+id+`' name='choice' value='`+subject+`'>`;
+	return str;
 }
 function submit_subjects4()
 {
 	var no=id.substring(id.indexOf('_')+1,id.length);
-
 	var value=$('#email_'+no).val();
 	var data={};
 	data['institute']=institute2;

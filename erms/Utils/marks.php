@@ -72,8 +72,14 @@ function get_students($subject,$institute,$type)
 		return -1;
 	}
 	$year=$res[0]['year'];
-	$arguments=[$institute,$subject,$year];
-	$res=\data\utils\database\find('SELECT rollno from admit where rollno in(SELECT rollno FROM student where institute=?) and id in (SELECT id from asubjects where subject=? and year=?)',$arguments,1);
+	
+	$sem=\data\utils\database\find('SELECT semester,course from subject where subject=?',[$subject],1);
+	if($sem==-1)
+		return -1;
+	$batch=$year-($sem[0]['semester']-1)/2;
+
+	$arguments=[$institute,$sem[0]['course'],$batch];
+	$res=\data\utils\database\find('SELECT rollno from student where institute=? and course=? and batch=?',$arguments,1);
 	$students=[];
 	if($res!=-1)
 	{
@@ -95,10 +101,29 @@ function get_students($subject,$institute,$type)
 				$temp_dict['marks']=-1;
 			array_push($students,$temp_dict);
 		}
-		return $students;
 	}
 	else
 		return -1;
+	$prev=\data\utils\database\find('SELECT rollno,marks from marks where year<? and subject=? and type=? and rollno in(SELECT rollno from student where institute=? and course=?)',[$year,$subject,$type,$institute,$sem[0]['course']],1);
+	$mtype=['pipractical','pitheory','ppractical','ptheory'];
+	$passing=\data\utils\database\find('SELECT ? from subject where subject=?',[$mtype[$type],$subject],1);
+	if($passing==-1)
+		return -1;
+	if($prev==-1)
+		return -1;
+	for($i=0; $i<count($prev);$i++)
+	{
+		if($pres[$i]['marks']<$passing[0][$mtype[$type]])
+			{
+			$temp_dict['rollno']=$prev[$i]['rollno'];
+			$temp_dict['name']=get_student_name($prev[$i]['rollno']);
+			$temp_dict['marks']=-1;
+			if($temp_dict['name']==-1)
+				return -1;
+			array_push($students, $temp_dict);
+			}
+	}
+	return $students;
 }
 function get_student_marks($rollno,$subject,$year,$type)
 {
@@ -142,23 +167,23 @@ function find_subjects($course,$institute,$semester)
 {	
 	if($course=='all' && $institute=='all')
 	{
-		$subjects_institute=\data\utils\database\find('Select subject.*, courses.institute FROM subject INNER JOIN courses ON subject.course=courses.course and subject.semester=?',[$semester],1);
+		$subjects_institute=\data\utils\database\find('Select subject.*, courses.institute FROM subject INNER JOIN courses ON subject.course=courses.course and subject.semester=? and (subject.optional=0 || subject.subject in(SELECT subject from choice where institute=courses.institute and course=courses.course))',[$semester],1);
 	}
 	else if($course=='all')
 	{
 		$arguments=[$institute,$semester];
-		$subjects_institute=\data\utils\database\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.course=courses.course and courses.institute=? and subject.semester=?',$arguments,1);
+		$subjects_institute=\data\utils\database\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.course=courses.course and courses.institute=? and subject.semester=? and (subject.optional=0 || subject.subject in(SELECT subject from choice where institute=courses.institute and course=courses.course))',$arguments,1);
 	}
 	else if($institute=='all')
 	{
 		$arguments=[$course,$semester];
-		$subjects_institute=\data\utils\database\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.course=courses.course and courses.course=? and subject.semester=?',$arguments,1);
+		$subjects_institute=\data\utils\database\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.course=courses.course and courses.course=? and subject.semester=? and (subject.optional=0 || subject.subject in(SELECT subject from choice where institute=courses.institute and course=courses.course))',$arguments,1);
 	}
 	else
 	{
 
 		$arguments=[$course,$institute,$semester];
-		$subjects_institute=\data\utils\database\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.course=courses.course and courses.course=? and courses.institute=? and subject.semester=?',$arguments,1);	
+		$subjects_institute=\data\utils\database\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.course=courses.course and courses.course=? and courses.institute=? and subject.semester=? and (subject.optional=0 || subject.subject in(SELECT subject from choice where institute=courses.institute and course=courses.course))',$arguments,1);	
 	}
 	$lists=[];
 	if($subjects_institute!=-1)
@@ -230,14 +255,16 @@ function check_entry($subject,$institute,$paper)
 		else
 			return -1;
 		$arguments=[$subject,$year,$institute];	
-		$res=\data\utils\database\find('SELECT COUNT(*) from asubjects where subject=? and id in (SELECT id from admit where year=? and rollno in(SELECT rollno from student where institute=?))',$arguments,1);
+		$res=get_students($subject,$institute,$paper);
 		if($res!=-1)
 		{
 			$arguments2=[$subject,$year,$paper,$institute];
 			$res2=\data\utils\database\find('SELECT COUNT(*) from marks where subject=? and year=? and type=? and rollno in(SELECT rollno from student where institute=?)',$arguments2,1);
 			if($res2!=-1)
 			{
-				if($res2[0]['COUNT(*)']==$res[0]['COUNT(*)'])
+				if(count($res)==0)
+					return 2;
+				if($res2[0]['COUNT(*)']==count($res))
 					return 1;
 				else
 					return 0;	

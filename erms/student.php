@@ -10,8 +10,8 @@ Utils: User Access
 */	
 
 namespace data;
-require('utils/student.php');
-require('utils/admit.php');
+require('Utils/student.php');
+require('Utils/admit.php');
 
 function student($user)
 {

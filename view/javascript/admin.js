@@ -887,7 +887,7 @@ function load_courses3()
 					$('#courses_list3').empty();
 					$('#courses_list3').append($('<option>', {
     				value: 'all',
-    				text: 'All'}));
+    				text: 'all'}));
 					for(var i=0; i<courses3.length;i++)
 					{
 						$('#courses_list3').append($('<option>', {
@@ -990,7 +990,7 @@ function optional_link(available,index,type)
 	{
 		return `<a id='batch_`+index+`' class='hand' data-toggle="modal" data-target="#marks3" onclick='load_marks3(this.id,`+type+`)'>Y</a>`;
 	}
-	if(available==-1)
+	if(available==-1 || available==2)
 	{
 		return '-';
 	}

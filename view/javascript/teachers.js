@@ -162,7 +162,7 @@ function optional_link(available,index,type)
 	{
 		return `<a id='batch_`+index+`' class='hand' data-toggle="modal" data-target="#marks1" onclick='load_marks1(this.id,`+type+`)'>Y</a>`;
 	}
-	if(available==-1)
+	if(available==-1 || available==2)
 	{
 		return '-';
 	}
