@@ -115,9 +115,79 @@ function get_screen($email)
 	else
 		return -1;
 }
-
-function getmarksheet($user)
+function add($a,$b)
 {
-	
+	if($a=='-')
+		$a=0;
+	if($b=='-')
+		$b=0;
+	return $a+$b;
 }
+function get_marksheet($user,$semester)
+{
+	$student=get_student($user,-1);
+	if($student!=-1)
+	{
+		$course=$student[0]['course'];
+		$institute=$student[0]['institute'];
+		$rollno=$student[0]['rollno'];
+		$arguments=[$semester,$course,$course,$institute];
+		$subjects=\data\utils\database\find('SELECT * from subject where semester=? and course=? and (optional=0 || (optional =1 and subject in (SELECT subject from choice where course=? and institute=?)))',$arguments,1);
+		$temp=[];
+		for ($i=0; $i<count($subjects);$i++)
+		{
+			$array=[$subjects[$i]['subject_code'],$subjects[$i]['subject'],
+			$subjects[$i]['mipractical'],$subjects[$i]['mpractical'],$subjects[$i]['mipractical']+$subjects[$i]['mpractical'],
+			$subjects[$i]['mitheory'],$subjects[$i]['mtheory'],$subjects[$i]['mitheory']+$subjects[$i]['mtheory']
+			];
+			for($type=0; $type<4;$type++)
+			{
+				$marks=\data\utils\database\find('SELECT MAX(marks) from marks where rollno=? and subject=? and type=?',[$rollno,$subjects[$i]['subject'],$type],1);
+				if($marks==-1)
+					return -1;
+				if($marks[0]['MAX(marks)']==null)
+				{
+					array_push($array,'-');
+				}
+				else
+				{
+					array_push($array,$marks[0]['MAX(marks)']);
+				}
+				if($type==1 or $type==3)
+				{
+					array_push($array,add($array[count($array)-1],$array[count($array)-2]));
+				}
+			}
+			array_push($temp,$array);
+		}
+		$total=['','Total',0,0,0,0,0,0,0,0,0,0,0,0];
+		for($i=0;$i<count($temp);$i++)
+		{
+			for($type=2;$type<count($total);$type++)
+			{
+				$total[$type]=add($temp[$i][$type],$total[$type]);
+			}
+		}
+		array_push($temp,$total);
+		$temp_dict['name']=$student[0]['name'];
+		$temp_dict['rollno']=$student[0]['rollno'];
+		$temp_dict['institute']=$institute;
+		$temp_dict['course']=$course;
+		$temp_dict['semester']=$semester;
+		$temp_dict['list']=$temp;
+		$temp_dict['total']=$total[13]+$total[10];
+		$temp_dict['percent']=$temp_dict['total']*100/($total[7]+$total[4]);
+		$temp_dict['division']='First';
+		if($temp_dict['percent']>40)
+			$temp_dict['pass']='Pass';
+		else
+			$temp_dict['pass']='Fail';
+		
+		return $temp_dict;
+	}
+	else
+		return -1;
+}
+
+
 ?>

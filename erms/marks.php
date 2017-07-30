@@ -40,6 +40,21 @@ function marks(){
 							else
 								echo(utils\reply('subjects','error','system'));
 							break;
+			case 'add_marks_external':
+							$res=utils\marks\check_data($data);
+							if($res!=-1)
+							{
+								$res=utils\marks\add_marks($data);
+								if($res!=-1)
+									echo(utils\reply('add_marks','success','marks_added'));
+								else
+									echo(utils\reply('add_marks','error','failed'));
+							}
+							else
+							{
+								echo(utils\reply('add_marks','message','Invalid Data'));
+							}
+							break;
 			case 'add_marks':$res=utils\marks\add_marks($data);
 								if($res!=-1)
 									echo(utils\reply('add_marks','success','marks_added'));

@@ -77,14 +77,15 @@ function generate_marksheet(id)
 {
 	var no=id.substring(id.indexOf('_')+1,id.length);
 	var post_arguments={};
-	post_arguments['type']='marks';
-	post_arguments['request']='marksheet';
+	post_arguments['type']='student';
+	post_arguments['request']='marksheet';	
 	post_arguments['value']=no+1;
 	$.post(address,post_arguments,
 		function marksheet(data,status)
 		{
 			if(status=='success')
 			{
+				console.log(data);
 				datah=JSON.parse(data);
 				if(datah['type']=='success')
 				{
@@ -107,6 +108,7 @@ function generate_admit_card(id)
 	{
 		if(status=='success')
 		{
+			console.log(data);
 			var datah=JSON.parse(data);
 			if(datah['type']=='success')
 			{

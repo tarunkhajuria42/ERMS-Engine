@@ -79,7 +79,7 @@ function submit_marks()
 		temp_dict['type']=3;
 		var post_arguments={};
 		post_arguments['type']='marks';
-		post_arguments['request']='add_marks';
+		post_arguments['request']='add_marks_external';
 		post_arguments['data']=JSON.stringify([temp_dict]);
 		$.post(address,post_arguments,
 			function marks_reply(data,status)
@@ -93,6 +93,8 @@ function submit_marks()
 						$('#marks').val('');
 						$('#roll_no').val('');
 					}
+					else if(datah['type']=='message')
+						error_marks(datah['reply']);
 					else
 						error_marks('Error Entering Marks, Please check values');
 				}

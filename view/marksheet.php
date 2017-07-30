@@ -75,9 +75,7 @@ function Table($header, $data)
 
 }
 
-if(isset($_POST))
-{}
-else
+if(!isset($_POST))
     echo('Error');
 
     
@@ -85,19 +83,18 @@ else
 // Instanciation of inherited class
 $pdf = new PDF('L');
 $header = array('CODE','SUBJECT','MIDMAX','ENDMAX','TOTAL1','PRACMAX','TMAX','TOTAL2','MID','END','TOTAL3','PRAC','TEAM','TOTAL3');
-$data = $_POST['marks'];
 $name = $_POST['name'];
 $roll = $_POST['rollno'];
 $institute = $_POST['institute'];
-$Semester = $_POST['semester']
+$Semester = $_POST['semester'];
 $status = 'Regular';
 $branch = $_POST['course'];
 $gtot = $_POST['total'];
 $pass = $_POST['pass'];
 $mj_tot = 'EIGHT THREE SIX - OUT OF 1000';
-$divis = $data['division'];
-$percent = $data['percent'];
-
+$divis = $_POST['division'];
+$percent = $_POST['percent'];
+$data=json_decode($_POST['list'],true);
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont('Arial','',10);
@@ -167,5 +164,5 @@ $pdf->Cell(130,7,'SIGNATURE AND SEAL OF INSTITUTION','B',0,'L');
 $pdf->Cell(70,7,'CONTROLLER OF EXAMS','BR',1,'L');
 $pdf->Cell(20,7,'*This is a computer generated marksheet',0,1,'L');
 $pdf->Output();
-}
+
 ?>

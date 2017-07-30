@@ -1104,7 +1104,7 @@ function init_tab4()
 {
 	load_session4();
 }
-var session_name_list=['Registration','ExamForm','Internals','External','Result'];
+var session_name_list=['Registration','ExamFrom','Admit Card','External','Result'];
 function load_session4()
 {
 	$.post(address,

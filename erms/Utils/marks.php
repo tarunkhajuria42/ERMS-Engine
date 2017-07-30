@@ -5,6 +5,28 @@ Examination Management System 0.1
 Utility functions
 */
 namespace data\utils\marks;
+function check_data($data)
+{
+	$res=\data\utils\marks\check_session();
+	if($res==-1)
+	{
+		return -1;
+	}
+	$year=$res[0]['year'];
+	$batch=\data\utils\student\get_batch($data[0]['rollno']);
+	if($res[0]['sessionid']>4)
+		$addsem=2;
+	else
+		$addsem=1;
+	$semester=($year-$batch)*2+$addsem;
+	$res=\data\utils\database\find('Select COUNT(*) from asubjects  where subject=? and  id =(Select id from admit where rollno=? and year=? and semester=?)',[$data[0]['subject'],$data[0]['rollno'],$year,$semester],1);
+	if($res==-1)
+		return -1;
+	if($res[0]['COUNT(*)']==0)
+		return -1;
+	else
+		return 1;
+}
 function add_marks($records)
 {
 	$res=\data\utils\marks\check_session();
@@ -255,7 +277,10 @@ function check_entry($subject,$institute,$paper)
 		else
 			return -1;
 		$arguments=[$subject,$year,$institute];	
-		$res=get_students($subject,$institute,$paper);
+		if($paper==3)
+			$res=\data\utils\database\find('SELECT * from asubjects where subject=? and id in (SELECT id from admit where year=? and rollno in(SELECT rollno from student where institute=?))',$arguments,1);
+		else
+			$res=get_students($subject,$institute,$paper);
 		if($res!=-1)
 		{
 			$arguments2=[$subject,$year,$paper,$institute];

@@ -21,10 +21,24 @@ function admit_details($email)
 	$subjects=\data\utils\database\find('SELECT subject_code,subject from subject where subject in(SELECT subject from asubjects where id in(SELECT id from admit where rollno=? and year=? and semester=?))',$arguments,1);
 	if($subjects!=-1)
 	{
+		
 		$temp_array=[];
 		for ($i=0; $i<count($subjects);$i++)
 		{
-			array_push($temp_array,[$subjects[$i]['subject_code'],$subjects[$i]['subject']])	;
+			$date=\data\utils\database\find('SELECT date,slot from datesheet where subject=? and year=?',[$subjects[$i]['subject'],$year],1);
+		if($date==-1)
+			return -1;
+		else if (count($date)==0)
+		{
+			$date='-';
+			$slot='-';
+		}
+		else
+		{
+			$slot=$date[0]['slot'];
+			$date=$date[0]['date'];
+		}
+			array_push($temp_array,[$subjects[$i]['subject_code'],$subjects[$i]['subject'],$date,$slot]);
 		}
 		$temp_dict['list']=$temp_array;
 	}

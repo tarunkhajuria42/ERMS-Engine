@@ -41,7 +41,8 @@ function student($user)
 								else
 									echo(utils\reply('admit_card','error','system'));
 								break;	
-			case 'marksheet':	$res=utils\admit\get_marksheet();
+			case 'marksheet':	
+								$res=utils\student\get_marksheet($user,$_POST['value']);
 								if($res!=-1)
 									echo(utils\reply('admit_card','success',$res));
 								else

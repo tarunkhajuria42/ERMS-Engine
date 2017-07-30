@@ -55,8 +55,8 @@ function Table($header, $data)
     {
         $this->Cell($w[0],10,$row[0],'LR');
         $this->Cell($w[1],10,$row[1],'LR');
-        //$this->Cell($w[2],10,$row[2],'LR',0,'R');
-        //$this->Cell($w[3],10,$row[3],'LR',0,'R');
+        $this->Cell($w[2],10,$row[2],'LR',0,'R');
+        $this->Cell($w[3],10,$row[3],'LR',0,'R');
         $this->Ln();
     }
     // Closing line
@@ -75,7 +75,7 @@ else
 $address_photo='http://localhost/ERMS-Engine/erms/applicant_pics/';
 $address_signature='http://localhost/ERMS-Engine/erms/applicant_sigs/';
 $pdf = new PDF();
-$header = array('CODE','SUBJECT');
+$header = array('CODE','SUBJECT','Date','Slot');
 $data = json_decode($_POST['list'],true);
 $signature=$address_signature.$_POST['signature'];
 $photo=$address_photo.$_POST['photo'];
