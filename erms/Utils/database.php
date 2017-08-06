@@ -108,8 +108,8 @@ function delete($query,$parameters,$table)
 		{
 			$statement->bindParam($i+1,$parameters[$i]);
 		}
-			
 		$statement->execute();
+		return 1;
 	}catch(\Exception $e)
 	{
 		return -1;

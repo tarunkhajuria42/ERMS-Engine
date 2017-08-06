@@ -176,7 +176,7 @@ function get_marksheet($user,$semester)
 		$temp_dict['semester']=$semester;
 		$temp_dict['list']=$temp;
 		$temp_dict['total']=$total[13]+$total[10];
-		$temp_dict['percent']=$temp_dict['total']*100/($total[7]+$total[4]);
+		$temp_dict['percent']=round($temp_dict['total']*100/($total[7]+$total[4]));
 		$temp_dict['division']='First';
 		if($temp_dict['percent']>40)
 			$temp_dict['pass']='Pass';

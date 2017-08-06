@@ -88,6 +88,7 @@ function get_marks($subject,$institute,$type)
 }
 function get_students($subject,$institute,$type)
 {
+
 	$res=\data\utils\marks\check_session();
 	if($res==-1)
 	{
@@ -98,10 +99,11 @@ function get_students($subject,$institute,$type)
 	$sem=\data\utils\database\find('SELECT semester,course from subject where subject=?',[$subject],1);
 	if($sem==-1)
 		return -1;
-	$batch=$year-($sem[0]['semester']-1)/2;
+	$batch=$year-round(($sem[0]['semester']-1)/2,0,PHP_ROUND_HALF_DOWN);
 
 	$arguments=[$institute,$sem[0]['course'],$batch];
 	$res=\data\utils\database\find('SELECT rollno from student where institute=? and course=? and batch=?',$arguments,1);
+
 	$students=[];
 	if($res!=-1)
 	{
@@ -127,24 +129,27 @@ function get_students($subject,$institute,$type)
 	else
 		return -1;
 	$prev=\data\utils\database\find('SELECT rollno,marks from marks where year<? and subject=? and type=? and rollno in(SELECT rollno from student where institute=? and course=?)',[$year,$subject,$type,$institute,$sem[0]['course']],1);
+	
 	$mtype=['pipractical','pitheory','ppractical','ptheory'];
-	$passing=\data\utils\database\find('SELECT ? from subject where subject=?',[$mtype[$type],$subject],1);
+	$passing=\data\utils\database\find('SELECT * from subject where subject=?',[$subject],1);
 	if($passing==-1)
 		return -1;
 	if($prev==-1)
 		return -1;
 	for($i=0; $i<count($prev);$i++)
 	{
-		if($pres[$i]['marks']<$passing[0][$mtype[$type]])
+		if($prev[$i]['marks']<$passing[0][$mtype[$type]])
 			{
 			$temp_dict['rollno']=$prev[$i]['rollno'];
 			$temp_dict['name']=get_student_name($prev[$i]['rollno']);
 			$temp_dict['marks']=-1;
+			
 			if($temp_dict['name']==-1)
 				return -1;
 			array_push($students, $temp_dict);
 			}
 	}
+
 	return $students;
 }
 function get_student_marks($rollno,$subject,$year,$type)
@@ -389,7 +394,7 @@ function new_session($email)
 	else
 	{
 		$session=0;
-		$year=2017;
+		$year=2016;
 	}
 	$arguments=[1,0];
 	if(\data\utils\database\update('UPDATE session SET completed=? where completed=?',$arguments,1)==1)

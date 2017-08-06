@@ -79,7 +79,7 @@ function generate_marksheet(id)
 	var post_arguments={};
 	post_arguments['type']='student';
 	post_arguments['request']='marksheet';	
-	post_arguments['value']=no+1;
+	post_arguments['value']=parseInt(no)+1;
 	$.post(address,post_arguments,
 		function marksheet(data,status)
 		{

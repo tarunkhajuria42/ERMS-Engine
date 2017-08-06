@@ -22,10 +22,12 @@ require('Utils/database.php');
 require('Utils/rights.php');
 require('Utils/course.php');
 
-//utils\user\register('deepankar@imfundo.io','deepankar','deepankar',5);
+//utils\user\register('ankan@imfundo.io','ankan','ankan',5);
 //utils\user\newSession('tarun@imfundo.io');
 //die();
+//var_dump($_COOKIE);
 $res=utils\user\checkSession();
+
 if($res<0)
 {
 	if(isset($_POST['type']))

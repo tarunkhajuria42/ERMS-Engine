@@ -968,6 +968,10 @@ function display_batch3(data,status)
 			batches3=datah['reply'];
 			for(var i=0; i<batches3.length; i++)
 			{	
+				if(batches3[i]['subject_code']=='CS 102')
+				{
+					console.log(batches3[i]['internal_practical']);
+				}
 				batch_table3.row.add([batches3[i]['subject_code'],
 					batches3[i]['institute'],
 					batches3[i]['course'],
@@ -986,11 +990,11 @@ function optional_link(available,index,type)
 	{
 		return 'N';
 	}
-	if(available==1)
+	else if(available==1)
 	{
 		return `<a id='batch_`+index+`' class='hand' data-toggle="modal" data-target="#marks3" onclick='load_marks3(this.id,`+type+`)'>Y</a>`;
 	}
-	if(available==-1 || available==2)
+	else if(available==-1 || available==2)
 	{
 		return '-';
 	}

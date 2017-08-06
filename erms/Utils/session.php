@@ -11,10 +11,10 @@ Session maintainace functions
 namespace data\utils\user;
 
 //Generates Acess token for a session
-
+define('valid_time',60);
 function newSession($email)
 {
-	define('valid_time',60);
+	
 	$i=0;
 	do
 	{
@@ -43,17 +43,13 @@ function destroySession()
 	if(isset($_COOKIE['token']))
 	{
 		$arguments=[$_COOKIE['token']];
+		//var_dump($arguments);
 		setcookie('token');
-		if(\data\utils\database\delete('DELETE from login where token=?',$arguments,2)==-1)
-		{
-			return -1;
-		}
-		else
-		{
-			return 1;
-		}
-		
+		$res=\data\utils\database\delete('DELETE from login where token=?',$arguments,2);
+		//var_dump($res);
+		return $res;	
 	}
+
 }
 /* returns the userid if session is set else generates -ve of specific errors
 See utils/error()
@@ -64,12 +60,20 @@ function checkSession()
 	{
 		$arguments=[$_COOKIE['token']];
 		$result=\data\utils\database\find('SELECT email,valid FROM login WHERE token =?',$arguments,2);
+		//var_dump($result); 
 		if(count($result)>0 and $result!==-1)
 		{
 			if(timeZone(\time())<$result[0]['valid'])
 			{
-				if(timeZone(\time())>($result[0]['valid']-(60*10)+10))
+				//echo($result[0]['valid']);
+				//echo(timeZone(\time()));
+				//echo(strtotime($result[0]['valid'])-strtotime(timeZone(\time())));
+				$a=strtotime(timeZone(\time()));
+				$b=strtotime($result[0]['valid'])-(60*valid_time)+60;
+				//echo($a);
+				if(strtotime(timeZone(\time()))>(strtotime($result[0]['valid'])-(60*valid_time)+60))
 				{
+					//echo('done');
 					destroySession();
 					newSession($result[0]['email']);	
 				}
@@ -97,3 +101,4 @@ function timeZone($time)
 	$dt->setTimestamp($time); //adjust the object to correct timestamp
 	return ($dt->format('Y-m-d H:i:s'));	
 }
+
