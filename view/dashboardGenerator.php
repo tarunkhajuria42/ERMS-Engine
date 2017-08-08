@@ -38,4 +38,8 @@ else if($_POST['access']==5)
 {
 	echo(\view\student());
 }
+else if($_POST['access']==6)
+{ 
+	echo(\view\rechecker());
+}
 ?>

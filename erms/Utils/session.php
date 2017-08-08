@@ -43,12 +43,18 @@ function destroySession()
 	if(isset($_COOKIE['token']))
 	{
 		$arguments=[$_COOKIE['token']];
-		//var_dump($arguments);
 		setcookie('token');
-		$res=\data\utils\database\delete('DELETE from login where token=?',$arguments,2);
-		//var_dump($res);
-		return $res;	
+		$res=\data\utils\database\find('SELECT token from login where token=?',$arguments,2);
+		if($res!=-1 and count($res)>0)
+		{
+			$res=\data\utils\database\delete('DELETE from login where token=?',$arguments,2);
+			return $res;	
+		}
+		else
+			return -1;
 	}
+	else 
+		return -1;
 
 }
 /* returns the userid if session is set else generates -ve of specific errors
@@ -65,17 +71,11 @@ function checkSession()
 		{
 			if(timeZone(\time())<$result[0]['valid'])
 			{
-				//echo($result[0]['valid']);
-				//echo(timeZone(\time()));
-				//echo(strtotime($result[0]['valid'])-strtotime(timeZone(\time())));
-				$a=strtotime(timeZone(\time()));
-				$b=strtotime($result[0]['valid'])-(60*valid_time)+60;
-				//echo($a);
 				if(strtotime(timeZone(\time()))>(strtotime($result[0]['valid'])-(60*valid_time)+60))
 				{
-					//echo('done');
-					destroySession();
-					newSession($result[0]['email']);	
+					$res=destroySession();
+					if($res!=-1 and count($res)>0)
+						newSession($result[0]['email']);	
 				}
 				return $result;
 			}
