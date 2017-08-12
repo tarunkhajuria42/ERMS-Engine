@@ -51,9 +51,7 @@ function marks(){
 									echo(utils\reply('add_marks','error','failed'));
 							}
 							else
-							{
 								echo(utils\reply('add_marks','message','Invalid Data'));
-							}
 							break;
 			case 'add_marks':$res=utils\marks\add_marks($data);
 								if($res!=-1)

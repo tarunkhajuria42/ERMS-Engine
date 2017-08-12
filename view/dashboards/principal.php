@@ -239,14 +239,14 @@ return <<<HTML
                     </div>
                     <div class="card-block">
                         <div class="table-responsive">
-                            <table class="table table-bordered" width="100%" id="ids_table" cellspacing="0">
+                            <table class="table table-bordered" width="100%" id="student_table3" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Email</th>
                                         <th>Courses</th>
+                                        <th> Edit</th>
                                     </tr>
                                 </thead>
-                                <tbody id='institutes_entry'>
+                                <tbody>
                                     <tr>
                                     <td>mayank@imfundo.io</td>
                                     <td><button class='btn btn-info pull-right'>Add/Edit</button></td>
@@ -255,8 +255,8 @@ return <<<HTML
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Email</th>
                                         <th>Courses</th>
+                                        <th>Edit</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -299,7 +299,6 @@ return <<<HTML
                                     </table>
                                 </div>
                             </div>
-
                         </div>
                 </div>
         </div>

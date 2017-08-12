@@ -1,3 +1,4 @@
+//Rechecker 
 init();
 function init()
 {
@@ -260,6 +261,7 @@ function fill_students1(data,status)
 		}
 	}
 }
+
 function marks_string1(marks,i)
 {
 if(marks==-1)
@@ -352,16 +354,4 @@ function error_batch1(text)
 function error_marks1(text)
 {
 	$('#info_marks1').text(text);
-}
-//******************************************************Utility Functions ****************************************
-function find_element(object,key,value)
-{
-	for (var i=0;i<object.length;i++)
-	{
-		if(object[i][key]==value)
-		{
-			return i;
-		}
-	}
-	return -1;
 }

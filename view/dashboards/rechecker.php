@@ -61,7 +61,7 @@ return <<<HTML
         </div>
     </nav>	
     <div class='tab-content'>
-    <div class="tab-pane content-wrapper py-3 " id='tab-01' active>
+    <div class="tab-pane content-wrapper py-3 active" id='tab-01' >
             <div class="container-fluid" id='container'>
 
                 <!-- Example Tables Card -->

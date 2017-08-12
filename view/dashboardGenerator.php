@@ -14,6 +14,7 @@ require('dashboards/principal.php');
 require('dashboards/examAdmin.php');
 require('dashboards/examEntry.php');
 require('dashboards/student.php');
+require('dashboards/rechecker.php');
 
 if($_POST['access']==0)
 {

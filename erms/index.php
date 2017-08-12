@@ -22,7 +22,7 @@ require('Utils/database.php');
 require('Utils/rights.php');
 require('Utils/course.php');
 
-//utils\user\register('ankan@imfundo.io','ankan','ankan',5);
+//utils\user\register('deepak@imfundo.io','deepak','deepak',6);
 //utils\user\newSession('tarun@imfundo.io');
 //die();
 //var_dump($_COOKIE);
