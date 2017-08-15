@@ -134,6 +134,8 @@ return <<<HTML
                                         <th>Roll No</th>
                                         <th>Name</th>
                                         <th>Marks</th>
+                                        <th>ID</th>
+                                        <th>Comment</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -144,6 +146,8 @@ return <<<HTML
                                         <th>Roll No</th>
                                         <th>Name</th>
                                         <th>Marks</th>
+                                        <th>ID</th>
+                                        <th>Comment</th>
                                         <th></th>
                                     </tr>
                                 </tfoot>

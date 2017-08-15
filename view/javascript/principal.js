@@ -201,14 +201,18 @@ function fill_marks1(data,status)
 		var datah=JSON.parse(data);
 		if(datah['type']=='success')
 		{
-			marks1=datah['reply']
+			data_pack=datah['reply'];
+			max=data_pack['max'];
+			marks1=data_pack['marks'];
 			for (var i=0; i<marks1.length;i++)
 			{
 				marks_table1.row.add([marks1[i]['rollno'],
 					marks1[i]['name'],
 					marks1[i]['marks'],
+					marks1[i]['userid'],
+					marks1[i]['comment'],
 					`<button id='marksedit_`+i+`' class='btn btn-info' onclick='edit_marks1(this.id)'>Edit</button>`
-					])
+					]);
 			}
 			marks_table1.draw();
 		}
@@ -225,6 +229,8 @@ function edit_marks1(id)
 		marks_table1.row.add([marks1[no]['rollno'],
 						marks1[no]['name'],
 						`<input type='text' id='marksedit_`+no+`' value='`+marks1[no]['marks']+`'>`,
+						marks1[no]['userid'],	
+						`<input type='text' id='comment_`+no+`'>`,
 			`<button id='marksedit_`+no+`' class='btn btn-info' onclick='submit_edit_marks1(this.id)'>Done</button>`
 			]).draw();
 		edit_in_progress1=true;
@@ -243,6 +249,8 @@ function submit_edit_marks1(id)
 		temp_dict['subject']=selected_subject1;
 		temp_dict['type']=selected_type1;
 		temp_dict['marks']=$('#marksedit_'+no).val();
+		temp_dict['userid']=user_id;
+		temp_dict['comment']=$('#comment_'+no).val();
 		temp_dict['rollno']=marks1[no]['rollno'];
 		post_arguments['data']=JSON.stringify([temp_dict]);	
 		$.post(address,post_arguments,
@@ -257,10 +265,14 @@ function submit_edit_marks1(id)
 					edit_in_progress1=false;
 					var no=row_in_edit.substring(row_in_edit.indexOf('_')+1,row_in_edit.length);
 					marks1[no]['marks']=$('#marksedit_'+no).val();
+					marks1[no]['comment']=$('#comment_'+no).val();
+					marks1[no]['userid']=user_id;
 					marks_table1.row($('#'+row_in_edit).parents('tr')).remove();
 					marks_table1.row.add([marks1[no]['rollno'],
 						marks1[no]['name'],
 						marks1[no]['marks'],
+						marks1[no]['userid'],
+						marks1[no]['comment'],
 						`<button id='marksedit_`+no+`' class='btn btn-info' onclick='edit_marks1(this.id)'>Edit</button>`
 						]).draw();
 				}
