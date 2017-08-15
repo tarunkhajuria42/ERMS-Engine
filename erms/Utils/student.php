@@ -140,8 +140,10 @@ function get_marksheet($user,$semester)
 			$subjects[$i]['mipractical'],$subjects[$i]['mpractical'],$subjects[$i]['mipractical']+$subjects[$i]['mpractical'],
 			$subjects[$i]['mitheory'],$subjects[$i]['mtheory'],$subjects[$i]['mitheory']+$subjects[$i]['mtheory']
 			];
-			for($type=0; $type<4;$type++)
+			$type_array=[0,2,1,3];
+			for($j=0; $j<4;$j++)
 			{
+				$type=$type_array[$j];
 				$marks=\data\utils\database\find('SELECT MAX(marks) from marks where rollno=? and subject=? and type=?',[$rollno,$subjects[$i]['subject'],$type],1);
 				if($marks==-1)
 					return -1;
@@ -153,7 +155,7 @@ function get_marksheet($user,$semester)
 				{
 					array_push($array,$marks[0]['MAX(marks)']);
 				}
-				if($type==1 or $type==3)
+				if($type==2 or $type==3)
 				{
 					array_push($array,add($array[count($array)-1],$array[count($array)-2]));
 				}
