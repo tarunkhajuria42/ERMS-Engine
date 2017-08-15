@@ -58,8 +58,8 @@ function edit_marks($records)
 	$year=$res[0]['year'];
 	for ($i=0; $i<count($records);$i++)
 	{
-		$arguments=[$records[$i]['marks'],$records[$i]['type'],$records[$i]['rollno'],$records[$i]['subject'],$year];
-		$res=\data\utils\database\update('UPDATE marks SET marks=? WHERE type=? and rollno=? and subject=? and year=?',$arguments,1);
+		$arguments=[$records[$i]['marks'],$records[$i]['comment'],$records[$i]['userid'],$records[$i]['type'],$records[$i]['rollno'],$records[$i]['subject'],$year];
+		$res=\data\utils\database\update('UPDATE marks SET marks=?, comment=?, userid=? WHERE type=? and rollno=? and subject=? and year=?',$arguments,1);
 		if($res!=-1)
 		{
 

@@ -5,7 +5,6 @@ var institutes_courses1;
 var all_courses=[];
 function init()
 {
-	get_user();
 	init_tab1();
 	init_tab2();
 	init_tab3();
@@ -1072,6 +1071,8 @@ function submit_edit_marks3(id)
 		temp_dict['subject']=selected_subject3;
 		temp_dict['type']=selected_type3;
 		temp_dict['marks']=$('#marksedit_'+no).val();
+		temp_dict['userid']=user_id;
+		temp_dict['comment']=$('#comment_'+no).val();
 		temp_dict['rollno']=marks3[no]['rollno'];
 		post_arguments['data']=JSON.stringify([temp_dict]);	
 		$.post(address,post_arguments,
@@ -1087,7 +1088,7 @@ function submit_edit_marks3(id)
 					var no=row_in_edit.substring(row_in_edit.indexOf('_')+1,row_in_edit.length);
 					marks3[no]['marks']=$('#marksedit_'+no).val();
 					marks3[no]['comment']=$('#comment_'+no).val();
-					marks3[no]['userid']=userid;
+					marks3[no]['userid']=user_id;
 					marks_table3.row($('#'+row_in_edit).parents('tr')).remove();
 					marks_table3.row.add([marks3[no]['rollno'],
 						marks3[no]['name'],
