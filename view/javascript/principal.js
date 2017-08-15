@@ -202,7 +202,7 @@ function fill_marks1(data,status)
 		if(datah['type']=='success')
 		{
 			data_pack=datah['reply'];
-			max=data_pack['max'];
+			$('#max_marks').text("Max Marks:"+data_pack['max']);
 			marks1=data_pack['marks'];
 			for (var i=0; i<marks1.length;i++)
 			{

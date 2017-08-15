@@ -5,6 +5,17 @@ Examination Management System 0.1
 Utility functions
 */
 namespace data\utils\marks;
+function get_max($subject,$type)
+{
+	$t=['mipractical','mitheory','mpractical','mtheory'];
+	$max=\data\utils\database\find('SELECT * from subject where subject=?',[$subject],1);
+	if($max!=-1)
+	{
+		return $max[0][$t[$type]];
+	}
+	else
+		return -1;
+}
 function check_data($data)
 {
 	$res=\data\utils\marks\check_session();

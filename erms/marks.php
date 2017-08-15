@@ -23,9 +23,12 @@ function marks(){
 							$subject=$data['subject'];
 							$type=$data['type'];
 							$res=utils\marks\get_marks($subject,$institute,$type);
-							if($res!=-1)
+							$max=utils\marks\get_max($subject,$type);
+							if($res!=-1 && $max!=-1)
 							{
-								echo(utils\reply('get_marks','success',$res));
+								$reply['marks']=$res;
+								$reply['max']=$max;
+								echo(utils\reply('get_marks','success',$reply));
 							}	
 							else
 								echo(utils\reply('get_marks','error','system'));

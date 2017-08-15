@@ -1025,7 +1025,9 @@ function fill_marks3(data,status)
 		var datah=JSON.parse(data);
 		if(datah['type']=='success')
 		{
-			marks3=datah['reply']
+			data_pack=datah['reply'];
+			$('#max_marks').text("Max Marks:"+data_pack['max']);
+			marks3=data_pack['marks'];
 			for (var i=0; i<marks3.length;i++)
 			{
 				marks_table3.row.add([marks3[i]['rollno'],

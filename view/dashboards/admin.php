@@ -304,6 +304,7 @@ return <<<HTML
                             <div class="modal-header">
                                 <button type="button" class="close" onclick='load_batch3()' data-dismiss="modal">&times;</button>
                                     <h4 class="modal-title">Marks</h4>
+                                      <p id='max_marks'></p>
                             </div>
                             <div class="modal-body">
                                 <div class="table-responsive">
