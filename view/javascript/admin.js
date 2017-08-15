@@ -5,6 +5,7 @@ var institutes_courses1;
 var all_courses=[];
 function init()
 {
+	get_user();
 	init_tab1();
 	init_tab2();
 	init_tab3();
@@ -1085,10 +1086,14 @@ function submit_edit_marks3(id)
 					edit_in_progress3=false;
 					var no=row_in_edit.substring(row_in_edit.indexOf('_')+1,row_in_edit.length);
 					marks3[no]['marks']=$('#marksedit_'+no).val();
+					marks3[no]['comment']=$('#comment_'+no).val();
+					marks3[no]['userid']=userid;
 					marks_table3.row($('#'+row_in_edit).parents('tr')).remove();
 					marks_table3.row.add([marks3[no]['rollno'],
 						marks3[no]['name'],
 						marks3[no]['marks'],
+						marks3[no]['userid'],
+						marks3[no]['comment'],
 						`<button id='marksedit_`+no+`' class='btn btn-info' onclick='edit_marks3(this.id)'>Edit</button>`
 						]).draw();
 				}

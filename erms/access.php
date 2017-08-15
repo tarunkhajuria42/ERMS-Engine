@@ -16,7 +16,11 @@ function access($email)
 			case 'type':
 							$access=utils\rights\check_access($email);
 							if($access!=-1)
-								echo(utils\reply('access','success',$access));
+							{
+								$reply['type']=$access;
+								$reply['email']=$email;
+								echo(utils\reply('access','success',$reply));
+							}		
 							else
 								echo(utils\reply('access','error','noaccess'));
 							break;

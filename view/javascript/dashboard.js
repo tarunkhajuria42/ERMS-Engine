@@ -1,4 +1,6 @@
 var address="http://localhost/ERMS-Engine/erms/index.php";
+var user_id;
+var user_type;
 function generateDashboard()
 {
 	//check if user is logged 
@@ -15,10 +17,12 @@ function setview(data,status)
 	var datah=JSON.parse(data);
 	if(datah['type']=='success')
 	{
-
+		var user_info=datah['reply'];
+		user_id=user_info['email'];
+		user_type=user_info['type'];
 		$.post('http://localhost/ERMS-Engine/view/dashboardGenerator.php',
 		{
-				access:datah['reply']
+				access:user_type
 		},function setdashboard(data,status)
 		{
 				$(data).appendTo("#page-top");
