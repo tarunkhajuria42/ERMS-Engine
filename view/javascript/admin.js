@@ -1021,7 +1021,7 @@ function fill_marks3(data,status)
 {
 	if(status=='success')
 	{
-		console.log(data);
+		console.log("yahoo");
 		var datah=JSON.parse(data);
 		if(datah['type']=='success')
 		{
@@ -1031,6 +1031,8 @@ function fill_marks3(data,status)
 				marks_table3.row.add([marks3[i]['rollno'],
 					marks3[i]['name'],
 					marks3[i]['marks'],
+					marks3[i]['userid'],
+					marks3[i]['comment'],
 					`<button id='marksedit_`+i+`' class='btn btn-info' onclick='edit_marks3(this.id)'>Edit</button>`
 					])
 			}
@@ -1049,6 +1051,8 @@ function edit_marks3(id)
 		marks_table3.row.add([marks3[no]['rollno'],
 						marks3[no]['name'],
 						`<input type='text' id='marksedit_`+no+`' value='`+marks3[no]['marks']+`'>`,
+						marks3[no]['userid'],	
+						`<input type='text' id='comment_`+no+`'>`,
 			`<button id='marksedit_`+no+`' class='btn btn-info' onclick='submit_edit_marks3(this.id)'>Done</button>`
 			]).draw();
 		edit_in_progress3=true;

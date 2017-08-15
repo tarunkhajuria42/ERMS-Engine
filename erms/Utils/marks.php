@@ -78,7 +78,7 @@ function get_marks($subject,$institute,$type)
 	}
 	$year=$res[0]['year'];
 	$arguments=[$subject,$year,$type,$institute];
-	$res=\data\utils\database\find('SELECT marks.rollno, marks.marks, student.name from marks INNER JOIN  student ON marks.subject=? and marks.year=? and marks.type=? and marks.rollno=student.rollno and student.institute=?',$arguments,1);
+	$res=\data\utils\database\find('SELECT marks.rollno, marks.marks, student.name, marks.comment, marks.userid from marks INNER JOIN  student ON marks.subject=? and marks.year=? and marks.type=? and marks.rollno=student.rollno and student.institute=?',$arguments,1);
 	if($res!=-1)
 	{
 		return $res;
