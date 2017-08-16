@@ -1,6 +1,7 @@
 init();
 function init()
 {
+	$("#wtext").text("Welcome : "+user_id);
 	init_tab1();
 }
 

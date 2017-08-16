@@ -1,6 +1,7 @@
 init_tab1();
 function init_tab1()
 {
+	$("#wtext").text("Welcome : "+user_id);
 	load_courses1();
 }
 var subjects1=[];

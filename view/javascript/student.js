@@ -3,6 +3,7 @@ var student_table1;
 var file_address='http://localhost/ERMS-Engine/erms/examform.php';
 function init()
 {
+	$("#wtext").text("Welcome : "+user_id);
 	init_tab1();
 }
 

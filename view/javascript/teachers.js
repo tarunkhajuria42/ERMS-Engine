@@ -1,6 +1,7 @@
 init();
 function init()
 {
+	$("#wtext").text("Welcome : "+user_id);
 	init_tab1();
 		
 }
@@ -201,7 +202,9 @@ function fill_marks1(data,status)
 		var datah=JSON.parse(data);
 		if(datah['type']=='success')
 		{
-			marks1=datah['reply'];
+			data_pack=datah['reply'];
+			$('#max_marks').text("Max Marks:"+data_pack['max']);
+			marks1=data_pack['marks'];
 			for (var i=0; i<marks1.length;i++)
 			{
 				marks_table1.row.add([marks1[i]['rollno'],
@@ -244,13 +247,13 @@ function fill_students1(data,status)
 		var datah=JSON.parse(data);
 		if(datah['type']=='success')
 		{
-			marks1=datah['reply'];
+			data_pack=datah['reply'];
+			$('#max_marks').text("Max Marks:"+data_pack['max']);
+			marks1=data_pack['student'];
 			marks_received1=JSON.parse(JSON.stringify(marks1));
 			for (var i=0; i<marks1.length;i++)
 			{
 				var string=marks_string1(marks1[i]['marks'],i);
-				console.log(marks1[i]['marks']);
-				console.log(string);
 				marks_table1.row.add([marks1[i]['rollno'],
 					marks1[i]['name'],
 					string
@@ -308,6 +311,11 @@ function submit_marks1()
 					temp_dict['subject']=selected_subject1;
 					temp_dict['type']=selected_type1;
 					marks_to_submit.push(temp_dict);
+					$('#marksedit_'+i).css('border-color','');
+				}
+				else
+				{
+					$('#marksedit_'+i).css('border-color','red');
 				}
 			}
 		}

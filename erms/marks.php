@@ -72,9 +72,14 @@ function marks(){
 							$institute=$data['institute'];
 							$subject=$data['subject'];
 							$type=$data['type'];
+							$max=utils\marks\get_max($subject,$type);
 							$res=utils\marks\get_students($subject,$institute,$type);
-							if($res!=-1)
-								echo(utils\reply('get_marks','success',$res));	
+							if($res!=-1 && $max!=-1)
+							{
+								$reply['max']=$max;
+								$reply['student']=$res;
+								echo(utils\reply('get_marks','success',$reply));	
+							}
 							else
 								echo(utils\reply('get_marks','error','system'));
 							break;

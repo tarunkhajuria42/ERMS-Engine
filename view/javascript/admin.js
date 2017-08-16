@@ -5,6 +5,7 @@ var institutes_courses1;
 var all_courses=[];
 function init()
 {
+	$("#wtext").text("Welcome : "+user_id);
 	init_tab1();
 	init_tab2();
 	init_tab3();

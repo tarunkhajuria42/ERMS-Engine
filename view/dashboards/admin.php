@@ -8,7 +8,7 @@ return <<<HTML
     <script src="javascript/tables.js"></script>
     <link href="css/admin.css" rel="stylesheet">
     <div id='welcome' onload='init()'>
-        <p class='welcome'>Welcome Tarun</p>
+        <p id='wtext' class='welcome'></p>
     </div>
     <nav id="mainNav" class="navbar static-top navbar-toggleable-md navbar-inverse">
         <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">

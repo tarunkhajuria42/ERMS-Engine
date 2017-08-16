@@ -74,7 +74,7 @@ function checkSession()
 				if(strtotime(timeZone(\time()))>(strtotime($result[0]['valid'])-(60*valid_time)+60))
 				{
 					$res=destroySession();
-					if($res!=-1 and count($res)>0)
+					//if($res!=-1 and count($res)>0)
 						newSession($result[0]['email']);	
 				}
 				return $result;
