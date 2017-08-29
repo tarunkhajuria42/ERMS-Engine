@@ -10,7 +10,7 @@ return <<<HTML
         <p id='wtext' class='welcome'></p>
     </div>
     <nav id="mainNav" class="navbar static-top navbar-toggleable-md navbar-inverse">
-        <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#navbarmain" aria-controls="navbarmain" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         

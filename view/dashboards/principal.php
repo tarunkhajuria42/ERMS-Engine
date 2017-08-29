@@ -10,44 +10,44 @@ return <<<HTML
     <div id='welcome'>
         <p id='wtext' class='welcome'></p>
     </div>
+      
     <nav id="mainNav" class="navbar static-top navbar-toggleable-md navbar-inverse">
-        <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#navbarmain" aria-controls="navbarmain" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        
-	<div id='header'>
-		<img id='header_logo' src='images\logoWhite.png'>
-		<h1 id='header_title'>Board of Technical Education</h1>
-		<h2 id='header_subtitle'>Government of N.C.T. of Delhi</h2>
-		<style>
-			#header{
-				width:100%;
-				height:130px;
-				background-color: #FF931E;
-				}
-			#header_logo{
-				position:absolute;
-				height:100px;
-				top:20px;
-				right:40px;
-			}
-			#header_title{	
-				position:absolute;
-				color:white;
-				font-size:18px;
-				top:45px;
-				right:150px;
-			}
-			#header_subtitle{
-				position:absolute;
-				color:white;
-				font-size:16px;
-				top:65px;
-				right:160px;
+        <div id='header'>
+        <img id='header_logo' src='images\logoWhite.png'>
+        <h1 id='header_title'>Board of Technical Education</h1>
+        <h2 id='header_subtitle'>Government of N.C.T. of Delhi</h2>
+        <style>
+            #header{
+                width:100%;
+                height:130px;
+                background-color: #FF931E;
+                }
+            #header_logo{
+                position:absolute;
+                height:100px;
+                top:20px;
+                right:40px;
+            }
+            #header_title{  
+                position:absolute;
+                color:white;
+                font-size:18px;
+                top:45px;
+                right:150px;
+            }
+            #header_subtitle{
+                position:absolute;
+                color:white;
+                font-size:16px;
+                top:65px;
+                right:160px;
 
-			}
-		</style>
-	</div>  
+            }
+        </style>
+    </div>
         <div class="collapse navbar-collapse" id="navbarmain">  
             <ul class="sidebar-nav navbar-nav nav-tabs" id='navlist'>
          			<li class="nav-item active">

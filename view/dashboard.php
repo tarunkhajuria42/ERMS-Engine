@@ -59,7 +59,7 @@ require('misc.php');
 		</head>
 
 <body id="page-top" onload="generateDashboard()">
-
+	
     
 </body>
 

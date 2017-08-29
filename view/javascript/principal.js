@@ -532,7 +532,7 @@ function load_courses4()
 	{	
 		datah=JSON.parse(data);
 		if(datah['type']=='success')
-		{
+		{	
 			courses4=datah['reply'];
 			for (var i=0; i<courses4.length;i++)
 			{
