@@ -7,14 +7,14 @@ return <<<HTML
 <!-- Navigation -->
     <script src="javascript/principal.js"></script>
     <link href="css/admin.css" rel="stylesheet">
-    <div id='welcome'>
-        <p id='wtext' class='welcome'></p>
-    </div>
       
     <nav id="mainNav" class="navbar static-top navbar-toggleable-md navbar-inverse">
         <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#navbarmain" aria-controls="navbarmain" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <div id='welcome'>
+        <p id='wtext' class='welcome'></p>
+        </div>
         <div id='header'>
         <img id='header_logo' src='images\logoWhite.png'>
         <h1 id='header_title'>Board of Technical Education</h1>
@@ -264,8 +264,6 @@ return <<<HTML
                                         <th>Edit</th>
                                     </tr>
                                 </tfoot>
-                                <tbody>
-                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -286,7 +284,7 @@ return <<<HTML
                             </div>
                             <div class="card-block">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" width="100%" id="choice_table4" cellspacing="0">
+                                    <table class="table table-bordered" width="100%" id="courses_table4" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>Courses</th>
@@ -305,6 +303,40 @@ return <<<HTML
                                 </div>
                             </div>
                         </div>
+                </div>
+                <div class="modal fade" id="choice4" role="dialog" data-backdrop='static'>
+                    <div class="modal-dialog modal-lg">
+                         <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" onclick='reset2()' data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Users</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" id="choice_table2" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Selected Subjects</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Selected Subjects</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        <div><button class='btn btn-info pull-right mt-2' onclick='new_user2()'>New User</button></div>
+                        </div>
+                            </div>
+                            <div><p id='info_users2' class='text-center'></p></div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>   
+                    </div>
                 </div>
         </div>
     <a class="scroll-to-top rounded" href="#page-top">

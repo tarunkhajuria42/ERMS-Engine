@@ -533,7 +533,9 @@ function load_courses4()
 		datah=JSON.parse(data);
 		if(datah['type']=='success')
 		{	
+			
 			courses4=datah['reply'];
+			console.log(courses4);
 			for (var i=0; i<courses4.length;i++)
 			{
 				courses_table4.row.add([courses4[i],
@@ -559,7 +561,6 @@ function add_edit_user4(id)
 		{
 			if(status=='success')
 			{
-				console.log(data);
 				var datah=JSON.parse(data);
 				if(datah['type']=='success')
 				{
