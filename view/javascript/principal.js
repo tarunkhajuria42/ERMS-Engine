@@ -486,19 +486,22 @@ var courses_table4;
 var choice_table4;
 var courses4=[];
 var cluster4=[];
+var choices4=[];
 var selected_course4;
 var is_new_opened4=false;
+var new_subject_opened4=false;
 var institute4;
 
 function init_tab4()
 {
 courses_table4=$('#courses_table4').DataTable();
-subjects_table4=$('#subjects_table4').DataTable();
+subjects_table4=$('#choice_table4').DataTable();
 get_institute4();
 } 
 function reset4()
 {
 	is_new_opened4=false;
+	new_subject_opened4=false;
 	subjects4=[];
 }
 function get_institute4()
@@ -533,19 +536,17 @@ function load_courses4()
 		datah=JSON.parse(data);
 		if(datah['type']=='success')
 		{	
-			
 			courses4=datah['reply'];
-			console.log(courses4);
 			for (var i=0; i<courses4.length;i++)
 			{
 				courses_table4.row.add([courses4[i],
-					`<button id='insti_`+i+`' onclick='add_edit_user4(this.id)' data-toggle="modal" data-target="#users4" class='btn btn-info pull-right'>Add/Edit</button>`]);
+					`<button id='insti_`+i+`' onclick='add_edit_subject4(this.id)' data-toggle="modal" data-target="#choice4" class='btn btn-info pull-right'>Add/Edit</button>`]);
 			}
 			courses_table4.draw();
 		}
 	});
 }
-function add_edit_user4(id)
+function add_edit_subject4(id)
 {
 	var no=id.substring(id.indexOf('_')+1,id.length);
 	selected_course4=courses4[no];
@@ -556,8 +557,9 @@ function add_edit_user4(id)
 	temp['institute']=institute4;
 	temp['course']=selected_course4;
 	post_arguments['data']=JSON.stringify(temp);
+	get_choices4();
 	$.post(address,post_arguments,
-		function populate_users(data,status)
+		function populate_subjects(data,status)
 		{
 			if(status=='success')
 			{
@@ -565,39 +567,64 @@ function add_edit_user4(id)
 				if(datah['type']=='success')
 				{
 					subjects_table4.clear();
+					console.log(data);
 					subjects4=datah['reply'];
 					for(var i=0; i<subjects4.length;i++)
 					{
 						subjects_table4.row.add([
-							subjects4[i]['subject'],
-							subjects4[i]['semester'],
-							string_checker(subjects4[i]['subject'],subjects4[i]['choice'],i)]);
+							subjects4[i]['subject_code']+'-'+subjects4['subject'],
+							`<button id='delete_`+i+`' class='btn btn-info' onclick=''>Delete</button>`])
 					}
 					subjects_table4.draw();
 				}
 			}
 		});
 }
-function string_checker(subject,value,id)
-{
-	var str;
-	if(value==1)
-		 str=`<input id='checkbox`+id+`' name='choice' value='`+subject+`' checked> `;		
-	else
-		str=`<input id='checkbox`+id+`' name='choice' value='`+subject+`'>`;
-	return str;
-}
-function submit_subjects4()
+function delete_subject(id)
 {
 	var no=id.substring(id.indexOf('_')+1,id.length);
-	var value=$('#email_'+no).val();
-	var data={};
+	subjects_table4.row(('#'))
+}
+
+function get_choices4()
+{
+	var post_arguments={};
+	post_arguments['type']='lists';
+	post_arguments['request']='find_choice';
+	post_arguments['data']=selected_course4;
+	$.post(address,
+		post_arguments,
+		function fill_choices(data,status)
+		{
+			if(status=='success')
+			{
+				datah=JSON.parse(data);
+				if(datah['type']=='success')
+					choices4=datah['reply'];	
+			}
+		});
+}
+function new_subject4()
+{
+	if(!new_subject_opened4)
+	{
+		
+		subjects_table4.row.add([
+			`<select id='choice_list4'></select>`,
+			`<button id='add_new4' onclick='add_subject4()' class='btn btn-info'>Add</button>`
+			]);
+		subjects_table4.draw();
+		new_subject_opened4=true;
+	}
+}
+function add_subject4(id)
+{
 	data['institute']=institute2;
 	data['course']=selected_course2;
-	data['email']=value;
+	data['subject']=$('#choice_list4').value();
 	var post_arguments={};
-	post_arguments['type']='access';
-	post_arguments['request']='add_user';
+	post_arguments['type']='lists';
+	post_arguments['request']='add_choice';	
 	post_arguments['data']=JSON.stringify(data);
 	$.post(address,post_arguments,
 		function reply_add2(data,status)
@@ -622,10 +649,7 @@ function submit_subjects4()
 				}
 			}
 		});
-
 }
-
-
 function message_subjects4(text)
 {
 	$('#info_subjects4').text(text);

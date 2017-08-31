@@ -107,6 +107,15 @@ function lists()
 								else
 									echo(utils\reply('get_choice','error','system'));
 								break;
+			case 'find_choice':
+								$course=$data;
+								$reply=utils\course\find_choice($course);
+								if($reply!=-1)
+									echo(utils\reply('find_choice','success',$reply));
+								else
+									echo(utils\reply('find_choice','error','system'));
+								break;
+
 			case 'add_choice':	$institute=$data['institute'];
 								$course=$data['course'];
 								$subjects=$data['subjects'];

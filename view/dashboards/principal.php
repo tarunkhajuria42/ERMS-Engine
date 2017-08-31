@@ -308,12 +308,12 @@ return <<<HTML
                     <div class="modal-dialog modal-lg">
                          <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" onclick='reset2()' data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Users</h4>
+                                <button type="button" class="close" onclick='reset4()' data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Choice Subjects</h4>
                             </div>
                             <div class="modal-body">
                                 <div class="table-responsive">
-                            <table class="table table-bordered" width="100%" id="choice_table2" cellspacing="0">
+                            <table class="table table-bordered" width="100%" id="choice_table4" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>Selected Subjects</th>
@@ -329,7 +329,7 @@ return <<<HTML
                                     </tr>
                                 </tfoot>
                             </table>
-                        <div><button class='btn btn-info pull-right mt-2' onclick='new_user2()'>New User</button></div>
+                        <div><button class='btn btn-info pull-right mt-2' onclick='new_subject4()'>Add Subject</button></div>
                         </div>
                             </div>
                             <div><p id='info_users2' class='text-center'></p></div>
