@@ -218,19 +218,19 @@ function max_semester($course)
 //************************************************ Choice of Subjects*****************************************
 function get_choice($institute,$course)
 {
-	$list=\data\utils\database\find('SELECT choice.subject_code,subject.subject from choice inner join subject on  choice.institute=? and choice.course =? and subject.subject_code=choice.subject_code',[$institute,$course],1);
+	$list=\data\utils\database\find('SELECT choice.subject_code, subject.subject from choice inner join subject on  choice.institute=? and choice.course =? and subject.subject_code=choice.subject_code',[$institute,$course],1);
 	return $list;
 }
 function find_choice($course)
 {
-	$list=\data\utils\database\find('SELECT subject_code, subject from subject where course=?');
+	$list=\data\utils\database\find('SELECT subject_code, subject from subject where course=? and optional=1',[$course],1);
 	return $list;
 }
-function add_choice($subjects,$course,$institute)
+function add_choice($subject,$course,$institute)
 {
 	for($i=0; $i<count($subject);$i++)
 	{
-		$res=\data\utils\database\insert('INSERT into choice(subject_code,course,institute) values(?,?,?)',[$subject[$i],$choice,$institute],1);
+		$res=\data\utils\database\insert('INSERT into choice(subject_code,course,institute) values(?,?,?)',[$subject[$i],$course,$institute],1);
 		if($res==-1)
 			return -1;
 	}
@@ -238,9 +238,9 @@ function add_choice($subjects,$course,$institute)
 }	
 function delete_choice($subjects,$course,$institute)
 {
-	for($i=0; $i<count($subject);$i++)
+	for($i=0; $i<count($subjects);$i++)
 	{
-		$res=\data\utils\database\delete('DELETE from choice where subject_code=? and course=? and institute=?',[$subject[$i],$course,$institute],1);
+		$res=\data\utils\database\delete('DELETE from choice where subject_code=? and course=? and institute=?',[$subjects[$i],$course,$institute],1);
 		if($res==-1)
 			return -1;
 	}

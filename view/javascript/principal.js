@@ -487,10 +487,12 @@ var choice_table4;
 var courses4=[];
 var cluster4=[];
 var choices4=[];
+var subjects4=[];
 var selected_course4;
 var is_new_opened4=false;
 var new_subject_opened4=false;
 var institute4;
+var delete_selected4;
 
 function init_tab4()
 {
@@ -557,7 +559,6 @@ function add_edit_subject4(id)
 	temp['institute']=institute4;
 	temp['course']=selected_course4;
 	post_arguments['data']=JSON.stringify(temp);
-	get_choices4();
 	$.post(address,post_arguments,
 		function populate_subjects(data,status)
 		{
@@ -567,23 +568,46 @@ function add_edit_subject4(id)
 				if(datah['type']=='success')
 				{
 					subjects_table4.clear();
-					console.log(data);
 					subjects4=datah['reply'];
+					get_choices4();
 					for(var i=0; i<subjects4.length;i++)
 					{
 						subjects_table4.row.add([
-							subjects4[i]['subject_code']+'-'+subjects4['subject'],
-							`<button id='delete_`+i+`' class='btn btn-info' onclick=''>Delete</button>`])
+							subjects4[i]['subject_code']+' - '+subjects4[i]['subject'],
+							`<button id='delete_`+i+`' class='btn btn-info' onclick='delete_subject4(this.id)'>Delete</button>`])
 					}
 					subjects_table4.draw();
 				}
 			}
 		});
 }
-function delete_subject(id)
+function delete_subject4(id)
 {
 	var no=id.substring(id.indexOf('_')+1,id.length);
-	subjects_table4.row(('#'))
+	var post_arguments={};
+	post_arguments['type']='lists';
+	post_arguments['request']='delete_choice';
+	var data={};
+	data['institute']=institute4;
+	data['course']=selected_course4;
+	data['subject']=subjects4[no]['subject_code'];
+	post_arguments['data']=JSON.stringify(data);
+	delete_selected4=no;
+	$.post(address,
+		post_arguments,
+		function delete_reply4(data,status)
+		{
+			console.log(data);
+			if(status=='success')
+			{
+				var datah=JSON.parse(data);
+				if(datah['type']=='success')
+				{
+					subjects_table4.row($('#delete_'+delete_selected4).parents('tr')).remove().draw();	
+					subjects4.splice(delete_selected4,1);			
+				}
+			}
+		});
 }
 
 function get_choices4()
@@ -591,16 +615,28 @@ function get_choices4()
 	var post_arguments={};
 	post_arguments['type']='lists';
 	post_arguments['request']='find_choice';
-	post_arguments['data']=selected_course4;
+	post_arguments['value']=selected_course4;
 	$.post(address,
 		post_arguments,
 		function fill_choices(data,status)
 		{
+			console.log(data);
 			if(status=='success')
 			{
 				datah=JSON.parse(data);
 				if(datah['type']=='success')
-					choices4=datah['reply'];	
+					var temp_list=datah['reply'];
+					choices4=[];
+					console.log(subjects4);
+					for(var i=0; i<temp_list.length;i++)
+					{
+						find_element(subjects4,'subject_code',temp_list[i]['subject_code']);
+						if(find_element(subjects4,'subject_code',temp_list[i]['subject_code'])==-1)
+						{
+							console.log('abc');
+							choices4.push(temp_list[i]);
+						}
+					}
 			}
 		});
 }
@@ -608,40 +644,55 @@ function new_subject4()
 {
 	if(!new_subject_opened4)
 	{
-		
 		subjects_table4.row.add([
 			`<select id='choice_list4'></select>`,
 			`<button id='add_new4' onclick='add_subject4()' class='btn btn-info'>Add</button>`
 			]);
 		subjects_table4.draw();
+		for(var i=0; i<choices4.length;i++)
+		{
+			var temp_string=choices4[i]['subject_code']+' - '+choices4[i]['subject'];
+			$('#choice_list4').append($('<option>',{
+			value:i,
+			text:temp_string
+			}));	
+		}
 		new_subject_opened4=true;
 	}
+	else
+	{
+		message_subjects4("Please add one subject at a time");
+	}
 }
-function add_subject4(id)
+function add_subject4()
 {
-	data['institute']=institute2;
-	data['course']=selected_course2;
-	data['subject']=$('#choice_list4').value();
+	var data={}
+	data['institute']=institute4;
+	data['course']=selected_course4;
+	data['subject']=choices4[$('#choice_list4').val()]['subject_code'];
 	var post_arguments={};
 	post_arguments['type']='lists';
 	post_arguments['request']='add_choice';	
 	post_arguments['data']=JSON.stringify(data);
-	$.post(address,post_arguments,
+	$.post(address,
+		post_arguments,
 		function reply_add2(data,status)
 		{
 			if(status=='success')
 			{
-				console.log(data);
 				var datah=JSON.parse(data);
 				if(datah['type']=='success')
 				{
-					var no=users2.length;
-					users2.push($('#email_'+no).val());
-					users_table2.row($('#email_'+no).parents('tr')).remove();
-					users_table2.row.add([users2[no],
-					`<button onclick='remove_user2(this.id)' class='btn btn-warning pull-right' id='removeuser_`+no+`'>Remove</button>`]);
-					users_table2.draw();
-					is_new_opened2=false;
+					var ch_no=$('#choice_list4').val();
+					subjects4.push(choices4[ch_no]);
+					subjects_table4.row($('#choice_list4').parents('tr')).remove();
+					var no=subjects4.length-1;
+					subjects_table4.row.add([
+						choices4[ch_no]['subject_code']+'-'+choices4[ch_no]['subject'],
+							`<button id='delete_`+no+`' class='btn btn-info' onclick='delete_subject4(this.id)'>Delete</button>`]);
+					subjects_table4.draw();
+					choices4.splice(ch_no,1);
+					new_subject_opened4=false;
 				}
 				else
 				{

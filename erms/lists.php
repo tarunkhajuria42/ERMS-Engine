@@ -108,7 +108,7 @@ function lists()
 									echo(utils\reply('get_choice','error','system'));
 								break;
 			case 'find_choice':
-								$course=$data;
+								$course=$_POST['value'];
 								$reply=utils\course\find_choice($course);
 								if($reply!=-1)
 									echo(utils\reply('find_choice','success',$reply));
@@ -118,8 +118,8 @@ function lists()
 
 			case 'add_choice':	$institute=$data['institute'];
 								$course=$data['course'];
-								$subjects=$data['subjects'];
-								$reply=utils\course\add_choice($institute,$course,$subjects);
+								$subject=[$data['subject']];
+								$reply=utils\course\add_choice($subject,$course,$institute);
 								if($reply!=-1)
 									echo(utils\reply('add_choice','success','choice_added'));
 								else
@@ -128,8 +128,8 @@ function lists()
 			case 'delete_choice':
 								$institute=$data['institute'];
 								$course=$data['course'];
-								$subjects=$data['subjects'];
-								$reply=utils\course\delete_choice($institute,$choice,$subjects);
+								$subjects=[$data['subject']];
+								$reply=utils\course\delete_choice($subjects,$course,$institute);
 								if($reply!=-1)
 									echo(utils\reply('delete_choice','success','deleted'));
 								else

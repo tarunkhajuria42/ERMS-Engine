@@ -52,6 +52,7 @@ require('misc.php');
             <!-- Custom scripts for this template -->
             <script src="javascript/dashboard.js"></script>
     		<script src="javascript/logout.js"></script>
+    		<script src="javascript/utility.js"></script>
 
 
     		
