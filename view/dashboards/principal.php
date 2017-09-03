@@ -91,11 +91,10 @@ return <<<HTML
                                 <thead>
                                     <tr>
                                         <th>Subject Code</th>
+                                        <th>Subject</th>
                                         <th>Institute</th>
                                         <th>Course</th>
-                                        <th>Internal Practical</th>
-                                        <th>Internal Theory</th>
-                                        <th>External Practical</th>
+                                        <th>Internals</th>
                                     </tr>
                                 </thead>
                                 <tbody >
@@ -103,11 +102,10 @@ return <<<HTML
                                 <tfoot>
                                     <tr>
                                         <th>Subject Code</th>
+                                        <th>Subject</th>
                                         <th>Institute</th>
                                         <th>Course</th>
-                                        <th>Internal Practical</th>
-                                        <th>Internal Theory</th>
-                                        <th>External Practical</th>
+                                        <th>Internals</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>

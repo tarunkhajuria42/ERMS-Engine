@@ -53,9 +53,12 @@ return <<<HTML
             <ul class="sidebar-nav navbar-nav nav-tabs" id='navlist'>
                     <li class="nav-item active">
                         <a class="nav-link" href="#tab-01" aria-controls="tab-01" role="tab" data-toggle="tab">Marks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab-02" aria-controls="tab-02" role="tab" data-toggle="tab">Admit Cards</a>
                     </li>       
                     <li class="nav-item">
-                        <a class="nav-link" href="#tab-02" aria-controls="tab-02" onclick='logout()' role="tab" data-toggle="tab">Logout</a>
+                        <a class="nav-link" href="#tab-03" aria-controls="tab-03" onclick='logout()' role="tab" data-toggle="tab">Logout</a>
                     </li>   
             </ul>
         </div>
@@ -80,11 +83,10 @@ return <<<HTML
                                 <thead>
                                     <tr>
                                         <th>Subject Code</th>
+                                        <th>Subject</th>
                                         <th>Institute</th>
                                         <th>Course</th>
-                                        <th>Internal Practical</th>
-                                        <th>Internal Theory</th>
-                                        <th>External Practical</th>
+                                        <th>Internals</th>
                                     </tr>
                                 </thead>
                                 <tbody >
@@ -92,16 +94,12 @@ return <<<HTML
                                 <tfoot>
                                     <tr>
                                         <th>Subject Code</th>
+                                        <th>Subject</th>
                                         <th>Institute</th>
                                         <th>Course</th>
-                                        <th>Internal Practical</th>
-                                        <th>Internal Theory</th>
-                                        <th>External Practical</th>
+                                        <th>Internals</th>
                                     </tr>
                                 </tfoot>
-                                <tbody>
-                                    
-                                </tbody>
                             </table>
                         </div>
                            
@@ -144,6 +142,51 @@ return <<<HTML
                             </div>
                         </div>   
                     </div>
+                </div>
+            </div>
+<!-- Selection -->
+        <div class="tab-pane content-wrapper py-3"  id='tab-02'>
+            <div class="container-fluid" id='container'>
+                <!-- Example Tables Card -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-table"></i> Check Admit Cards
+                    </div>
+                    <div class="card-block">
+                    <div>
+                        Course:<select id='courses_list2' class='mb-3 mr-3'>
+                        </select>
+                        Year:<select id='year_list2' class='mb-3 mr-3'>
+                        </select>
+                        <button onclick='select_submit2()'  class=' btn btn-info btn-sm'>Select</button></div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" id="batch_table1" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Roll No</th>
+                                        <th>Name</th>
+                                        <th>Photo</th>
+                                        <th>Fees</th>
+                                        <th>Attendance</th>
+                                        <th>Not Restricted</th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Roll No</th>
+                                        <th>Name</th>
+                                        <th>Photo</th>
+                                        <th>Fees</th>
+                                        <th>Attendance</th>
+                                        <th>Not Restricted</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div> 
+                </div>
                 </div>
             </div>    
         </div>

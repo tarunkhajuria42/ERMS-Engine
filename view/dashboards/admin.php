@@ -198,14 +198,8 @@ return <<<HTML
                                         <th>Code</th>
                                         <th>Subject</th>
                                         <th>Semester</th>
-                                        <th>Passing Internal Practical</th>
-                                        <th>Maximum Internal Practical</th>
-                                        <th>Passing Internal Theory</th>
-                                        <th>Maximum Internal Theory</th>
-                                        <th>Passing External Practical</th>
-                                        <th>Maximum Enternal Practical</th>
-                                        <th>Passing External Theory</th>
-                                        <th>Maximum External Theory</th>
+                                        <th>Maximum Internals</th>
+                                        <th>Maximum Externals</th>
                                         <th>Optional</th>
                                         <th></th>
                                         <th></th>
@@ -218,21 +212,13 @@ return <<<HTML
                                         <th>Code</th>
                                         <th>Subject</th>
                                         <th>Semester</th>
-                                        <th>Passing Internal Practical</th>
-                                        <th>Maximum Internal Practical</th>
-                                        <th>Passing Internal Theory</th>
-                                        <th>Maximum Internal Theory</th>
-                                        <th>Passing External Practical</th>
-                                        <th>Maximum Enternal Practical</th>
-                                        <th>Passing External Theory</th>
-                                        <th>Maximum External Theory</th>
+                                        <th>Maximum Internals</th>
+                                        <th>Maximum Externals</th>
                                         <th>Optional</th>
                                         <th></th>
                                         <th></th>
                                     </tr>
                                 </tfoot>
-                                <tbody>
-                                </tbody>
                             </table>
                             </div>
                             <div><button class='btn btn-info pull-right mt-2' onclick='new_subject_button2()'>Add Subject</button></div>
@@ -271,12 +257,11 @@ return <<<HTML
                                 <thead>
                                     <tr>
                                         <th>Subject Code</th>
+                                        <th>Subject</th>
                                         <th>Institute</th>
                                         <th>Course</th>
-                                        <th>Internal Practical</th>
-                                        <th>Internal Theory</th>
-                                        <th>External Practical</th>
-                                        <th>External Theory</th>
+                                        <th>Internal</th>
+                                        <th>External</th>
                                     </tr>
                                 </thead>
                                 <tbody >
@@ -284,12 +269,11 @@ return <<<HTML
                                 <tfoot>
                                     <tr>
                                         <th>Subject Code</th>
+                                        <th>Subject</th>
                                         <th>Institute</th>
                                         <th>Course</th>
-                                        <th>Internal Practical</th>
-                                        <th>Internal Theory</th>
-                                        <th>External Practical</th>
-                                        <th>External Theory</th>
+                                        <th>Internal</th>
+                                        <th>External</th>
                                     </tr>
                                 </tfoot>
                             </table>

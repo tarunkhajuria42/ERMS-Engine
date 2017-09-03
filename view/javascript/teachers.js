@@ -141,12 +141,10 @@ function display_batch1(data,status)
 			for(var i=0; i<batches1.length; i++)
 			{	
 				batch_table1.row.add([batches1[i]['subject_code'],
+					batches1[i]['subject'],
 					batches1[i]['institute'],
 					batches1[i]['course'],
-					optional_link(batches1[i]['internal_practical'],i,0),
-					optional_link(batches1[i]['internal_theory'],i,1),
-					optional_link(batches1[i]['practical'],i,2),
-					optional_link(batches1[i]['theory'],i,3)
+					optional_link(batches1[i]['internal'],i,0),
 					]).draw();	
 			}
 		}
@@ -361,6 +359,8 @@ function error_marks1(text)
 {
 	$('#info_marks1').text(text);
 }
+//****************************************************** Tab 2 (Admit Card Approval) *****************************
+
 //******************************************************Utility Functions ****************************************
 function find_element(object,key,value)
 {

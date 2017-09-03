@@ -117,7 +117,10 @@ return <<<HTML
                                     </div>
                                     <h5>Back Papers</h5>
                                     <div class="form-group" id='back'>
-                                        
+                                    </div>
+                                    <h5>Improvement Papers</h5>
+                                    <div class="form-group" id='improvement'>
+                                        <select id='improvement_papers'></select>
                                     </div>
                                 </div>
                                 <div class="col-md-4">

@@ -926,6 +926,7 @@ function load_semester3()
     						text: semesters3[i]['semester']}));
 					}
 				}
+
 			}
 		});
 }
@@ -958,28 +959,24 @@ function load_batch3()
 }
 function display_batch3(data,status)
 {
-	console.log(data);
+	//console.log(data);
 	if(status=='success')
 	{
 		
 		var datah=JSON.parse(data);
 		if(datah['type']=='success')
 		{
-			batch_table3.clear().draw();
+			//batch_table3.clear().draw();
 			batches3=datah['reply'];
 			for(var i=0; i<batches3.length; i++)
 			{	
-				if(batches3[i]['subject_code']=='CS 102')
-				{
-					console.log(batches3[i]['internal_practical']);
-				}
+				//console.log(optional_link(batches3[i]['internal'],i,0));
 				batch_table3.row.add([batches3[i]['subject_code'],
+					batches3[i]['subject'],
 					batches3[i]['institute'],
 					batches3[i]['course'],
-					optional_link(batches3[i]['internal_practical'],i,0),
-					optional_link(batches3[i]['internal_theory'],i,1),
-					optional_link(batches3[i]['practical'],i,2),
-					optional_link(batches3[i]['theory'],i,3)
+					optional_link(batches3[i]['internal'],i,0),
+					optional_link(batches3[i]['external'],i,1)
 					]).draw();	
 			}
 		}

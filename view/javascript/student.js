@@ -120,7 +120,7 @@ function generate_admit_card(id)
 	});
 
 }
-
+//************************************************** Exam Form Section *************************************************
 function generate_exam_form(id)
 {
 	$('#message').text("");
@@ -142,6 +142,7 @@ function generate_exam_form(id)
 					var regular=form_data['regular'];
 					var electives=form_data['electives'];
 					var back=form_data['back'];
+					var improvement=form_data['improvement'];
 					$('#regular').empty();
 					$('#elective').empty();
 					$('#back').empty();
@@ -162,6 +163,7 @@ function generate_exam_form(id)
 		})
 
 }
+//******************************************************** Posting utility **********************************************
 function post_final(action, method, input) {
     'use strict';
     var form;

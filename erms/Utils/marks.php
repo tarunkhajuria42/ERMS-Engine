@@ -226,48 +226,19 @@ function find_subjects($course,$institute,$semester)
 	$lists=[];
 	if($subjects_institute!=-1)
 	{
+
 		for($i=0;$i<count($subjects_institute);$i++)
 		{
-		if($subjects_institute[$i]['mitheory']==0)
-		{
-			$temp_dict['internal_theory']=-1;	
-		}
+			if($subjects_institute[$i]['minternal']==0)
+				$temp_dict['internal']=-1;	
+			else if(check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],0)!=-1)
+				$temp_dict['internal']=check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],0);
+			else 
+				return -1;
+		if($subjects_institute[$i]['mexternal']==0)
+			$temp_dict['external']=-1;
 		else if(check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],1)!=-1)
-		{
-			$temp_dict['internal_theory']=check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],1);	
-		}
-		else 
-			return -1;
-		if($subjects_institute[$i]['mtheory']==0)
-		{
-			$temp_dict['theory']=-1;	
-		}
-		else if(check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],3)!=-1)
-		{
-			$temp_dict['theory']=check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],3);	
-		}
-		else 
-			return -1;
-
-		if($subjects_institute[$i]['mipractical']==0)
-		{
-			$temp_dict['internal_practical']=-1;	
-		}
-		else if(check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],0)!=-1)
-		{
-			$temp_dict['internal_practical']=check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],0);	
-		}
-		else 
-			return -1;
-
-		if($subjects_institute[$i]['mpractical']==0)
-		{
-			$temp_dict['practical']=-1;	
-		}
-		else if(check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],2)!=-1)
-		{
-			$temp_dict['practical']=check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],2);	
-		}
+			$temp_dict['external']=check_entry($subjects_institute[$i]['subject'],$subjects_institute[$i]['institute'],1);	
 		else 
 			return -1;
 		$temp_dict['subject']=$subjects_institute[$i]['subject'];
@@ -282,8 +253,6 @@ function find_subjects($course,$institute,$semester)
 	{
 		return -1;
 	}
-	
-	
 }
 function check_entry($subject,$institute,$paper)
 {
@@ -293,14 +262,14 @@ function check_entry($subject,$institute,$paper)
 		else
 			return -1;
 		$arguments=[$subject,$year,$institute];	
-		if($paper==3)
+		if($paper==1)
 			$res=\data\utils\database\find('SELECT * from asubjects where subject=? and id in (SELECT id from admit where year=? and rollno in(SELECT rollno from student where institute=?))',$arguments,1);
 		else
 			$res=get_students($subject,$institute,$paper);
 		if($res!=-1)
 		{
 			$arguments2=[$subject,$year,$paper,$institute];
-			$res2=\data\utils\database\find('SELECT COUNT(*) from marks where subject=? and year=? and type=? and rollno in(SELECT rollno from student where institute=?)',$arguments2,1);
+			$res2=\data\utils\database\find('SELECT COUNT(*) from marks where subject=? and year=? and type=? and rollno in(SELECT rollno from student where institute=?)',$arguments2,1);	
 			if($res2!=-1)
 			{
 				if(count($res)==0)
@@ -363,7 +332,7 @@ function add_datesheet($list)
 			return -1;
 		}
 		$year=$res[0]['year'];
-	for ($i=0; $i<count($list);$i++)
+	for($i=0; $i<count($list);$i++)
 	{
 		$subject=$list[$i]['subject'];
 		$semester=\data\utils\database\find('SELECT semester from subject where subject=?',[$subject],1);
