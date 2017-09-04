@@ -72,6 +72,7 @@ function exam_form($email)
 	$regular=regular_papers($student['rollno']);
 	$back=back_papers($student['rollno']);
 	$choice=elective_papers($student['rollno']);
+	$improvement=improvement_papers($student['rollno']);
 	if($regular!=-1)
 		$temp_dict['regular']=$regular;
 	else
@@ -176,7 +177,44 @@ function elective_papers($rollno)
 	$res=\data\utils\database\find('SELECT subject,subject_code from subject where semester=? and course=? and optional=? and subject in(SELECT subject from choice where institute=?)',$arguments,1);
 	return $res;
 }
-function add_record($photo,$signature,$rollno,$regular,$choice,$back)
+function improvement_papers($rollno)
+{
+	$back=back_papers($rollno);
+	$temp=\data\utils\database\find('SELECT subject,subject_code from subject where course=? and semester in()');
+	$improvement=[];
+	for($i=0; $i < count($temp);$i++)
+	{
+		if(check_index($back,'subject',$temp[$i]['subject'])==-1)
+			array_push($improvement,$temp[$i]);
+	}
+	return $improvement;
+
+}
+// Check if a value in a array of arrays/objects
+function check_index($object,$key,$value)
+{
+	for($i=0; $i<count($object);$i++)
+	{
+		if($object[$i][$key]==$value)
+			return $i;
+	}
+	return -1;
+}
+function get_semester()
+{
+	$res=\data\utils\marks\check_session();
+	if($res==-1)
+	{
+		return -1;
+	}
+	$year=$res[0]['year'];
+	if($res[0]['sessionid']>4)
+		$addsem=2;
+	else
+		$addsem=1;
+	$semester=($year-$batch)*2+$addsem;
+}
+function add_record($photo,$signature,$rollno,$regular,$choice,$back,$improvement)
 {
 	$centre=allocate_center($rollno);
 	if($centre==-1)
@@ -214,6 +252,11 @@ function add_record($photo,$signature,$rollno,$regular,$choice,$back)
 	for($i=0; $i<count($back); $i++)
 	{
 		if(add_subject($back[$i],$id,2)==-1)
+			return -1;
+	}
+	for($i=0;$i<count($improvement);$i++)
+	{
+		if(add_subject($improvement[$i],$id,3)==-1)
 			return -1;
 	}
 	return 1;

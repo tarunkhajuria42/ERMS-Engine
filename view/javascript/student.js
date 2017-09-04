@@ -121,6 +121,8 @@ function generate_admit_card(id)
 
 }
 //************************************************** Exam Form Section *************************************************
+var improvement=[];
+var all_subjects=[];
 function generate_exam_form(id)
 {
 	$('#message').text("");
@@ -142,7 +144,7 @@ function generate_exam_form(id)
 					var regular=form_data['regular'];
 					var electives=form_data['electives'];
 					var back=form_data['back'];
-					var improvement=form_data['improvement'];
+					var all_subjects=form_data['improvement'];
 					$('#regular').empty();
 					$('#elective').empty();
 					$('#back').empty();
@@ -158,10 +160,43 @@ function generate_exam_form(id)
 					{
 						$("<input type='checkbox' name='back[]' value='"+back[i]['subject']+"' >  "+back[i]['subject_code']+"-  "+back[i]['subject']+"<br>").appendTo('#back');
 					}
+					for(var i=0; i<all_subjects.length;i++)
+					{
+						$('improvement_papers').append($('<option>',{
+							value:all_subjects[i]['subject'],
+							text:all_subjects[i]['subject'],
+							id:'option_'+i
+						}));
+					}
 				}
 			}
 		})
 
+}
+function add_improvement()
+{
+	console.log($('#list_improvement').val());
+	if($('#list_improvement').val()!=null)
+	{
+		$(`<input type='hidden' name='improvement[]' value='`+$('#list_improvement').val()+`' id='imp_'`+improvement.length+`'>`).appendTo('#improvement');
+		$(`<p id='impsub_'`+improvement.length+`'>`+$('#list_improvement').val()+`</p><button type='button' id='del_+'`+improvement.length+` onclick='del_improvement(this.id)' class='btn btn-info'>Delete</button>`).appendTo('#improvement');
+		improvement.push($('#list_improvement').val());	
+		$('#option_'+i).remove();	
+	}
+	
+}
+function del_improvement(id)
+{
+	var no=id.substring(id.indexOf('_')+1,id.length);
+	$('#imp_'+no).remove();
+	$('#impsub_'+no).remove();
+	$('#del_'+no).remove();
+	$('improvement_papers').append($('<option>',{
+							value:improvement[i],
+							text:improvement[i],
+							id:'option_'+i
+						}));
+	improvement.splice(no,1);
 }
 //******************************************************** Posting utility **********************************************
 function post_final(action, method, input) {

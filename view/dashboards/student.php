@@ -120,8 +120,8 @@ return <<<HTML
                                     </div>
                                     <h5>Improvement Papers</h5>
                                     <div class="form-group" id='improvement'>
-                                        <select id='improvement_papers'></select>
                                     </div>
+                                    <select id='improvement_papers'></select><button type='button' id='add_button' onclick='add_improvement()' class='btn btn-info ml-2'>Add</button>
                                 </div>
                                 <div class="col-md-4">
                                     <div>
@@ -132,6 +132,9 @@ return <<<HTML
                                     <div>
                                         <label>Applicant's Signature</label>
                                         <input type="file" name="sigToUpload" id="sigToUpload">
+                                    </div>
+                                    <div class='mt-5'>
+                                        <h5>Total Fees:</h5> <p id='fees'></p>
                                     </div>
                                 </div>
                         </div>

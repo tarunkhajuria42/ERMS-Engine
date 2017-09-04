@@ -101,7 +101,7 @@ function get_semesters($institute,$course)
 	else 
 	{	
 		$arguments=[$rem,$course];
-		$sem=\data\utils\database\find('SELECT DISTINCT semester from subject where semester%2=? and course=?',$arguments,1);	
+		$sem=\data\utils\database\find('SELECT DISTINCT semester from subject where semester%2=? and course=?',$arguments,1);
 	}
 	return $sem;
 }
