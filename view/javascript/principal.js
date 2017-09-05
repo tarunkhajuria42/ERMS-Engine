@@ -202,20 +202,38 @@ function fill_marks1(data,status)
 			data_pack=datah['reply'];
 			$('#max_marks').text("Max Marks:"+data_pack['max']);
 			marks1=data_pack['marks'];
+			if(marks1[0]['institute_id']==null)
+			{
+				$('#message1').show();
+				$('#submit1').show();
+			}
+			else
+			{
+				console.log('abc');
+				$('#submit1').hide();
+				$('#message1').hide();
+			}
 			for (var i=0; i<marks1.length;i++)
 			{
 				marks_table1.row.add([marks1[i]['rollno'],
 					marks1[i]['name'],
 					marks1[i]['marks'],
-					marks1[i]['userid'],
+					marks1[i]['last_edit'],
 					marks1[i]['comment'],
-					`<button id='marksedit_`+i+`' class='btn btn-info' onclick='edit_marks1(this.id)'>Edit</button>`
+					marks1[i]['entry'],
+					edit_button1(marks1[i]['institute_id'],i)
 					]);
 			}
 			marks_table1.draw();
 		}
 	}
-
+}
+function edit_button1(insti_id,i)
+{
+	if(insti_id==null)
+		return `<button id='marksedit_`+i+`' class='btn btn-info' onclick='edit_marks1(this.id)'>Edit</button>`
+	else
+		return `-`
 }
 function edit_marks1(id)
 {
@@ -227,8 +245,9 @@ function edit_marks1(id)
 		marks_table1.row.add([marks1[no]['rollno'],
 						marks1[no]['name'],
 						`<input type='text' id='marksedit_`+no+`' value='`+marks1[no]['marks']+`'>`,
-						marks1[no]['userid'],	
+						marks1[no]['last_edit'],	
 						`<input type='text' id='comment_`+no+`'>`,
+						marks1[no]['entry'],
 			`<button id='marksedit_`+no+`' class='btn btn-info' onclick='submit_edit_marks1(this.id)'>Done</button>`
 			]).draw();
 		edit_in_progress1=true;
@@ -247,7 +266,7 @@ function submit_edit_marks1(id)
 		temp_dict['subject']=selected_subject1;
 		temp_dict['type']=selected_type1;
 		temp_dict['marks']=$('#marksedit_'+no).val();
-		temp_dict['userid']=user_id;
+		temp_dict['last_edit']=user_id;
 		temp_dict['comment']=$('#comment_'+no).val();
 		temp_dict['rollno']=marks1[no]['rollno'];
 		post_arguments['data']=JSON.stringify([temp_dict]);	
@@ -269,8 +288,9 @@ function submit_edit_marks1(id)
 					marks_table1.row.add([marks1[no]['rollno'],
 						marks1[no]['name'],
 						marks1[no]['marks'],
-						marks1[no]['userid'],
+						marks1[no]['last_edit'],
 						marks1[no]['comment'],
+						marks1[no]['entry'],
 						`<button id='marksedit_`+no+`' class='btn btn-info' onclick='edit_marks1(this.id)'>Edit</button>`
 						]).draw();
 				}
@@ -281,13 +301,52 @@ function submit_edit_marks1(id)
 				error_batch1('Network Error');
 		});
 }
+function submit1()
+{
+	var post_arguments={};
+		post_arguments['type']='marks';
+		post_arguments['request']='submit_marks';
+		marks_array=[];
+		for(var i=0; i<marks1.length;i++)
+		{
+			var temp_dict={};
+			temp_dict['subject']=selected_subject1;
+			temp_dict['type']=selected_type1;
+			temp_dict['rollno']=marks1[i]['rollno'];
+			temp_dict['institute_id']=user_id;
+			marks_array.push(temp_dict);
+		}
+		post_arguments['data']=JSON.stringify(marks_array);	
+		$.post(address,post_arguments,
+			function submit_receipt1(data,status)
+			{
+				if(status=='success')
+				{
+					datah=JSON.parse(data);
+					console.log(data);
+					if(datah['type']=='success')
+					{
+						for(var i=0; i<marks1.length;i++)
+						{
+							console.log(i);
+							$('#marksedit_'+i).remove();
+						}
+						$('#submit1').hide();
+						$('#message1').hide();
+						error_marks1('Success');
+					}
+				}
+
+			});
+
+}
 function error_batch1(text)
 {
 	$('#info_batch1').text(text);
 }
 function error_marks1(text)
 {
-	$('#info_batch1').text(text);
+	$('#info_marks1').text(text);
 }
 //********************************************* Tab 2 (Users) ************************************************
 var courses_table2;

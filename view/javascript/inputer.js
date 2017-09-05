@@ -77,7 +77,8 @@ function submit_marks()
 		temp_dict['rollno']=rollno;
 		temp_dict['marks']=marks;
 		temp_dict['subject']=subject;
-		temp_dict['type']=3;
+		temp_dict['type']=1;
+		temp_dict['entry']=user_id;
 		var post_arguments={};
 		post_arguments['type']='marks';
 		post_arguments['request']='add_marks_external';

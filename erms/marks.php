@@ -68,6 +68,12 @@ function marks(){
 								else
 									echo(utils\reply('edit_marks','error','edit_failed'));
 								break;
+			case 'submit_marks': $res=utils\marks\submit_marks($data);
+								if($res!=-1)
+									echo(utils\reply('submit_marks','success','marks_submitted'));
+								else
+									echo(utils\reply('submit_marks','error','failed'));
+								break;
 			case 'get_students':
 							$institute=$data['institute'];
 							$subject=$data['subject'];

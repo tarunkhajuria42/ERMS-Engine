@@ -87,7 +87,6 @@ return <<<HTML
                             </tfoot>
                         </table>
                     </div>
-                       
                 </div> 
             </div>
            
@@ -107,13 +106,9 @@ return <<<HTML
                                 <div class="col-md-8">
                                     <h5>Regular Subjects</h5>
                                     <div class="form-group" id='regular'>
-                                        
-                                        
                                     </div>
                                     <h5>Electives</h5>
                                     <div class="form-group" id='elective'>
-                                        
-
                                     </div>
                                     <h5>Back Papers</h5>
                                     <div class="form-group" id='back'>

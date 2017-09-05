@@ -298,8 +298,9 @@ return <<<HTML
                                         <th>Roll No</th>
                                         <th>Name</th>
                                         <th>Marks</th>
-                                        <th>ID</th>
+                                        <th>Last Edit</th>
                                         <th>Comments</th>
+                                        <th>Submit By</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -310,8 +311,9 @@ return <<<HTML
                                         <th>Roll No</th>
                                         <th>Name</th>
                                         <th>Marks</th>
-                                        <th>ID</th>
+                                        <th>Last Edit</th>
                                         <th>Comments</th>
+                                        <th>Submit By</th>
                                         <th></th>
                                     </tr>
                                 </tfoot>

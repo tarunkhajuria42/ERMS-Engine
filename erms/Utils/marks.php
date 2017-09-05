@@ -7,7 +7,7 @@ Utility functions
 namespace data\utils\marks;
 function get_max($subject,$type)
 {
-	$t=['mipractical','mitheory','mpractical','mtheory'];
+	$t=['minternal','mexternal'];
 	$max=\data\utils\database\find('SELECT * from subject where subject=?',[$subject],1);
 	if($max!=-1)
 	{
@@ -25,18 +25,98 @@ function check_data($data)
 	}
 	$year=$res[0]['year'];
 	$batch=\data\utils\student\get_batch($data[0]['rollno']);
+	$vocational=\data\utils\student\check_vocational($data[0]['rollno']);
+	if($vocational==-1)
+		return -1;
+	$add_voc=[0,2];
 	if($res[0]['sessionid']>4)
 		$addsem=2;
 	else
 		$addsem=1;
-	$semester=($year-$batch)*2+$addsem;
-	$res=\data\utils\database\find('Select COUNT(*) from asubjects  where subject=? and  id =(Select id from admit where rollno=? and year=? and semester=?)',[$data[0]['subject'],$data[0]['rollno'],$year,$semester],1);
+	$semester=($year-$batch)*2+$addsem+$add_voc[$vocational];
+	$res=\data\utils\database\find('SELECT COUNT(*) from asubjects  where subject=? and  id =(Select id from admit where rollno=? and year=? and semester=?)',[$data[0]['subject'],$data[0]['rollno'],$year,$semester],1);
 	if($res==-1)
 		return -1;
 	if($res[0]['COUNT(*)']==0)
 		return -1;
 	else
+	{
+		$max=get_max($data[0]['subject'],1);
+		if($max>=$data[0]['marks'])
+			return 1;
+		else
+			return -1;
+	}
+		
+}
+function submit_marks($records)
+{
+	$res=\data\utils\marks\check_session();
+	if($res==-1)
+	{
+		return -1;
+	}
+	$year=$res[0]['year'];
+	if(isset($records[0]['institute_id']))
+	{
+		for ($i=0; $i<count($records);$i++)
+		{
+			$arguments=[$records[$i]['institute_id'],$records[$i]['type'],$records[$i]['rollno'],$records[$i]['subject'],$year];
+			$res=\data\utils\database\update('UPDATE marks SET institute_id=? WHERE type=? and rollno=? and subject=? and year=?',$arguments,1);
+			if($res!=-1)
+			{
+
+			}	
+			else
+				return -1;
+		}
 		return 1;
+	}
+	else
+	{
+		for ($i=0; $i<count($records);$i++)
+		{
+			$arguments=[$records[$i]['board'],$records[$i]['type'],$records[$i]['rollno'],$records[$i]['subject'],$year];
+			$res=\data\utils\database\update('UPDATE marks SET board=? WHERE type=? and rollno=? and subject=? and year=?',$arguments,1);
+			if($res!=-1)
+			{
+
+			}	
+			else
+				return -1;
+		}
+		return 1;
+	}
+	
+}
+function dist_grace()
+{
+	$res=\data\utils\marks\check_session();
+	if($res==-1)
+	{
+		return -1;
+	}
+	$year=$res[0]['year'];
+	$students=\data\utils\database\find('SELECT * from admit where year=?',[$year],1);
+	if($students!=-1)
+	{
+		for($i=0; $i<count($students);$i++)
+		{
+			$batch=\data\utils\student\get_batch($students[$i]['rollno']);
+			$vocational=\data\utils\student\check_vocational($students[$i]['rollno']);
+			$course=\data\utils\student\get_course($students[$i]['rollno']);
+			if($vocational==-1)
+				return -1;
+			$add_voc=[0,2];
+			if($res[0]['sessionid']>4)
+				$addsem=2;
+			else
+				$addsem=1;
+			$semester=($year-$batch)*2+$addsem+$add_voc[$vocational];
+			//$subjects=\data\utils\database\find('SELECT marks, subject,type from marks where rollno=? and year=?',[$students[$i]['']])
+		}
+	}
+
 }
 function add_marks($records)
 {
@@ -48,8 +128,8 @@ function add_marks($records)
 	$year=$res[0]['year'];
 	for ($i=0; $i<count($records);$i++)
 	{
-		$arguments=[$records[$i]['marks'],$records[$i]['type'],$records[$i]['rollno'],$records[$i]['subject'],$year];
-		$res=\data\utils\database\insert('INSERT into marks(marks,type,rollno,subject,year)VALUES(?,?,?,?,?)',$arguments,1);
+		$arguments=[$records[$i]['marks'],$records[$i]['type'],$records[$i]['rollno'],$records[$i]['subject'],$year,$records[$i]['entry']];
+		$res=\data\utils\database\insert('INSERT into marks(marks,type,rollno,subject,year,entry)VALUES(?,?,?,?,?,?)',$arguments,1);
 		if($res!=-1)
 		{
 
@@ -69,8 +149,8 @@ function edit_marks($records)
 	$year=$res[0]['year'];
 	for ($i=0; $i<count($records);$i++)
 	{
-		$arguments=[$records[$i]['marks'],$records[$i]['comment'],$records[$i]['userid'],$records[$i]['type'],$records[$i]['rollno'],$records[$i]['subject'],$year];
-		$res=\data\utils\database\update('UPDATE marks SET marks=?, comment=?, userid=? WHERE type=? and rollno=? and subject=? and year=?',$arguments,1);
+		$arguments=[$records[$i]['marks'],$records[$i]['comment'],$records[$i]['last_edit'],$records[$i]['type'],$records[$i]['rollno'],$records[$i]['subject'],$year];
+		$res=\data\utils\database\update('UPDATE marks SET marks=?, comment=?, last_edit=? WHERE type=? and rollno=? and subject=? and year=?',$arguments,1);
 		if($res!=-1)
 		{
 
@@ -78,7 +158,7 @@ function edit_marks($records)
 		else
 			return -1;
 	}
-	return 1;
+	return 1;	
 }
 function get_marks($subject,$institute,$type)
 {
@@ -89,11 +169,9 @@ function get_marks($subject,$institute,$type)
 	}
 	$year=$res[0]['year'];
 	$arguments=[$subject,$year,$type,$institute];
-	$res=\data\utils\database\find('SELECT marks.rollno, marks.marks, student.name, marks.comment, marks.userid from marks INNER JOIN  student ON marks.subject=? and marks.year=? and marks.type=? and marks.rollno=student.rollno and student.institute=?',$arguments,1);
+	$res=\data\utils\database\find('SELECT marks.rollno, marks.marks, student.name, marks.comment, marks.last_edit, marks.entry,marks.institute_id,marks.board from marks INNER JOIN  student ON marks.subject=? and marks.year=? and marks.type=? and marks.rollno=student.rollno and student.institute=?',$arguments,1);
 	if($res!=-1)
-	{
 		return $res;
-	}
 	else
 		return -1;
 }
@@ -112,11 +190,13 @@ function get_students($subject,$institute,$type)
 		return -1;
 	$batch=$year-round(($sem[0]['semester']-1)/2,0,PHP_ROUND_HALF_DOWN);
 
-	$arguments=[$institute,$sem[0]['course'],$batch];
-	$res=\data\utils\database\find('SELECT rollno from student where institute=? and course=? and batch=?',$arguments,1);
-
+	$arguments=[$institute,$sem[0]['course'],$batch,0];
+	$res=\data\utils\database\find('SELECT rollno from student where institute=? and course=? and batch=? and vocational=?',$arguments,1);
+	$arguments=[$institute,$sem[0]['course'],$batch+1,1];
+	$res2=\data\utils\database\find('SELECT rollno from student where institute=? and course=? and batch=? and vocational=?',$arguments,1);
+	$res=array_merge($res,$res2);
 	$students=[];
-	if($res!=-1)
+	if($res!=-1 and $res2!=-1)
 	{
 		for($i=0;$i<count($res);$i++)
 		{
@@ -127,7 +207,6 @@ function get_students($subject,$institute,$type)
 			{
 				return -1;
 			}
-
 			if($temp_dict['marks']==-1)
 			{
 				return -1;
@@ -139,28 +218,6 @@ function get_students($subject,$institute,$type)
 	}
 	else
 		return -1;
-	$prev=\data\utils\database\find('SELECT rollno,marks from marks where year<? and subject=? and type=? and rollno in(SELECT rollno from student where institute=? and course=?)',[$year,$subject,$type,$institute,$sem[0]['course']],1);
-	
-	$mtype=['pipractical','pitheory','ppractical','ptheory'];
-	$passing=\data\utils\database\find('SELECT * from subject where subject=?',[$subject],1);
-	if($passing==-1)
-		return -1;
-	if($prev==-1)
-		return -1;
-	for($i=0; $i<count($prev);$i++)
-	{
-		if($prev[$i]['marks']<$passing[0][$mtype[$type]])
-			{
-			$temp_dict['rollno']=$prev[$i]['rollno'];
-			$temp_dict['name']=get_student_name($prev[$i]['rollno']);
-			$temp_dict['marks']=-1;
-			
-			if($temp_dict['name']==-1)
-				return -1;
-			array_push($students, $temp_dict);
-			}
-	}
-
 	return $students;
 }
 function get_student_marks($rollno,$subject,$year,$type)
@@ -219,7 +276,6 @@ function find_subjects($course,$institute,$semester)
 	}
 	else
 	{
-
 		$arguments=[$course,$institute,$semester];
 		$subjects_institute=\data\utils\database\find('SELECT subject.*, courses.institute from subject INNER JOIN courses ON subject.course=courses.course and courses.course=? and courses.institute=? and subject.semester=? and (subject.optional=0 || subject.subject in(SELECT subject from choice where institute=courses.institute and course=courses.course))',$arguments,1);	
 	}
@@ -281,7 +337,6 @@ function check_entry($subject,$institute,$paper)
 			}
 			else 
 				return -1;
-			
 		}	
 		else
 			 return -1;	

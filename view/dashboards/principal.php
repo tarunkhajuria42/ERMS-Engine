@@ -135,6 +135,7 @@ return <<<HTML
                                         <th>Marks</th>
                                         <th>ID</th>
                                         <th>Comment</th>
+                                        <th>Entered By</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -147,6 +148,7 @@ return <<<HTML
                                         <th>Marks</th>
                                         <th>ID</th>
                                         <th>Comment</th>
+                                        <th>Entered By</th>
                                         <th></th>
                                     </tr>
                                 </tfoot>
@@ -155,7 +157,8 @@ return <<<HTML
                             </div>
                             <div><p id='info_marks1' class='text-center'></p></div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-warning" data-dismiss='modal' onclick='load_batch1()'>Close</button>
+                            <p id='message1'>I have checked all the data and submit to board</p>
+                                <button type="button" class="btn btn-info ml-2" id='submit1' onclick='submit1()'>Submit</button>
                             </div>
                         </div>   
                     </div>

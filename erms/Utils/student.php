@@ -57,6 +57,17 @@ function get_batch($rollno)
 	else 
 		return -1;
 }
+function check_vocational($rollno)
+{
+	$arguments=[$rollno];
+	$res=\data\utils\database\find('SELECT vocational from student where rollno=?',[$rollno],1);
+	if(count($res)>0 and $res!=-1)
+	{
+		return $res[0]['vocational'];
+	}
+	else
+		return -1;
+}
 function get_screen($email)
 {
 	$student=get_student($email,-1);
@@ -122,6 +133,7 @@ function add($a,$b)
 	if($b=='-')
 		$b=0;
 	return $a+$b;
+	
 }
 function get_marksheet($user,$semester)
 {
@@ -137,11 +149,10 @@ function get_marksheet($user,$semester)
 		for ($i=0; $i<count($subjects);$i++)
 		{
 			$array=[$subjects[$i]['subject_code'],$subjects[$i]['subject'],
-			$subjects[$i]['mipractical'],$subjects[$i]['mpractical'],$subjects[$i]['mipractical']+$subjects[$i]['mpractical'],
-			$subjects[$i]['mitheory'],$subjects[$i]['mtheory'],$subjects[$i]['mitheory']+$subjects[$i]['mtheory']
+			$subjects[$i]['minternal'],$subjects[$i]['mexternal'],$subjects[$i]['minternal']+$subjects[$i]['mexternal']
 			];
-			$type_array=[0,2,1,3];
-			for($j=0; $j<4;$j++)
+			$type_array=[0,1];
+			for($j=0; $j<2;$j++)
 			{
 				$type=$type_array[$j];
 				$marks=\data\utils\database\find('SELECT MAX(marks) from marks where rollno=? and subject=? and type=?',[$rollno,$subjects[$i]['subject'],$type],1);
@@ -155,14 +166,15 @@ function get_marksheet($user,$semester)
 				{
 					array_push($array,$marks[0]['MAX(marks)']);
 				}
-				if($type==2 or $type==3)
+				if($type==1)
 				{
+
 					array_push($array,add($array[count($array)-1],$array[count($array)-2]));
 				}
 			}
 			array_push($temp,$array);
 		}
-		$total=['','Total',0,0,0,0,0,0,0,0,0,0,0,0];
+		$total=['','Total',0,0,0,0,0,0];
 		for($i=0;$i<count($temp);$i++)
 		{
 			for($type=2;$type<count($total);$type++)
@@ -177,8 +189,8 @@ function get_marksheet($user,$semester)
 		$temp_dict['course']=$course;
 		$temp_dict['semester']=$semester;
 		$temp_dict['list']=$temp;
-		$temp_dict['total']=$total[13]+$total[10];
-		$temp_dict['percent']=round($temp_dict['total']*100/($total[7]+$total[4]));
+		$temp_dict['total']=$total[7];
+		$temp_dict['percent']=round($temp_dict['total']*100/($total[4]));
 		$temp_dict['division']='First';
 		if($temp_dict['percent']>40)
 			$temp_dict['pass']='Pass';

@@ -308,6 +308,7 @@ function submit_marks1()
 					temp_dict['marks']=marks1[i]['marks'];
 					temp_dict['subject']=selected_subject1;
 					temp_dict['type']=selected_type1;
+					temp_dict['entry']=user_id;
 					marks_to_submit.push(temp_dict);
 					$('#marksedit_'+i).css('border-color','');
 				}
@@ -360,7 +361,105 @@ function error_marks1(text)
 	$('#info_marks1').text(text);
 }
 //****************************************************** Tab 2 (Admit Card Approval) *****************************
+var institute2;
+var courses2=[];
+var year2=[];
+var selected_list_course2='all';
+var selected_list_year2;
+var selected_subject2;
+var selected_type2;
+var batch_table2;
+function init_tab1()
+{
+	batch_table1=$('#batch_table1').DataTable();
+	marks_table1=$('#marks_table1').DataTable();
+	get_institute1();
+	$('#courses_list1').change(
+		function change_courses1()
+		{
+			selected_list_course1=$('#courses_list1').val();
+			load_semester1();
+		});
+}
+function get_institute1()
+{	
+	$.post(address,
+	{
+		type:'access',
+		request:'get_institute'
+	},
+	function institutes_fill2(data,status)
+	{
+		datah=JSON.parse(data);
+		if(datah['type']=='success')
+		{
+			institute1=datah['reply'];
+			load_courses1();
+		}
+	});
+}
 
+function load_courses2()
+{
+	var post_arguments={};
+	post_arguments['type']='admit';
+	post_arguments['request']='get_courses';
+	$.post(address,post_arguments,
+		function list_courses1(data,status)
+		{	
+			if(status=='success')
+			{
+				var datah=JSON.parse(data);
+				if(datah['type']=='success')
+				{
+					courses2=datah['reply'];
+					$('#courses_list1').empty();
+					for(var i=0; i<courses1.length;i++)
+					{
+						$('#courses_list1').append($('<option>', {
+    						value: courses1[i],
+    						text: courses1[i]}));
+					}
+					selected_list_course2=$('#courses_list1').val();
+					load_year2();
+				}
+			}
+		});
+}
+function load_year2()
+{
+	var post_arguments={};
+	post_arguments['type']='lists';
+	post_arguments['request']='get_semesters';
+	temp={};
+	temp['institute']=institute1;
+	temp['course']=selected_list_course1;
+	post_arguments['data']=JSON.stringify(temp);
+	$.post(address,post_arguments,
+		function list_semesters1(data,status)
+		{
+			if(status=='success')
+			{
+				console.log(data);
+				var datah=JSON.parse(data);
+				if(datah['type']=='success')
+				{
+					semesters1=datah['reply'];
+					$('#semester_list1').empty();
+					for(var i=0; i<semesters1.length;i++)
+					{
+						$('#semester_list1').append($('<option>', {
+    						value: semesters1[i]['semester'],
+    						text: semesters1[i]['semester']}));
+					}
+				}
+			}
+		});
+}
+function load_view()
+{
+
+}
 //******************************************************Utility Functions ****************************************
 function find_element(object,key,value)
 {

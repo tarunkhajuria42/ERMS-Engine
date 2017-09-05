@@ -16,13 +16,13 @@ if($files!=-1)
 		$student=$res[0];	
 	else
 		return -1;
-	$regularpapers=utils\admit\regular_papers($student['rollno']);
+	$regularpapers=utils\admit\regular_papers($student['rollno'],$student['vocational']);
 	$regular=[];
 	for($i=0;$i<count($regularpapers);$i++)
 	{
 		array_push($regular,$regularpapers[$i]['subject']);
 	}
-	$electivepapers=utils\admit\elective_papers($student['rollno']);
+	$electivepapers=utils\admit\elective_papers($student['rollno'],$student['vocational']);
 	$electives=[];
 	for($i=0;$i<count($electivepapers);$i++)
 	{
@@ -32,8 +32,12 @@ if($files!=-1)
 		$back=$_POST['back'];
 	else
 		$back=[];
+	if(isset($_POST['improvement']))
+		$improvement=$_POST['improvement'];
+	else
+		$improvement=[];
 
-	$final=utils\admit\add_record($files[0],$files[1],$student['rollno'],$regular,$electives,$back);
+	$final=utils\admit\add_record($files[0],$files[1],$student['rollno'],$regular,$electives,$back,$improvement);
 	if($final!=-1)
 		echo(utils\reply('examform','success','exam_form'));
 	else

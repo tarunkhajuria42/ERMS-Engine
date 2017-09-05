@@ -21,7 +21,6 @@ function admit_details($email)
 	$subjects=\data\utils\database\find('SELECT subject_code,subject from subject where subject in(SELECT subject from asubjects where id in(SELECT id from admit where rollno=? and year=? and semester=?))',$arguments,1);
 	if($subjects!=-1)
 	{
-		
 		$temp_array=[];
 		for ($i=0; $i<count($subjects);$i++)
 		{
@@ -69,10 +68,11 @@ function exam_form($email)
 	else
 		return -1;
 	$temp_dict['rollno']=$student['rollno'];
-	$regular=regular_papers($student['rollno']);
-	$back=back_papers($student['rollno']);
-	$choice=elective_papers($student['rollno']);
-	$improvement=improvement_papers($student['rollno']);
+	$s_type=$student['vocational'];
+	$regular=regular_papers($student['rollno'],$s_type);
+	$back=back_papers($student['rollno'],$s_type);
+	$choice=elective_papers($student['rollno'],$s_type);
+	$improvement=improvement_papers($student['rollno'],$back);
 	if($regular!=-1)
 		$temp_dict['regular']=$regular;
 	else
@@ -87,12 +87,14 @@ function exam_form($email)
 		$temp_dict['electives']=$choice;
 	else
 		return -1;
+	if($improvement!=-1)
+		$temp_dict['improvement']=$improvement;
 	return $temp_dict;
 
 }
-function regular_papers($rollno)
+function regular_papers($rollno,$s_type)
 {
-
+	$additional=[0,2];
 	$res=\data\utils\marks\check_session();
 	if($res==-1)
 	{
@@ -104,7 +106,7 @@ function regular_papers($rollno)
 		$addsem=2;
 	else
 		$addsem=1;
-	$semester=($year-$batch)*2+$addsem;
+	$semester=($year-$batch)*2+$addsem+$additional[$s_type];
 	$course=\data\utils\student\get_course($rollno);
 	$arguments=[$semester,$course,0];
 	$res=\data\utils\database\find('SELECT subject,subject_code from subject where semester=? and course=? and optional=?',$arguments,1);
@@ -114,8 +116,9 @@ function regular_papers($rollno)
 		return -1;
 
 }
-function back_papers($rollno)
+function back_papers($rollno,$s_type)
 {
+	$additional=[0,2];
 	$res=\data\utils\marks\check_session();
 	if($res==-1)
 	{
@@ -124,10 +127,16 @@ function back_papers($rollno)
 	$year=$res[0]['year'];
 	$batch=\data\utils\student\get_batch($rollno);
 	if($res[0]['sessionid']>4)
+	{
 		$addsem=2;
+		$mod=0;
+	}
 	else
+	{
 		$addsem=1;
-	$semester=($year-$batch)*2+$addsem;
+		$mod=1;
+	}
+	$semester=($year-$batch)*2+$addsem+$additional[$s_type];
 	$course=\data\utils\student\get_course($rollno);
 	$list=[];
 	for($temp=$semester;$temp>0;$temp=$temp-2)
@@ -137,11 +146,23 @@ function back_papers($rollno)
 		for($i=0; $i<count($sub);$i++)
 		{
 			$total=0;
-			$total_pass=$sub[$i]['ptheory'];
-			$arguments=[$sub[$i]['subject'],$rollno,3];
-			$marks=\data\utils\database\find('SELECT MAX(marks) from marks where subject=? and rollno=? and type=?',$arguments,1);
-				if($marks!=-1)
-					$total=$marks[0]['MAX(marks)'];
+			$total_pass=0.4*($sub[$i]['minternal']+$sub[$i]['mexternal']);
+			$arguments=[$sub[$i]['subject'],$rollno,1];
+			$external=\data\utils\database\find('SELECT marks from marks where subject=? and rollno=? and type=? and year=(SELECT MAX(year) from marks where subject=? and rollno=? and type=?)',$arguments,1);
+			$arguments=[$sub[$i]['subject'],$rollno,0];
+			$internal=\data\utils\database\find('SELECT marks from marks where subject=? and rollno=? and type=? and year=(SELECT MAX(year) from marks where subject=? and rollno=? and type=?)',$arguments,1);
+				if($internal!=-1 and $external!=-1)
+				{
+					if(count($internal)==0)
+						$i_marks=0;
+					else
+						$i_marks=$internal[0]['marks'];
+					if(count($external)==0)
+						$e_marks=0;
+					else
+						$e_marks=$external[0]['marks'];
+					$total=$i_marks+$e_marks;
+				}	
 				else
 					return -1;
 			if($total<$total_pass)
@@ -156,8 +177,9 @@ function back_papers($rollno)
 	return $list;
 }
 
-function elective_papers($rollno)
+function elective_papers($rollno,$s_type)
 {
+	$additional=[0,2];
 	$res=\data\utils\marks\check_session();
 	if($res==-1)
 	{
@@ -169,20 +191,38 @@ function elective_papers($rollno)
 		$addsem=2;
 	else
 		$addsem=1;
-	$semester=($year-$batch)*2+$addsem;
+	$semester=($year-$batch)*2+$addsem+$additional[$s_type];
 	$course=\data\utils\student\get_course($rollno);
 	$institute=\data\utils\student\get_institute($rollno);
 	$arguments=[$semester,$course,1,$institute];
-
 	$res=\data\utils\database\find('SELECT subject,subject_code from subject where semester=? and course=? and optional=? and subject in(SELECT subject from choice where institute=?)',$arguments,1);
 	return $res;
 }
-function improvement_papers($rollno)
+function improvement_papers($rollno,$back)
 {
-	$back=back_papers($rollno);
-	$temp=\data\utils\database\find('SELECT subject,subject_code from subject where course=? and semester in()');
+	$res=\data\utils\marks\check_session();
+	if($res==-1)
+	{
+		return -1;
+	}
+	$year=$res[0]['year'];
+	$batch=\data\utils\student\get_batch($rollno);
+	if($res[0]['sessionid']>4)
+	{
+		$addsem=2;
+		$mod=0;
+	}
+	else
+	{
+		$addsem=1;
+		$mod=1;
+	}
+	$max_sem=($year-$batch)*2+$addsem;
+	$course=\data\utils\student\get_course($rollno);
+	$arguments=[$course,$mod,$rollno];
+	$temp=\data\utils\database\find('SELECT * from subject where course=? and semester %2=? and subject in (SELECT subject from asubjects where id in(SELECT id from admit where rollno=?))',$arguments,1);
 	$improvement=[];
-	for($i=0; $i < count($temp);$i++)
+	for($i=0; $i <count($temp);$i++)
 	{
 		if(check_index($back,'subject',$temp[$i]['subject'])==-1)
 			array_push($improvement,$temp[$i]);
@@ -200,7 +240,7 @@ function check_index($object,$key,$value)
 	}
 	return -1;
 }
-function get_semester()
+function current_semester()
 {
 	$res=\data\utils\marks\check_session();
 	if($res==-1)
@@ -228,11 +268,15 @@ function add_record($photo,$signature,$rollno,$regular,$choice,$back,$improvemen
 	}
 	$year=$res[0]['year'];
 	$batch=\data\utils\student\get_batch($rollno);
+	$vocational=\data\utils\student\check_vocational($rollno);
+	if($vocational==-1)
+		return -1;
+	$add_vocational=[0,2];
 	if($res[0]['sessionid']>4)
 		$addsem=2;
 	else
 		$addsem=1;
-	$semester=($year-$batch)*2+$addsem;
+	$semester=($year-$batch)*2+$addsem+$add_vocational[$vocational];
 	//Insert into admit
 	$arguments=[$id,$centre,$photo,$signature,$year,$semester,$rollno];
 	$submit=\data\utils\database\insert('INSERT into admit(id,center,photo,signature,year,semester,rollno) values(?,?,?,?,?,?,?)',$arguments,1);

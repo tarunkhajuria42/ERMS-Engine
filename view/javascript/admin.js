@@ -966,11 +966,11 @@ function display_batch3(data,status)
 		var datah=JSON.parse(data);
 		if(datah['type']=='success')
 		{
-			//batch_table3.clear().draw();
+			batch_table3.clear().draw();
 			batches3=datah['reply'];
 			for(var i=0; i<batches3.length; i++)
 			{	
-				//console.log(optional_link(batches3[i]['internal'],i,0));
+				
 				batch_table3.row.add([batches3[i]['subject_code'],
 					batches3[i]['subject'],
 					batches3[i]['institute'],
@@ -1031,8 +1031,9 @@ function fill_marks3(data,status)
 				marks_table3.row.add([marks3[i]['rollno'],
 					marks3[i]['name'],
 					marks3[i]['marks'],
-					marks3[i]['userid'],
+					marks3[i]['last_edit'],
 					marks3[i]['comment'],
+					marks3[i]['institute_id'],
 					`<button id='marksedit_`+i+`' class='btn btn-info' onclick='edit_marks3(this.id)'>Edit</button>`
 					])
 			}
@@ -1051,8 +1052,9 @@ function edit_marks3(id)
 		marks_table3.row.add([marks3[no]['rollno'],
 						marks3[no]['name'],
 						`<input type='text' id='marksedit_`+no+`' value='`+marks3[no]['marks']+`'>`,
-						marks3[no]['userid'],	
+						marks3[no]['last_edit'],	
 						`<input type='text' id='comment_`+no+`'>`,
+						marks3[no]['institute_id'],
 			`<button id='marksedit_`+no+`' class='btn btn-info' onclick='submit_edit_marks3(this.id)'>Done</button>`
 			]).draw();
 		edit_in_progress3=true;
@@ -1093,8 +1095,9 @@ function submit_edit_marks3(id)
 					marks_table3.row.add([marks3[no]['rollno'],
 						marks3[no]['name'],
 						marks3[no]['marks'],
-						marks3[no]['userid'],
+						marks3[no]['last_edit'],
 						marks3[no]['comment'],
+						marks3[no]['institute_id'],
 						`<button id='marksedit_`+no+`' class='btn btn-info' onclick='edit_marks3(this.id)'>Edit</button>`
 						]).draw();
 				}

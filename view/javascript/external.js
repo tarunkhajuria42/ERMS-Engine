@@ -123,7 +123,7 @@ function submit_new1(id)
 					var no=users1.length;
 					users1.push($('#email_'+no).val());
 					users_table1.row($('#email_'+no).parents('tr')).remove();
-					users_table1.row.add([users2[no],
+					users_table1.row.add([users1[no],
 					`<button onclick='remove_user1(this.id)' class='btn btn-warning pull-right' id='removeuser_`+no+`'>Remove</button>`]);
 					users_table1.draw();
 					is_new_opened1=false;
